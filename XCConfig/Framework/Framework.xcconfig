@@ -1,0 +1,92 @@
+// Architectures
+
+// Assets
+
+// Build Locations
+
+// Build Options
+
+// Deployment
+INSTALL_PATH = $(LOCAL_LIBRARY_DIR)/Frameworks
+SKIP_INSTALL = YES
+
+// Headers
+
+// Kernel Module
+
+// Linking
+DYLIB_COMPATIBILITY_VERSION = 1
+DYLIB_CURRENT_VERSION = 1
+DYLIB_INSTALL_NAME_BASE = @rpath
+
+// Localization
+
+// Packaging
+DEFINES_MODULE = YES
+INFOPLIST_FILE = Resources/Kindness/Info.plist
+PRODUCT_BUNDLE_IDENTIFIER = com.ellispeck.kindness
+PRODUCT_NAME = Kindness
+
+// Search Paths
+
+// Signing
+
+// Testing
+
+// Text-Based APIs
+
+// Versioning
+
+// Apple LLVM 9.0 - Address Sanitizer
+
+// Apple LLVM 9.0 - Code Generation
+
+// Apple LLVM 9.0 - Custom Compiler Flags
+
+// Apple LLVM 9.0 - Language
+
+// Apple LLVM 9.0 - Language - C++
+
+// Apple LLVM 9.0 - Language - Modules
+
+// Apple LLVM 9.0 - Language - Objective C
+
+// Apple LLVM 9.0 - Preprocessing
+
+// Apple LLVM 9.0 - Undefined Behavior Sanitizer
+
+// Apple LLVM 9.0 - Warning Policies
+
+// Apple LLVM 9.0 - Warnings - All languages
+
+// Apple LLVM 9.0 - Warnings - C++
+
+// Apple LLVM 9.0 - Warnings - Objective C
+
+// Apple LLVM 9.0 - Warnings - Objective C and ARC
+
+// OSACompile - Build Options
+
+// Static Analyzer - Analysis Policy
+
+// Static Analyzer - Generic Issues
+
+// Static Analyzer - Issues - Apple APIs
+
+// Static Analyzer - Issues - Objective C
+
+// Static Analyzer - Issues - Security
+
+// Swift Compiler - Code Generation
+
+// Swift Compiler - Custom Flags
+
+// Swift Compiler - General
+
+// Swift Compiler - Language
+
+// Swift Compiler - Search Paths
+
+// Swift Compiler - Warnings Policies
+
+// User-Defined

@@ -1,0 +1,91 @@
+#include "./Project.xcconfig"
+
+// Architectures
+
+// Assets
+
+// Build Locations
+
+// Build Options
+DEBUG_INFORMATION_FORMAT = dwarf-with-dsym
+VALIDATE_PRODUCT = YES
+
+// Deployment
+
+// Headers
+
+// Kernel Module
+
+// Linking
+
+// Localization
+
+// Packaging
+
+// Search Paths
+
+// Signing
+
+// Testing
+
+// Text-Based APIs
+
+// Versioning
+
+// Apple LLVM 9.0 - Address Sanitizer
+
+// Apple LLVM 9.0 - Code Generation
+
+// Apple LLVM 9.0 - Custom Compiler Flags
+
+// Apple LLVM 9.0 - Language
+
+// Apple LLVM 9.0 - Language - C++
+
+// Apple LLVM 9.0 - Language - Modules
+
+// Apple LLVM 9.0 - Language - Objective C
+
+// Apple LLVM 9.0 - Preprocessing
+ENABLE_NS_ASSERTIONS = NO
+
+// Apple LLVM 9.0 - Undefined Behavior Sanitizer
+
+// Apple LLVM 9.0 - Warning Policies
+
+// Apple LLVM 9.0 - Warnings - All languages
+
+// Apple LLVM 9.0 - Warnings - C++
+
+// Apple LLVM 9.0 - Warnings - Objective C
+
+// Apple LLVM 9.0 - Warnings - Objective C and ARC
+
+// OSACompile - Build Options
+
+// Static Analyzer - Analysis Policy
+
+// Static Analyzer - Generic Issues
+
+// Static Analyzer - Issues - Apple APIs
+
+// Static Analyzer - Issues - Objective C
+
+// Static Analyzer - Issues - Security
+
+// Swift Compiler - Code Generation
+SWIFT_COMPILATION_MODE = wholemodule
+SWIFT_OPTIMIZATION_LEVEL = -O
+
+// Swift Compiler - Custom Flags
+
+// Swift Compiler - General
+
+// Swift Compiler - Language
+
+// Swift Compiler - Search Paths
+
+// Swift Compiler - Warnings Policies
+
+// User-Defined
+MTL_ENABLE_DEBUG_INFO = NO
