@@ -25,10 +25,18 @@ public struct ArrayTag {
 }
 
 extension ArrayTag: FunctorTag {
-    public static func fmap<A, B>(
+    public static func _fmap<A, B>(
         _ f: @escaping (A) -> B
     ) -> (KindApplication<ArrayTag, A>) -> KindApplication<ArrayTag, B> {
-        return [A].fmap(f)
+        return [A]._fmap(f)
+    }
+}
+
+extension ArrayTag: ApplyTag {
+    public static func _apply<A, B>(
+        _ fab: KindApplication<ArrayTag, (A) -> B>
+    ) -> (KindApplication<ArrayTag, A>) -> KindApplication<ArrayTag, B> {
+        return [(A) -> B]._apply(fab)
     }
 }
 
@@ -46,7 +54,23 @@ extension Array: K1 {
 }
 
 extension Array: Functor {
-    public static func fmap<T>(_ f: @escaping (Element) -> T) -> (K1Self) -> K1Other<T> {
+    public static func _fmap<T>(_ f: @escaping (Element) -> T) -> (K1Self) -> K1Other<T> {
         return [T].kind • { $0.map(f) } • [Element].unkind
     }
+}
+
+extension Array: Apply {
+    public static func _apply<A, B>(
+        _ fab: KindApplication<K1Tag, (A) -> B>
+    ) -> (KindApplication<K1Tag, A>) -> KindApplication<K1Tag, B> {
+        // TODO: Use fold when Foldable is available
+        return arrayKindFold(+) • curry(<&>)(fab) • curry(<&>)
+    }
+}
+
+// Temporary until generic Foldable is available
+private func arrayKindFold<A, B>(
+    _ f: @escaping ([B], A) -> [B]
+) -> (KindApplication<ArrayTag, A>) -> KindApplication<ArrayTag, B> {
+    return [B].kind • { $0.reduce([], f) } • [A].unkind
 }

@@ -63,3 +63,20 @@ public func id<A>(_ a: A) -> A {
 public func const<A, B>(_ b: B) -> (A) -> B {
     return { _ in b }
 }
+
+/// Given a function that takes a pair (A, B) and returns C, return a function that takes (A), then returns a function
+/// (B) -> C
+///
+/// - Parameter f: Function from pair (A, B) -> C
+/// - Returns: Curried function (A) -> (B) -> C
+public func curry<A, B, C>(_ f: @escaping (A, B) -> C) -> (A) -> (B) -> C {
+    return { a in { b in f(a, b) } }
+}
+
+/// Flip the order of arguments in a curried function
+///
+/// - Parameter f: Function in which the argument order should be flipped
+/// - Returns: Function with the order of the first two arguments flipped
+public func flip<A, B, C>(_ f: @escaping (A) -> (B) -> C) -> (B) -> (A) -> C {
+    return { b in { a in f(a)(b) } }
+}

@@ -25,7 +25,7 @@ public protocol FunctorTag {
     ///
     /// - Parameter f: Function to be mapped
     /// - Returns: A function from `(KindApplication<SelfTag, A>) -> KindApplication<SelfTag, B>`
-    static func fmap<A, B>(_ f: @escaping (A) -> B) -> (KindApplication<Self, A>) -> KindApplication<Self, B>
+    static func _fmap<A, B>(_ f: @escaping (A) -> B) -> (KindApplication<Self, A>) -> KindApplication<Self, B>
 }
 
 /// A parameterized type that can be mapped over. Requires one method, `fmap`, that given a function `(A) -> B` returns
@@ -36,7 +36,7 @@ public protocol Functor: K1 where K1Tag: FunctorTag {
     ///
     /// - Parameter f: Function to be mapped
     /// - Returns: A function from `(KindApplication<SelfTag, A>) -> KindApplication<SelfTag, B>`
-    static func fmap<T>(_ f: @escaping (K1Arg) -> T) -> (K1Self) -> K1Other<T>
+    static func _fmap<T>(_ f: @escaping (K1Arg) -> T) -> (K1Self) -> K1Other<T>
 }
 
 public extension Functor {
@@ -45,7 +45,7 @@ public extension Functor {
     ///
     /// - Parameter f: Function to be mapped
     /// - Returns: `Self<B>` result of passing self to the mapped function `(Self<A>) -> Self<B>`
-    func fmap<F: Functor>(_ f: @escaping (K1Arg) -> F.K1Arg) -> F where F.K1Tag == K1Tag {
+    func _fmap<F: Functor>(_ f: @escaping (K1Arg) -> F.K1Arg) -> F where F.K1Tag == K1Tag {
         return f <^> self
     }
 }
@@ -59,7 +59,7 @@ public extension Functor {
 ///   - fa: `F<A>` value to pass to the mapped function
 /// - Returns: `F<B>` result of passing `F<A>` to the mapped function `(F<A>) -> F<B>`
 public func <^> <F: Functor, G: Functor>(_ f: @escaping (F.K1Arg) -> G.K1Arg, _ fa: F) -> G where F.K1Tag == G.K1Tag {
-    return G.unkind • F.fmap(f) <| fa.kind
+    return G.unkind • F._fmap(f) <| fa.kind
 }
 
 /// Maps a function `(A) -> B` to `(F<A>) -> KindApplication<FTag, B>`
@@ -70,7 +70,7 @@ public func <^> <F: Functor, G: Functor>(_ f: @escaping (F.K1Arg) -> G.K1Arg, _ 
 /// - Returns: `KindApplication<FTag, B>` result of passing `F<A>` to the mapped function
 /// `(F<A>) -> KindApplication<FTag, B>`
 public func <^> <F: Functor, B>(_ f: @escaping (F.K1Arg) -> B, _ fa: F) -> KindApplication<F.K1Tag, B> {
-    return F.fmap(f) <| fa.kind
+    return F._fmap(f) <| fa.kind
 }
 
 /// Maps a function `(A) -> B` to `(KindApplication<FTag, A>) -> F<B>`
@@ -81,7 +81,7 @@ public func <^> <F: Functor, B>(_ f: @escaping (F.K1Arg) -> B, _ fa: F) -> KindA
 /// - Returns: `F<B>` result of passing `KindApplication<FTag, A>` to the mapped function
 /// `KindApplication<FTag, A>) -> F<B>`
 public func <^> <A, G: Functor>(_ f: @escaping (A) -> G.K1Arg, _ fa: KindApplication<G.K1Tag, A>) -> G {
-    return G.unkind • G.K1Tag.fmap(f) <| fa
+    return G.unkind • G.K1Tag._fmap(f) <| fa
 }
 
 /// Maps a function `(A) -> B` to `(KindApplication<FTag, A>) -> KindApplication<FTag, B>`
@@ -95,7 +95,7 @@ public func <^> <FTag: FunctorTag, A, B>(
     _ f: @escaping (A) -> B,
     _ fa: KindApplication<FTag, A>
 ) -> KindApplication<FTag, B> {
-    return FTag.fmap(f) <| fa
+    return FTag._fmap(f) <| fa
 }
 
 /// Maps a function `(A) -> B` to `(F<A>) -> F<B>`
@@ -113,7 +113,7 @@ public func fmap <F: Functor, G: Functor>(_ f: @escaping (F.K1Arg) -> G.K1Arg) -
 ///   - f: Function to be mapped
 /// - Returns: Mapped function `(F<A>) -> KindApplication<FTag, B>`
 public func fmap<F: Functor, B>(_ f: @escaping (F.K1Arg) -> B) -> (F) -> KindApplication<F.K1Tag, B> {
-    return { F.fmap(f) <| $0.kind }
+    return { F._fmap(f) <| $0.kind }
 }
 
 /// Maps a function `(A) -> B` to `(KindApplication<FTag, A>) -> F<B>`
@@ -122,10 +122,21 @@ public func fmap<F: Functor, B>(_ f: @escaping (F.K1Arg) -> B) -> (F) -> KindApp
 ///   - f: Function to be mapped
 /// - Returns: Mapped function `(KindApplication<FTag, A>) -> F<B>`
 public func fmap<A, G: Functor>(_ f: @escaping (A) -> G.K1Arg) -> (KindApplication<G.K1Tag, A>) -> G {
-    return G.unkind • G.K1Tag.fmap(f)
+    return G.unkind • G.K1Tag._fmap(f)
 }
 
-// MARK: flipMap | <&>
+/// Maps a function `(A) -> B` to `(KindApplication<FTag, A>) -> KindApplication<FTag, B>`
+///
+/// - Parameters:
+///   - f: Function to be mapped
+/// - Returns: Mapped function `(KindApplication<FTag, A>) -> KindApplication<FTag, B>`
+public func fmap<FTag: FunctorTag, A, B>(
+    _ f: @escaping (A) -> B
+) -> (KindApplication<FTag, A>) -> KindApplication<FTag, B> {
+    return FTag._fmap(f)
+}
+
+// MARK: mapFlipped | <&>
 
 /// Flipped version of `<^>`
 ///

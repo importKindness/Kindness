@@ -20,17 +20,27 @@ import Kindness
 
 class ArrayTests: XCTestCase {
     func testFunctorPreservesIdentity() {
-        property("functor preserves identity") <- forAll { (xs: [Int]) in
+        property("functor preserves identity") <- forAll { (xs: [Int8]) in
             return (id <^> xs) == (id <| xs)
         }
     }
 
     func testFunctorPreservesComposition() {
         property("functor preserves composition")
-            <- forAll { (xs: [Int], fArrow: ArrowOf<Int, UInt>, gArrow: ArrowOf<UInt, String>) in
+            <- forAll { (xs: [Int8], fArrow: ArrowOf<Int8, Int8>, gArrow: ArrowOf<Int8, Int8>) in
                 let f = fArrow.getArrow
                 let g = gArrow.getArrow
                 return (g • f <^> xs) == (fmap(g) • fmap(f) <| xs)
+            }
+    }
+
+    func testApplyHasAssociativeComposition() {
+        property("apply has associative composition")
+            <- forAll { (fArrows: [ArrowOf<Int8, Int8>], gArrows: [ArrowOf<Int8, Int8>], h: [Int8]) in
+                let f = fArrows.map { $0.getArrow }
+                let g = gArrows.map { $0.getArrow }
+
+                return (curry(•) <^> f <*> g <*> h) == (f <*> (g <*> h))
             }
     }
 }
