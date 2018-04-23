@@ -617,7 +617,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if command -v swiftlint >/dev/null; then\n    swiftlint lint --path \"${SRCROOT}/Sources\" --config \"${SRCROOT}/.swiftlint.yml\"\n    SWIFTLINT_EXIT=$?\n    touch \"${DERIVED_FILE_DIR}/SWIFTLINT_RAN_IOS_FRAMEWORK\"\n    exit $SWIFTLINT_EXIT\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n    touch \"${DERIVED_FILE_DIR}/SWIFTLINT_RAN_IOS_FRAMEWORK\"\nfi\n";
+			shellScript = "if [ \"$CI\" = true ] ; then\n    echo \"Deferring to Danger for swiftlint on CI\"\nelif command -v swiftlint >/dev/null; then\n    swiftlint lint --path \"${SRCROOT}/Sources\" --config \"${SRCROOT}/.swiftlint.yml\"\n    SWIFTLINT_EXIT=$?\n    touch \"${DERIVED_FILE_DIR}/SWIFTLINT_RAN_IOS_FRAMEWORK\"\n    exit $SWIFTLINT_EXIT\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n    touch \"${DERIVED_FILE_DIR}/SWIFTLINT_RAN_IOS_FRAMEWORK\"\nfi\n";
 		};
 		417196BF208C144700E96BD6 /* Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -634,7 +634,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if command -v swiftlint >/dev/null; then\n    swiftlint lint --path \"${SRCROOT}/Tests\" --config \"${SRCROOT}/.swiftlint.yml\"\n    SWIFTLINT_EXIT=$?\n    touch \"${DERIVED_FILE_DIR}/SWIFTLINT_RAN_IOS_TESTS\"\n    exit $SWIFTLINT_EXIT\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n    touch \"${DERIVED_FILE_DIR}/SWIFTLINT_RAN_IOS_TESTS\"\nfi";
+			shellScript = "if [ \"$CI\" = true ] ; then\n    echo \"Deferring to Danger for swiftlint on CI\"\nelif command -v swiftlint >/dev/null; then\n    swiftlint lint --path \"${SRCROOT}/Tests\" --config \"${SRCROOT}/.swiftlint.yml\"\n    SWIFTLINT_EXIT=$?\n    touch \"${DERIVED_FILE_DIR}/SWIFTLINT_RAN_IOS_TESTS\"\n    exit $SWIFTLINT_EXIT\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n    touch \"${DERIVED_FILE_DIR}/SWIFTLINT_RAN_IOS_TESTS\"\nfi";
 		};
 		417196C0208C14B900E96BD6 /* Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -651,7 +651,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if command -v swiftlint >/dev/null; then\n    swiftlint lint --path \"${SRCROOT}/Sources\" --config \"${SRCROOT}/.swiftlint.yml\"\n    SWIFTLINT_EXIT=$?\n    touch \"${DERIVED_FILE_DIR}/SWIFTLINT_RAN_OSX_FRAMEWORK\"\n    exit $SWIFTLINT_EXIT\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n    touch \"${DERIVED_FILE_DIR}/SWIFTLINT_RAN_OSX_FRAMEWORK\"\nfi";
+			shellScript = "if [ \"$CI\" = true ] ; then\n    echo \"Deferring to Danger for swiftlint on CI\"\nelif command -v swiftlint >/dev/null; then\n    swiftlint lint --path \"${SRCROOT}/Sources\" --config \"${SRCROOT}/.swiftlint.yml\"\n    SWIFTLINT_EXIT=$?\n    touch \"${DERIVED_FILE_DIR}/SWIFTLINT_RAN_OSX_FRAMEWORK\"\n    exit $SWIFTLINT_EXIT\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n    touch \"${DERIVED_FILE_DIR}/SWIFTLINT_RAN_OSX_FRAMEWORK\"\nfi";
 		};
 		417196C1208C151600E96BD6 /* Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -668,7 +668,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"${BUILT_PRODUCTS_DIR}/${FULL_PRODUCT_NAME}/Contents/MacOS/${PRODUCT_NAME}\"\n\nif command -v swiftlint >/dev/null; then\n    swiftlint lint --path \"${SRCROOT}/Tests\" --config \"${SRCROOT}/.swiftlint.yml\"\n    SWIFTLINT_EXIT=$?\n    touch \"${DERIVED_FILE_DIR}/SWIFTLINT_RAN_OSX_TESTS\"\n    exit $SWIFTLINT_EXIT\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n    touch \"${DERIVED_FILE_DIR}/SWIFTLINT_RAN_OSX_TESTS\"\nfi";
+			shellScript = "if [ \"$CI\" = true ] ; then\n    echo \"Deferring to Danger for swiftlint on CI\"\nelif command -v swiftlint >/dev/null; then\n    swiftlint lint --path \"${SRCROOT}/Tests\" --config \"${SRCROOT}/.swiftlint.yml\"\n    SWIFTLINT_EXIT=$?\n    touch \"${DERIVED_FILE_DIR}/SWIFTLINT_RAN_OSX_TESTS\"\n    exit $SWIFTLINT_EXIT\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n    touch \"${DERIVED_FILE_DIR}/SWIFTLINT_RAN_OSX_TESTS\"\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 

@@ -114,12 +114,16 @@ excluded:
   - Carthage
   - Package
 
-force_cast: error
-force_try: error
-force_unwrapping: error
-implicitly_unwrapped_optional: error
+force_cast: 
+  severity: error
+force_try:
+  severity: error
+force_unwrapping:
+  severity: error
+implicitly_unwrapped_optional: 
+  severity: error
 line_length:
-  - warning: 120
+  ignores_urls: true
 type_body_length:
-  - warning: 500
-  - error: 1000
+  warning: 500
+  error: 1000
