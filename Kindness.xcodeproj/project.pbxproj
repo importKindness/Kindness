@@ -109,6 +109,7 @@
 		4160CE40208A964300D0BBA2 /* Precedence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Precedence.swift; sourceTree = "<group>"; };
 		4160CE44208AA3C100D0BBA2 /* ArrayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayTests.swift; sourceTree = "<group>"; };
 		4160CE47208AA3F200D0BBA2 /* SwiftCheck.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftCheck.framework; path = Carthage/Build/iOS/SwiftCheck.framework; sourceTree = "<group>"; };
+		41AB23D6208E10C000A2C722 /* ensureNoProjectBuildSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ensureNoProjectBuildSettings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -241,6 +242,7 @@
 		414D8455208A5D7600C52931 /* Scripts */ = {
 			isa = PBXGroup;
 			children = (
+				41AB23D6208E10C000A2C722 /* ensureNoProjectBuildSettings.swift */,
 			);
 			path = Scripts;
 			sourceTree = "<group>";
@@ -382,6 +384,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 414D841E208A5BB800C52931 /* Build configuration list for PBXNativeTarget "Kindness-iOS" */;
 			buildPhases = (
+				41572E96208E1E3F004095EC /* Ensure XCConfig */,
 				414D8405208A5BB800C52931 /* Sources */,
 				414D8406208A5BB800C52931 /* Frameworks */,
 				414D8407208A5BB800C52931 /* Headers */,
@@ -401,6 +404,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 414D8421208A5BB800C52931 /* Build configuration list for PBXNativeTarget "KindnessTests-iOS" */;
 			buildPhases = (
+				41572E97208E1ED2004095EC /* Ensure XCConfig */,
 				414D840F208A5BB800C52931 /* Sources */,
 				414D8410208A5BB800C52931 /* Frameworks */,
 				414D8411208A5BB800C52931 /* Resources */,
@@ -421,6 +425,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 414D843E208A5C5400C52931 /* Build configuration list for PBXNativeTarget "Kindness-OSX" */;
 			buildPhases = (
+				41572E98208E1EDF004095EC /* Ensure XCConfig */,
 				414D8424208A5C5300C52931 /* Sources */,
 				414D8425208A5C5300C52931 /* Frameworks */,
 				414D8426208A5C5300C52931 /* Headers */,
@@ -440,6 +445,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 414D843F208A5C5400C52931 /* Build configuration list for PBXNativeTarget "KindnessTests-OSX" */;
 			buildPhases = (
+				41572E99208E1EEB004095EC /* Ensure XCConfig */,
 				414D842D208A5C5400C52931 /* Sources */,
 				414D842E208A5C5400C52931 /* Frameworks */,
 				414D842F208A5C5400C52931 /* Resources */,
@@ -532,6 +538,70 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		41572E96208E1E3F004095EC /* Ensure XCConfig */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(PROJECT_FILE_PATH)/project.pbxproj",
+			);
+			name = "Ensure XCConfig";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/XCCONFIG_CHECK_RAN_$(TARGET_NAME)",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Scripts/ensureNoProjectBuildSettings.swift\" \"${PROJECT_FILE_PATH}/project.pbxproj\" \"${TARGET_NAME}\"\nSTATUS_CODE=$?\ntouch \"${DERIVED_FILE_DIR}/XCCONFIG_CHECK_RAN_${TARGET_NAME}\"\nexit ${STATUS_CODE}";
+		};
+		41572E97208E1ED2004095EC /* Ensure XCConfig */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(PROJECT_FILE_PATH)/project.pbxproj",
+			);
+			name = "Ensure XCConfig";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/XCCONFIG_CHECK_RAN_$(TARGET_NAME)",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Scripts/ensureNoProjectBuildSettings.swift\" \"${PROJECT_FILE_PATH}/project.pbxproj\" \"${TARGET_NAME}\"\nSTATUS_CODE=$?\ntouch \"${DERIVED_FILE_DIR}/XCCONFIG_CHECK_RAN_${TARGET_NAME}\"\nexit ${STATUS_CODE}";
+		};
+		41572E98208E1EDF004095EC /* Ensure XCConfig */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(PROJECT_FILE_PATH)/project.pbxproj",
+			);
+			name = "Ensure XCConfig";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/XCCONFIG_CHECK_RAN_$(TARGET_NAME)",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Scripts/ensureNoProjectBuildSettings.swift\" \"${PROJECT_FILE_PATH}/project.pbxproj\" \"${TARGET_NAME}\"\nSTATUS_CODE=$?\ntouch \"${DERIVED_FILE_DIR}/XCCONFIG_CHECK_RAN_${TARGET_NAME}\"\nexit ${STATUS_CODE}";
+		};
+		41572E99208E1EEB004095EC /* Ensure XCConfig */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(PROJECT_FILE_PATH)/project.pbxproj",
+			);
+			name = "Ensure XCConfig";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/XCCONFIG_CHECK_RAN_$(TARGET_NAME)",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Scripts/ensureNoProjectBuildSettings.swift\" \"${PROJECT_FILE_PATH}/project.pbxproj\" \"${TARGET_NAME}\"\nSTATUS_CODE=$?\ntouch \"${DERIVED_FILE_DIR}/XCCONFIG_CHECK_RAN_${TARGET_NAME}\"\nexit ${STATUS_CODE}";
+		};
 		417196BE208C084500E96BD6 /* Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
