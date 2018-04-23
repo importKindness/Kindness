@@ -55,3 +55,11 @@ public func <| <A, B> (_ f: (A) -> B, _ a: A) -> B {
 public func id<A>(_ a: A) -> A {
     return a
 }
+
+/// Given a value `b`, return a function that ignores its input and always returns `b`.
+///
+/// - Parameter b: Value the resulting function should always return
+/// - Returns: A function that always returns `b`
+public func const<A, B>(_ b: B) -> (A) -> B {
+    return { _ in b }
+}
