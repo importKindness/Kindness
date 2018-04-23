@@ -25,10 +25,10 @@ public struct ArrayTag {
 }
 
 extension ArrayTag: FunctorTag {
-    public static func _fmap<A, B>(
+    public static func fmap<A, B>(
         _ f: @escaping (A) -> B
     ) -> (KindApplication<ArrayTag, A>) -> KindApplication<ArrayTag, B> {
-        return [A]._fmap(f)
+        return [A].fmap(f)
     }
 }
 
@@ -46,7 +46,7 @@ extension Array: K1 {
 }
 
 extension Array: Functor {
-    public static func _fmap<T>(_ f: @escaping (Element) -> T) -> (K1Self) -> K1Other<T> {
+    public static func fmap<T>(_ f: @escaping (Element) -> T) -> (K1Self) -> K1Other<T> {
         return [T].kind • { $0.map(f) } • [Element].unkind
     }
 }
