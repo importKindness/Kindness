@@ -45,6 +45,20 @@ class ArrayTests: XCTestCase {
             }
     }
 
+    func testAppendingToMemptyReturnsAppendedValue() {
+        property("appending to mempty returns the appended value")
+            <- forAll { (xs: [Int8]) in
+                return .mempty <> xs == xs
+            }
+    }
+
+    func testAppendingMemptyReturnsOriginalValue() {
+        property("appending mempty returns original value")
+            <- forAll { (xs: [Int8]) in
+                return xs <> .mempty == xs
+            }
+    }
+
     func testSemigroupBinaryOpIsAssociative() {
         property("semigroup binary op is associative")
             <- forAll { (x: [Int8], y: [Int8], z: [Int8]) in

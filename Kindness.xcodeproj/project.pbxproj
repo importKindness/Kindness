@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		4102538E209133DF00769002 /* Semigroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4102538D209133DF00769002 /* Semigroup.swift */; };
 		4102538F209133DF00769002 /* Semigroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4102538D209133DF00769002 /* Semigroup.swift */; };
+		410253912091388500769002 /* Monoid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410253902091388500769002 /* Monoid.swift */; };
+		410253922091388500769002 /* Monoid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410253902091388500769002 /* Monoid.swift */; };
+		4102539420913BE500769002 /* MonoidTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4102539320913BE500769002 /* MonoidTests.swift */; };
+		4102539520913BE500769002 /* MonoidTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4102539320913BE500769002 /* MonoidTests.swift */; };
 		412A7D22208E594C00581C76 /* Apply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412A7D21208E594C00581C76 /* Apply.swift */; };
 		412A7D23208E594C00581C76 /* Apply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412A7D21208E594C00581C76 /* Apply.swift */; };
 		414D8414208A5BB800C52931 /* Kindness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 414D840A208A5BB800C52931 /* Kindness.framework */; };
@@ -77,6 +81,8 @@
 
 /* Begin PBXFileReference section */
 		4102538D209133DF00769002 /* Semigroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Semigroup.swift; sourceTree = "<group>"; };
+		410253902091388500769002 /* Monoid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Monoid.swift; sourceTree = "<group>"; };
+		4102539320913BE500769002 /* MonoidTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonoidTests.swift; sourceTree = "<group>"; };
 		412A7D21208E594C00581C76 /* Apply.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Apply.swift; sourceTree = "<group>"; };
 		414D840A208A5BB800C52931 /* Kindness.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Kindness.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		414D8413208A5BB800C52931 /* KindnessTests_iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KindnessTests_iOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -354,6 +360,7 @@
 				4160CE36208A900100D0BBA2 /* Array.swift */,
 				4160CE33208A8F3700D0BBA2 /* Functor.swift */,
 				4160CE3D208A95B200D0BBA2 /* Function.swift */,
+				410253902091388500769002 /* Monoid.swift */,
 				4102538D209133DF00769002 /* Semigroup.swift */,
 			);
 			path = Data;
@@ -372,6 +379,7 @@
 			isa = PBXGroup;
 			children = (
 				4160CE44208AA3C100D0BBA2 /* ArrayTests.swift */,
+				4102539320913BE500769002 /* MonoidTests.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -699,6 +707,7 @@
 				4160CE3B208A90CF00D0BBA2 /* Hole.swift in Sources */,
 				414D8488208A849D00C52931 /* Kinds.swift in Sources */,
 				4102538E209133DF00769002 /* Semigroup.swift in Sources */,
+				410253912091388500769002 /* Monoid.swift in Sources */,
 				4160CE34208A8F3700D0BBA2 /* Functor.swift in Sources */,
 				4160CE3E208A95B200D0BBA2 /* Function.swift in Sources */,
 			);
@@ -709,6 +718,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4160CE45208AA3C100D0BBA2 /* ArrayTests.swift in Sources */,
+				4102539420913BE500769002 /* MonoidTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -722,6 +732,7 @@
 				4160CE3C208A90CF00D0BBA2 /* Hole.swift in Sources */,
 				414D8489208A849D00C52931 /* Kinds.swift in Sources */,
 				4102538F209133DF00769002 /* Semigroup.swift in Sources */,
+				410253922091388500769002 /* Monoid.swift in Sources */,
 				4160CE35208A8F3700D0BBA2 /* Functor.swift in Sources */,
 				4160CE3F208A95B200D0BBA2 /* Function.swift in Sources */,
 			);
@@ -732,6 +743,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4160CE46208AA3C100D0BBA2 /* ArrayTests.swift in Sources */,
+				4102539520913BE500769002 /* MonoidTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

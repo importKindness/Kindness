@@ -68,6 +68,12 @@ extension Array: Functor {
     }
 }
 
+extension Array: Monoid {
+    public static var mempty: [Element] {
+        return []
+    }
+}
+
 extension Array: Semigroup {
     public static func <> (lhs: [Element], rhs: [Element]) -> [Element] {
         return lhs + rhs

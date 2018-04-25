@@ -12,8 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-infix operator <>: AdditionPrecedence
+import XCTest
 
-public protocol Semigroup {
-    static func <> (_ lhs: Self, _ rhs: Self) -> Self
+import SwiftCheck
+
+import Kindness
+
+class MonoidTests: XCTestCase {
+    func testPowerRepeatsMonoidProvidedNumberOfTimes() {
+        property("power repeats a provided monoid provided number of times")
+            <- forAll { (times: UInt8, xs: [UInt8]) in
+                return power(xs, times) == (0..<times).map(const(xs)).reduce([], +)
+            }
+    }
 }
