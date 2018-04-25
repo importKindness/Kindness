@@ -19,10 +19,21 @@ import SwiftCheck
 import Kindness
 
 class ArrayTests: XCTestCase {
+    func testApplyHasAssociativeComposition() {
+        property("apply has associative composition")
+            <- forAll { (fArrows: [ArrowOf<Int8, Int8>], gArrows: [ArrowOf<Int8, Int8>], h: [Int8]) in
+                let f = fArrows.map { $0.getArrow }
+                let g = gArrows.map { $0.getArrow }
+
+                return (curry(•) <^> f <*> g <*> h) == (f <*> (g <*> h))
+            }
+    }
+
     func testFunctorPreservesIdentity() {
-        property("functor preserves identity") <- forAll { (xs: [Int8]) in
-            return (id <^> xs) == (id <| xs)
-        }
+        property("functor preserves identity")
+            <- forAll { (xs: [Int8]) in
+                return (id <^> xs) == (id <| xs)
+            }
     }
 
     func testFunctorPreservesComposition() {
@@ -34,13 +45,10 @@ class ArrayTests: XCTestCase {
             }
     }
 
-    func testApplyHasAssociativeComposition() {
-        property("apply has associative composition")
-            <- forAll { (fArrows: [ArrowOf<Int8, Int8>], gArrows: [ArrowOf<Int8, Int8>], h: [Int8]) in
-                let f = fArrows.map { $0.getArrow }
-                let g = gArrows.map { $0.getArrow }
-
-                return (curry(•) <^> f <*> g <*> h) == (f <*> (g <*> h))
+    func testSemigroupBinaryOpIsAssociative() {
+        property("semigroup binary op is associative")
+            <- forAll { (x: [Int8], y: [Int8], z: [Int8]) in
+                return (x <> y) <> z == x <> (y <> z)
             }
     }
 }
