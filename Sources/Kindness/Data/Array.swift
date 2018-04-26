@@ -24,6 +24,12 @@ public struct ArrayTag {
     }
 }
 
+extension ArrayTag: ApplicativeTag {
+    public static func _pure<A>(_ a: A) -> KindApplication<ArrayTag, A> {
+        return [A]._pure(a)
+    }
+}
+
 extension ArrayTag: ApplyTag {
     public static func _apply<A, B>(
         _ fab: KindApplication<ArrayTag, (A) -> B>
@@ -53,6 +59,12 @@ extension Array: K1 {
     }
 }
 
+extension Array: Applicative {
+    public static func _pure(_ a: K1Arg) -> KindApplication<K1Tag, K1Arg> {
+        return [a].kind
+    }
+}
+
 extension Array: Apply {
     public static func _apply<A, B>(
         _ fab: KindApplication<K1Tag, (A) -> B>
@@ -67,7 +79,7 @@ extension Array: Apply {
 }
 
 extension Array: Foldable, FoldableByFoldL {
-    public static func _foldl<B>(_ f: @escaping (B, Element) -> B) -> (B) -> (Array<Element>) -> B {
+    public static func _foldl<B>(_ f: @escaping (B, Element) -> B) -> (B) -> ([Element]) -> B {
         return { b in
             return { xs in
                 return xs.reduce(b, f)

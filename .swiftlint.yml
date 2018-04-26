@@ -88,7 +88,6 @@ whitelist_rules:
   - switch_case_alignment
   - switch_case_on_newline
   - syntactic_sugar
-  - trailing_closure
   - trailing_comma
   - trailing_newline
   - trailing_semicolon

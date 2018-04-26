@@ -19,6 +19,39 @@ import SwiftCheck
 import Kindness
 
 class ArrayTests: XCTestCase {
+    func testApplicativePreservesIdentity() {
+        property("applicative preserves identity")
+            <- forAll { (xs: [Int8]) in
+                return (pure(id) <*> xs) == xs
+            }
+    }
+
+    func testApplicativePreservesComposition() {
+        property("applicative preserves composition")
+            <- forAll { (fArrows: [ArrowOf<Int8, Int8>], gArrows: [ArrowOf<Int8, Int8>], h: [Int8]) in
+                let f = fArrows.map { $0.getArrow }
+                let g = gArrows.map { $0.getArrow }
+
+                return (pure(curry(•)) <*> f <*> g <*> h) == (f <*> (g <*> h))
+            }
+    }
+
+    func testApplicativeHomomorphismLaw() {
+        property("applying pure(f) to pure(x) is the same as pure(f(x))")
+            <- forAll { (fArrow: ArrowOf<Int8, Int8>, x: Int8) in
+                let f = fArrow.getArrow
+                return (pure(f) <*> (pure(x) as [Int8])) == pure(f(x))
+            }
+    }
+
+    func testApplicativeInterchangeLaw() {
+        property("applying a morphism to a pure value is the same as applying pure($value) to the morphism")
+            <- forAll { (fArrows: [ArrowOf<Int8, Int8>], x: Int8) in
+                let f = fArrows.map { $0.getArrow }
+                return (f <*> pure(x)) == (pure(curry(|>)(x)) <*> f)
+            }
+    }
+
     func testApplyHasAssociativeComposition() {
         property("apply has associative composition")
             <- forAll { (fArrows: [ArrowOf<Int8, Int8>], gArrows: [ArrowOf<Int8, Int8>], h: [Int8]) in

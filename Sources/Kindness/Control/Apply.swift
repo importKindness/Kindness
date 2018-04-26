@@ -382,8 +382,6 @@ public func applyFirst<A, G: Apply>(_ f: KindApplication<G.K1Tag, A>) -> (G) -> 
     return curry(<*) <| f
 }
 
-
-
 /// Combine two actions while keeping the result on the left
 ///
 /// - Parameters:
