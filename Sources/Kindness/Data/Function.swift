@@ -24,7 +24,7 @@ public func •<A, B, C>(_ g: @escaping (B) -> C, _ f: @escaping (A) -> B) -> (A
     return { g(f($0)) }
 }
 
-infix operator |>: ApplyPrecedenceLeft
+infix operator |>: ApplyPrecedence
 
 /// Applies the argument on the left to the function on the right
 ///
@@ -36,7 +36,7 @@ public func |> <A, B> (_ a: A, _ f: (A) -> B) -> B {
     return f(a)
 }
 
-infix operator <|: ApplyPrecedenceRight
+infix operator <|: ApplyPrecedence
 
 /// Applies the argument on the right to the function on the left
 ///
@@ -64,13 +64,21 @@ public func const<A, B>(_ b: B) -> (A) -> B {
     return { _ in b }
 }
 
-/// Given a function that takes a pair (A, B) and returns C, return a function that takes (A), then returns a function
-/// (B) -> C
+/// Given a function that takes a pair `(A, B)` and returns `C`, return a function that takes `A`, then returns a
+/// function `(B) -> C`.
 ///
 /// - Parameter f: Function from pair (A, B) -> C
 /// - Returns: Curried function (A) -> (B) -> C
 public func curry<A, B, C>(_ f: @escaping (A, B) -> C) -> (A) -> (B) -> C {
     return { a in { b in f(a, b) } }
+}
+
+/// Given a function that takes `A `and returns a function `(B) -> C`, returns a function `(A, B) -> C`.
+///
+/// - Parameter f: Curried function `(A) -> (B) -> C`
+/// - Returns: Uncurried function `(A, B) -> C`
+public func uncurry<A, B, C>(_ f: @escaping (A) -> (B) -> C) -> (A, B) -> C {
+    return { a, b in f(a)(b) }
 }
 
 /// Flip the order of arguments in a curried function
@@ -79,4 +87,12 @@ public func curry<A, B, C>(_ f: @escaping (A, B) -> C) -> (A) -> (B) -> C {
 /// - Returns: Function with the order of the first two arguments flipped
 public func flip<A, B, C>(_ f: @escaping (A) -> (B) -> C) -> (B) -> (A) -> C {
     return { b in { a in f(a)(b) } }
+}
+
+/// Flip the order of arguments in an uncurried function
+///
+/// - Parameter f: Function in which the argument order should be flipped
+/// - Returns: Function with the order of the two arguments flipped
+public func flip<A, B, C>(_ f: @escaping (A, B) -> C) -> (B, A) -> C {
+    return { b, a in f(a, b) }
 }

@@ -30,17 +30,11 @@ precedencegroup FunctorPrecedence {
 
 precedencegroup MonadPrecedence {
     lowerThan: LogicalDisjunctionPrecedence
-    higherThan: ApplyPrecedenceRight
+    higherThan: ApplyPrecedence
     associativity: left
 }
 
-precedencegroup ApplyPrecedenceRight {
+precedencegroup ApplyPrecedence {
     lowerThan: LogicalDisjunctionPrecedence
-    higherThan: ApplyPrecedenceLeft
     associativity: right
-}
-
-precedencegroup ApplyPrecedenceLeft {
-    lowerThan: LogicalDisjunctionPrecedence
-    associativity: left
 }

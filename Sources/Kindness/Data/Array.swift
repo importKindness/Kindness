@@ -56,9 +56,23 @@ extension Array: K1 {
 extension Array: Apply {
     public static func _apply<A, B>(
         _ fab: KindApplication<K1Tag, (A) -> B>
-        ) -> (KindApplication<K1Tag, A>) -> KindApplication<K1Tag, B> {
-        // TODO: Use fold when Foldable is available
-        return arrayKindFold(+) • curry(<&>)(fab) • curry(<&>)
+    ) -> (KindApplication<K1Tag, A>) -> KindApplication<K1Tag, B> {
+        let fs = [(A) -> B].unkind(fab)
+        return { kxs in
+            return [A].unkind(kxs).flatMap({ x in
+                return fs.map({ $0 <| x })
+            }).kind
+        }
+    }
+}
+
+extension Array: Foldable, FoldableByFoldL {
+    public static func _foldl<B>(_ f: @escaping (B, Element) -> B) -> (B) -> (Array<Element>) -> B {
+        return { b in
+            return { xs in
+                return xs.reduce(b, f)
+            }
+        }
     }
 }
 
@@ -78,11 +92,4 @@ extension Array: Semigroup {
     public static func <> (lhs: [Element], rhs: [Element]) -> [Element] {
         return lhs + rhs
     }
-}
-
-// Temporary until generic Foldable is available
-private func arrayKindFold<A, B>(
-    _ f: @escaping ([B], A) -> [B]
-) -> (KindApplication<ArrayTag, A>) -> KindApplication<ArrayTag, B> {
-    return [B].kind • { $0.reduce([], f) } • [A].unkind
 }

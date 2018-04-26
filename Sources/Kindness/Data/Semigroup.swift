@@ -14,6 +14,13 @@
 
 infix operator <>: AdditionPrecedence
 
+/// A type with an associative binary operation
 public protocol Semigroup {
+    /// Append the value on the right to the value on the left
+    ///
+    /// - Parameters:
+    ///   - lhs: Value to which `rhs` should be appended
+    ///   - rhs: Value to append to `lhs`
+    /// - Returns: Result of appending `rhs` to `lhs`
     static func <> (_ lhs: Self, _ rhs: Self) -> Self
 }

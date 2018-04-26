@@ -35,6 +35,8 @@
 		4160CE48208AA3F300D0BBA2 /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4160CE47208AA3F200D0BBA2 /* SwiftCheck.framework */; };
 		4160CE4A208AA63000D0BBA2 /* SwiftCheck.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4160CE47208AA3F200D0BBA2 /* SwiftCheck.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4160CE4D208AA65900D0BBA2 /* SwiftCheck.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4160CE2C208A8D9300D0BBA2 /* SwiftCheck.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		418D969620924CE600102A31 /* Foldable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418D969520924CE600102A31 /* Foldable.swift */; };
+		418D969720924CE600102A31 /* Foldable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418D969520924CE600102A31 /* Foldable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +123,7 @@
 		4160CE40208A964300D0BBA2 /* Precedence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Precedence.swift; sourceTree = "<group>"; };
 		4160CE44208AA3C100D0BBA2 /* ArrayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayTests.swift; sourceTree = "<group>"; };
 		4160CE47208AA3F200D0BBA2 /* SwiftCheck.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftCheck.framework; path = Carthage/Build/iOS/SwiftCheck.framework; sourceTree = "<group>"; };
+		418D969520924CE600102A31 /* Foldable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Foldable.swift; sourceTree = "<group>"; };
 		41AB23D6208E10C000A2C722 /* ensureNoProjectBuildSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ensureNoProjectBuildSettings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -358,6 +361,7 @@
 			isa = PBXGroup;
 			children = (
 				4160CE36208A900100D0BBA2 /* Array.swift */,
+				418D969520924CE600102A31 /* Foldable.swift */,
 				4160CE33208A8F3700D0BBA2 /* Functor.swift */,
 				4160CE3D208A95B200D0BBA2 /* Function.swift */,
 				410253902091388500769002 /* Monoid.swift */,
@@ -701,6 +705,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				418D969620924CE600102A31 /* Foldable.swift in Sources */,
 				4160CE37208A900100D0BBA2 /* Array.swift in Sources */,
 				4160CE41208A964300D0BBA2 /* Precedence.swift in Sources */,
 				412A7D22208E594C00581C76 /* Apply.swift in Sources */,
@@ -726,6 +731,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				418D969720924CE600102A31 /* Foldable.swift in Sources */,
 				4160CE38208A900100D0BBA2 /* Array.swift in Sources */,
 				4160CE42208A964300D0BBA2 /* Precedence.swift in Sources */,
 				412A7D23208E594C00581C76 /* Apply.swift in Sources */,
