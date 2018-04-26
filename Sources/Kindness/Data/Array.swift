@@ -27,7 +27,7 @@ public struct ArrayTag {
 extension ArrayTag: ApplyTag {
     public static func _apply<A, B>(
         _ fab: KindApplication<ArrayTag, (A) -> B>
-        ) -> (KindApplication<ArrayTag, A>) -> KindApplication<ArrayTag, B> {
+    ) -> (KindApplication<ArrayTag, A>) -> KindApplication<ArrayTag, B> {
         return [(A) -> B]._apply(fab)
     }
 }
