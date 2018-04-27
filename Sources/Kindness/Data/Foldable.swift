@@ -93,6 +93,8 @@ public protocol Foldable: K1 where K1Tag: FoldableTag {
     static func _foldMap<M: Monoid>(_ f: @escaping (K1Arg) -> M) -> (KindApplication<K1Tag, K1Arg>) -> M
 }
 
+// MARK: foldr
+
 /// Fold from right to left
 ///
 /// - Parameter f: Function to perform each step of the fold
@@ -149,6 +151,8 @@ public func foldr<FTag: FoldableTag, A, B>(_ f: @escaping (A, B) -> B, _ b: B) -
     return FTag._foldr(f) <| b
 }
 
+// MARK: foldl
+
 /// Fold from left to right
 ///
 /// - Parameter f: Function to perform each step of the fold
@@ -204,6 +208,8 @@ public func foldl<FTag: FoldableTag, A, B>(_ f: @escaping (B) -> (A) -> B) -> (B
 public func foldl<FTag: FoldableTag, A, B>(_ f: @escaping (B, A) -> B, _ b: B) -> (KindApplication<FTag, A>) -> B {
     return FTag._foldl(f) <| b
 }
+
+// MARK: foldMap
 
 /// Fold from right to left by mapping each value into a monoid and appending
 ///

@@ -38,6 +38,12 @@ extension ArrayTag: ApplyTag {
     }
 }
 
+extension ArrayTag: BindTag {
+    public static func _bind<A, B>(_ m: KindApplication<ArrayTag, A>, _ f: @escaping (A) -> KindApplication<ArrayTag, B>) -> KindApplication<ArrayTag, B> {
+        return [A].unkind(m)._bind(f)
+    }
+}
+
 extension ArrayTag: FoldableTag {
     public static func _foldr<A, B>(_ f: @escaping (A, B) -> B) -> (B) -> (KindApplication<ArrayTag, A>) -> B {
         return [A]._foldr(f)
@@ -89,6 +95,12 @@ extension Array: Apply {
                 return fs.map({ $0 <| x })
             }).kind
         }
+    }
+}
+
+extension Array: Bind {
+    public func _bind<B>(_ f: @escaping (K1Arg) -> KindApplication<K1Tag, B>) -> KindApplication<K1Tag, B> {
+        return flatMap([B].unkind • f).kind
     }
 }
 

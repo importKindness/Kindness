@@ -62,6 +62,16 @@ class ArrayTests: XCTestCase {
             }
     }
 
+    func testBindIsAssociative() {
+        property("bind is associative")
+            <- forAll { (xs: [Int8], fArrow: ArrowOf<Int8, [Int8]>, gArrow: ArrowOf<Int8, [Int8]>) in
+                let f = fArrow.getArrow
+                let g = gArrow.getArrow
+
+                return ((xs >>- f) >>- g) == (xs >>- { k -> [Int8] in f(k) >>- g })
+            }
+    }
+
     func testFunctorPreservesIdentity() {
         property("functor preserves identity")
             <- forAll { (xs: [Int8]) in
