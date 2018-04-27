@@ -122,7 +122,7 @@ public func >>- <A, N: Bind>(
 /// provided function to the output of that left operation in sequence
 public func >>- <A, N: Bind>(
     _ m: KindApplication<N.K1Tag, A>, _ f: @escaping (A) -> N
-) -> KindApplication<N.K1Tag, N.K1Arg>  {
+) -> KindApplication<N.K1Tag, N.K1Arg> {
     return N.K1Tag._bind(m, N.kind • f)
 }
 
@@ -138,8 +138,6 @@ public func >>- <FTag: BindTag, A, B>(
 ) -> KindApplication<FTag, B> {
     return FTag._bind(m, f)
 }
-
-
 
 /// Compose two operations with the left being determined by the output of the right
 ///
@@ -224,7 +222,7 @@ public func -<< <A, N: Bind>(
 /// provided function to the output of that right operation in sequence
 public func -<< <A, N: Bind>(
     _ f: @escaping (A) -> N, _ m: KindApplication<N.K1Tag, A>
-) -> KindApplication<N.K1Tag, N.K1Arg>  {
+) -> KindApplication<N.K1Tag, N.K1Arg> {
     return m >>- f
 }
 
@@ -303,7 +301,7 @@ public func join<N: Bind>(_ m: KindApplication<N.K1Tag, N>) -> KindApplication<N
 ///
 /// - Parameter m: Structure to flatten
 /// - Returns: Structure flattened by one level of nesting
-public func join<FTag: BindTag, A>(_ m: KindApplication<FTag, KindApplication<FTag,A>>) -> KindApplication<FTag, A> {
+public func join<FTag: BindTag, A>(_ m: KindApplication<FTag, KindApplication<FTag, A>>) -> KindApplication<FTag, A> {
     return m >>- id
 }
 

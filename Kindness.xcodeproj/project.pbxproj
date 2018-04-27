@@ -581,6 +581,7 @@
 			);
 			inputPaths = (
 				"$(PROJECT_FILE_PATH)/project.pbxproj",
+				"$(SRCROOT)/Scripts/ensureNoProjectBuildSettings.swift",
 			);
 			name = "Ensure XCConfig";
 			outputPaths = (
@@ -613,6 +614,7 @@
 			);
 			inputPaths = (
 				"$(PROJECT_FILE_PATH)/project.pbxproj",
+				"$(SRCROOT)/Scripts/ensureNoProjectBuildSettings.swift",
 			);
 			name = "Ensure XCConfig";
 			outputPaths = (

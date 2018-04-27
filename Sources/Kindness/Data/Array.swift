@@ -39,7 +39,9 @@ extension ArrayTag: ApplyTag {
 }
 
 extension ArrayTag: BindTag {
-    public static func _bind<A, B>(_ m: KindApplication<ArrayTag, A>, _ f: @escaping (A) -> KindApplication<ArrayTag, B>) -> KindApplication<ArrayTag, B> {
+    public static func _bind<A, B>(
+        _ m: KindApplication<ArrayTag, A>, _ f: @escaping (A) -> KindApplication<ArrayTag, B>
+    ) -> KindApplication<ArrayTag, B> {
         return [A].unkind(m)._bind(f)
     }
 }

@@ -16,21 +16,15 @@
 
 import Foundation
 
-let processArguments = ProcessInfo.processInfo.arguments
+let arguments = CommandLine.arguments
 
-guard let actualArgsStartIndex = processArguments.index(of: "--")?.advanced(by: 1) else {
-    print("error: Usage: ensureNoProjectBuildSettings.swift <path_to_pbxproj> <target>")
-    exit(EX_USAGE)
-}
-
-let actualArgs = processArguments.suffix(from: actualArgsStartIndex)
-
-guard actualArgs.count == 2,
-    let projectPath = actualArgs.first,
-    let targetName = actualArgs.last else {
+guard arguments.count == 3 else {
         print("error: Usage: ensureNoProjectBuildSettings.swift <path_to_pbxproj> <target>")
         exit(EX_USAGE)
 }
+
+let projectPath = arguments[1]
+let targetName = arguments[2]
 
 guard let projectDict = NSDictionary(contentsOfFile: projectPath),
     let objectsDict = projectDict["objects"] as? NSDictionary else {
