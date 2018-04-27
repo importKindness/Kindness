@@ -17,12 +17,15 @@ infix operator -<<: MonadPrecedence
 infix operator >=>: MonadPrecedence
 infix operator <=<: MonadPrecedence
 
+/// HKT tag type for types that conform to `Bind`.
 public protocol BindTag {
     static func _bind<A, B>(
         _ m: KindApplication<Self, A>, _ f: @escaping (A) -> KindApplication<Self, B>
     ) -> KindApplication<Self, B>
 }
 
+/// Extends `Apply` with the ability to compose operations with each operation having access to the result of the
+/// previous operation.
 public protocol Bind: Apply where K1Tag: BindTag {
     /// Compose two operations with the second being determined by the output of the first
     ///
@@ -144,7 +147,7 @@ public func >=> <A, M: Bind, N: Bind>(
     return { a in f(a) >>- g }
 }
 
-// MARK: composeKlieslieFlipped | <=<
+// MARK: composeKliesliFlipped | <=<
 
 /// Backward Kliesli composition
 public func <=< <A, M: Bind, N: Bind>(

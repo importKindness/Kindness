@@ -12,10 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/// HKT tag for `Monad`s
 public protocol MonadTag: ApplicativeTag, BindTag { }
 
+/// Combines `Applicative` and `Bind`, supporting both lifting of values into `Self` and composing operations
+/// sequentially.
 public protocol Monad: Applicative, Bind { }
 
+/// Provides an implementation for `Apply` required method `_apply` based on `>>-`
 public protocol ApplyByMonad: Monad { }
 
 public extension ApplyByMonad {
@@ -30,6 +34,7 @@ public extension ApplyByMonad {
     }
 }
 
+/// Provides an implementation for `Functor` required method `_fmap` based on `>>-`
 public protocol FunctorByMonad: Monad { }
 
 public extension FunctorByMonad {

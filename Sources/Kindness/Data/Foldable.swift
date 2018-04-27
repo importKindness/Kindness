@@ -80,6 +80,7 @@ public extension FoldableByFoldMap {
     }
 }
 
+/// HKT tag type for `Foldables`s.
 public protocol FoldableTag {
     static func _foldr<A, B>(_ f: @escaping (A, B) -> B) -> (B) -> (KindApplication<Self, A>) -> B
     static func _foldl<A, B>(_ f: @escaping (B, A) -> B) -> (B) -> (KindApplication<Self, A>) -> B

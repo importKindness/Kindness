@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/// HKT tag type for `Applicative`s.
 public protocol ApplicativeTag: ApplyTag {
     /// Given a value of type `A`, lift that value into `KindApplication<Self, A>`
     ///
@@ -20,6 +21,7 @@ public protocol ApplicativeTag: ApplyTag {
     static func _pure<A>(_ a: A) -> KindApplication<Self, A>
 }
 
+/// Extends `Apply` with the ability to lift of type A value a into Self<A>
 public protocol Applicative: Apply where K1Tag: ApplicativeTag {
     /// Given a value of type `A`, lift that value into `Self` represented as `KindApplication<K1Tag, A>`
     ///
