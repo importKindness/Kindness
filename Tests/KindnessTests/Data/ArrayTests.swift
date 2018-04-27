@@ -88,6 +88,22 @@ class ArrayTests: XCTestCase {
             }
     }
 
+    func testBindLeftIdentity() {
+        property("bind has left identity")
+            <- forAll { (x: Int8, fArrow: ArrowOf<Int8, [Int8]>) in
+                let f = fArrow.getArrow
+
+                return (pure(x) as [Int8] >>- f) == f(x)
+            }
+    }
+
+    func testBindRightIdentity() {
+        property("bind has right identity")
+            <- forAll { (x: [Int8]) in
+                return (x >>- pure) == x
+            }
+    }
+
     func testAppendingToMemptyReturnsAppendedValue() {
         property("appending to mempty returns the appended value")
             <- forAll { (xs: [Int8]) in

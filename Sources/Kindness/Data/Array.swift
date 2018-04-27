@@ -122,6 +122,8 @@ extension Array: Functor {
     }
 }
 
+extension Array: Monad { }
+
 extension Array: Monoid {
     public static var mempty: [Element] {
         return []
