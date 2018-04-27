@@ -38,6 +38,20 @@ extension ArrayTag: ApplyTag {
     }
 }
 
+extension ArrayTag: FoldableTag {
+    public static func _foldr<A, B>(_ f: @escaping (A, B) -> B) -> (B) -> (KindApplication<ArrayTag, A>) -> B {
+        return [A]._foldr(f)
+    }
+
+    public static func _foldl<A, B>(_ f: @escaping (B, A) -> B) -> (B) -> (KindApplication<ArrayTag, A>) -> B {
+        return [A]._foldl(f)
+    }
+
+    public static func _foldMap<A, M: Monoid>(_ f: @escaping (A) -> M) -> (KindApplication<ArrayTag, A>) -> M {
+        return [A]._foldMap(f)
+    }
+}
+
 extension ArrayTag: FunctorTag {
     public static func _fmap<A, B>(
         _ f: @escaping (A) -> B
@@ -79,10 +93,10 @@ extension Array: Apply {
 }
 
 extension Array: Foldable, FoldableByFoldL {
-    public static func _foldl<B>(_ f: @escaping (B, Element) -> B) -> (B) -> ([Element]) -> B {
+    public static func _foldl<B>(_ f: @escaping (B, Element) -> B) -> (B) -> (KindApplication<K1Tag, K1Arg>) -> B {
         return { b in
             return { xs in
-                return xs.reduce(b, f)
+                return [Element].unkind(xs).reduce(b, f)
             }
         }
     }
