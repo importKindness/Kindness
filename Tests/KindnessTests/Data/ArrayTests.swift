@@ -19,26 +19,48 @@ import SwiftCheck
 import Kindness
 
 class ArrayTests: XCTestCase {
+    func testAltIsAssociative() {
+        property("alt is associative")
+            <- forAll { (x: [Int8], y: [Int8], z: [Int8]) -> Bool in
+                return ((x <|> y) <|> z) == (x <|> (y <|> z))
+            }
+    }
+
+    func testAltIsDistributive() {
+        property("alt is distributive")
+            <- forAll { (x: [Int8], y: [Int8], fArrow: ArrowOf<Int8, Int8>) -> Bool in
+                let f = fArrow.getArrow
+
+                let lhs: [Int8] = f <^> (x <|> y)
+                let rhs: [Int8] = (f <^> x) <|> (f <^> y)
+
+                return lhs == rhs
+            }
+    }
+
     func testApplicativePreservesIdentity() {
         property("applicative preserves identity")
-            <- forAll { (xs: [Int8]) in
+            <- forAll { (xs: [Int8]) -> Bool in
                 return (pure(id) <*> xs) == xs
             }
     }
 
     func testApplicativePreservesComposition() {
         property("applicative preserves composition")
-            <- forAll { (fArrows: [ArrowOf<Int8, Int8>], gArrows: [ArrowOf<Int8, Int8>], h: [Int8]) in
+            <- forAll { (fArrows: [ArrowOf<Int8, Int8>], gArrows: [ArrowOf<Int8, Int8>], h: [Int8]) -> Bool in
                 let f = fArrows.map { $0.getArrow }
                 let g = gArrows.map { $0.getArrow }
 
-                return (pure(curry(•)) <*> f <*> g <*> h) == (f <*> (g <*> h))
+                let lhs: [Int8] = pure(curry(•)) <*> f <*> g <*> h
+                let rhs: [Int8] = f <*> (g <*> h)
+
+                return lhs == rhs
             }
     }
 
     func testApplicativeHomomorphismLaw() {
         property("applying pure(f) to pure(x) is the same as pure(f(x))")
-            <- forAll { (fArrow: ArrowOf<Int8, Int8>, x: Int8) in
+            <- forAll { (fArrow: ArrowOf<Int8, Int8>, x: Int8) -> Bool in
                 let f = fArrow.getArrow
                 return (pure(f) <*> (pure(x) as [Int8])) == pure(f(x))
             }
@@ -46,25 +68,32 @@ class ArrayTests: XCTestCase {
 
     func testApplicativeInterchangeLaw() {
         property("applying a morphism to a pure value is the same as applying pure($value) to the morphism")
-            <- forAll { (fArrows: [ArrowOf<Int8, Int8>], x: Int8) in
+            <- forAll { (fArrows: [ArrowOf<Int8, Int8>], x: Int8) -> Bool in
                 let f = fArrows.map { $0.getArrow }
-                return (f <*> pure(x)) == (pure(curry(|>)(x)) <*> f)
+
+                let lhs: [Int8] = f <*> pure(x)
+                let rhs: [Int8] = pure(curry(|>)(x)) <*> f
+
+                return lhs == rhs
             }
     }
 
     func testApplyHasAssociativeComposition() {
         property("apply has associative composition")
-            <- forAll { (fArrows: [ArrowOf<Int8, Int8>], gArrows: [ArrowOf<Int8, Int8>], h: [Int8]) in
+            <- forAll { (fArrows: [ArrowOf<Int8, Int8>], gArrows: [ArrowOf<Int8, Int8>], h: [Int8]) -> Bool in
                 let f = fArrows.map { $0.getArrow }
                 let g = gArrows.map { $0.getArrow }
 
-                return (curry(•) <^> f <*> g <*> h) == (f <*> (g <*> h))
+                let lhs: [Int8] = curry(•) <^> f <*> g <*> h
+                let rhs: [Int8] = f <*> (g <*> h)
+
+                return lhs == rhs
             }
     }
 
     func testBindIsAssociative() {
         property("bind is associative")
-            <- forAll { (xs: [Int8], fArrow: ArrowOf<Int8, [Int8]>, gArrow: ArrowOf<Int8, [Int8]>) in
+            <- forAll { (xs: [Int8], fArrow: ArrowOf<Int8, [Int8]>, gArrow: ArrowOf<Int8, [Int8]>) -> Bool in
                 let f = fArrow.getArrow
                 let g = gArrow.getArrow
 
@@ -74,14 +103,14 @@ class ArrayTests: XCTestCase {
 
     func testFunctorPreservesIdentity() {
         property("functor preserves identity")
-            <- forAll { (xs: [Int8]) in
+            <- forAll { (xs: [Int8]) -> Bool in
                 return (id <^> xs) == (id <| xs)
             }
     }
 
     func testFunctorPreservesComposition() {
         property("functor preserves composition")
-            <- forAll { (xs: [Int8], fArrow: ArrowOf<Int8, Int8>, gArrow: ArrowOf<Int8, Int8>) in
+            <- forAll { (xs: [Int8], fArrow: ArrowOf<Int8, Int8>, gArrow: ArrowOf<Int8, Int8>) -> Bool in
                 let f = fArrow.getArrow
                 let g = gArrow.getArrow
                 return (g • f <^> xs) == (fmap(g) • fmap(f) <| xs)

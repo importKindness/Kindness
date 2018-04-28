@@ -24,6 +24,14 @@ public struct ArrayTag {
     }
 }
 
+extension ArrayTag: AltTag {
+    public static func _alt<A>(
+        _ lhs: KindApplication<ArrayTag, A>
+    ) -> (KindApplication<ArrayTag, A>) -> KindApplication<ArrayTag, A> {
+        return [A]._alt(lhs)
+    }
+}
+
 extension ArrayTag: ApplicativeTag {
     public static func _pure<A>(_ a: A) -> KindApplication<ArrayTag, A> {
         return [A]._pure(a)
@@ -78,6 +86,14 @@ extension Array: K1 {
 
     public static func unkind(_ kind: K1Self) -> [Element] {
         return kind.tag.unsafeUnwrap()
+    }
+}
+
+extension Array: Alt {
+    public static func _alt(
+        _ lhs: KindApplication<K1Tag, K1Arg>
+    ) -> (KindApplication<K1Tag, K1Arg>) -> KindApplication<K1Tag, K1Arg> {
+        return { rhs in ([K1Arg].unkind(lhs) <> [K1Arg].unkind(rhs)).kind }
     }
 }
 

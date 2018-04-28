@@ -80,6 +80,7 @@ SWIFT_OPTIMIZATION_LEVEL = -Onone
 
 // Swift Compiler - Custom Flags
 SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG
+OTHER_SWIFT_FLAGS = -Xfrontend -warn-long-function-bodies=500
 
 // Swift Compiler - General
 

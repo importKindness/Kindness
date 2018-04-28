@@ -21,8 +21,11 @@ import Kindness
 class MonoidTests: XCTestCase {
     func testPowerRepeatsMonoidProvidedNumberOfTimes() {
         property("power repeats a provided monoid provided number of times")
-            <- forAll { (times: UInt8, xs: [UInt8]) in
-                return power(xs, times) == (0..<times).map(const(xs)).reduce([], +)
+            <- forAll { (times: UInt8, xs: [UInt8]) -> Bool in
+                let lhs: [UInt8] = power(xs, times)
+                let rhs: [UInt8] = (0..<times).map(const(xs)).reduce([], +)
+
+                return lhs == rhs
             }
     }
 }
