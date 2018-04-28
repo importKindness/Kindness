@@ -147,6 +147,36 @@ class ArrayTests: XCTestCase {
             }
     }
 
+    func testAppendingToEmptyReturnsAppendedValue() {
+        property("appending to empty returns the appended value")
+            <- forAll { (xs: [Int8]) in
+                return .empty <> xs == xs
+            }
+    }
+
+    func testAppendingEmptyReturnsOriginalValue() {
+        property("appending empty returns original value")
+            <- forAll { (xs: [Int8]) in
+                return xs <> .empty == xs
+            }
+    }
+
+    func testMappingEmptyIsEmpty() {
+        property("mapping over empty is empty")
+            <- forAll { (fArrow: ArrowOf<Int8, Int8>) -> Bool in
+                let f = fArrow.getArrow
+
+                let lhs: [Int8] = f <^> [Int8].empty
+                let rhs: [Int8] = .empty
+
+                return lhs == rhs
+            }
+    }
+
+    func testEmptyEqualsMempty() {
+        XCTAssertEqual([Int8].empty, [Int8].mempty)
+    }
+
     func testSemigroupBinaryOpIsAssociative() {
         property("semigroup binary op is associative")
             <- forAll { (x: [Int8], y: [Int8], z: [Int8]) in

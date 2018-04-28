@@ -76,6 +76,12 @@ extension ArrayTag: FunctorTag {
     }
 }
 
+extension ArrayTag: PlusTag {
+    public static func empty<A>() -> KindApplication<ArrayTag, A> {
+        return [A].empty.kind
+    }
+}
+
 extension Array: K1 {
     public typealias K1Tag = ArrayTag
     public typealias K1Arg = Element
@@ -142,6 +148,12 @@ extension Array: Monad { }
 
 extension Array: Monoid {
     public static var mempty: [Element] {
+        return []
+    }
+}
+
+extension Array: Plus {
+    public static var empty: [Element] {
         return []
     }
 }
