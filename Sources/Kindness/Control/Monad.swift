@@ -22,7 +22,7 @@ public protocol MonadTag: ApplicativeTag, BindTag { }
 ///
 ///     Left Identity: pure(x) >>- f == f(x)
 ///     Right Identity: x >>- pure == x
-public protocol Monad: Applicative, Bind { }
+public protocol Monad: Applicative, Bind where K1Tag: MonadTag { }
 
 /// Provides an implementation for `Apply` required method `_apply` based on `>>-`
 public protocol ApplyByMonad: Monad { }

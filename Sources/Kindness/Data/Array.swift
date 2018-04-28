@@ -78,6 +78,10 @@ extension ArrayTag: FunctorTag {
     }
 }
 
+extension ArrayTag: MonadTag { }
+
+extension ArrayTag: MonadZeroTag { }
+
 extension ArrayTag: PlusTag {
     public static func empty<A>() -> KindApplication<ArrayTag, A> {
         return [A].empty.kind
@@ -151,6 +155,8 @@ extension Array: Functor {
 }
 
 extension Array: Monad { }
+
+extension Array: MonadZero { }
 
 extension Array: Monoid {
     public static var mempty: [Element] {

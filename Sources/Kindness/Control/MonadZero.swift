@@ -12,14 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/// HKT tag for `Alternative`s
-public protocol AlternativeTag: ApplicativeTag, PlusTag { }
+public protocol MonadZeroTag: AlternativeTag, MonadTag { }
 
-/// Combines `Applicative` and `Plus`, supporting an empty element, applying wrapped functions to wrapped values, and
-/// lifting values into `Self`.
+/// Combines `Alternative` and `Monad`, supporting an empty element, applying wrapped functions to wrapped values,
+/// lifting values into `Self`, and sequencing dependent operations.
 ///
 /// Laws:
 ///
-///     Distributivity: (f <|> g) <*> x == (f <*> x) <|> (g <*> x)
-///     Annihilation: empty <*> f = empty
-public protocol Alternative: Applicative, Plus where K1Tag: AlternativeTag { }
+///     Annihilation: empty >>- f = empty
+public protocol MonadZero: Alternative, Monad { }

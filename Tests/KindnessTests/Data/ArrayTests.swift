@@ -54,7 +54,7 @@ class ArrayTests: XCTestCase {
             }
     }
 
-    func testAlternativeAnn() {
+    func testAlternativeAnnihilation() {
         property("Alternative - Annihilation: empty <*> f = empty")
             <- forAll { (xs: [Int8]) -> Bool in
                 let emptyFs: [(Int8) -> Int8] = .empty
@@ -162,6 +162,18 @@ class ArrayTests: XCTestCase {
         property("Monad - Right Identity: x >>- pure == x")
             <- forAll { (x: [Int8]) in
                 return (x >>- pure) == x
+            }
+    }
+
+    func testMonadZeroAnnihilation() {
+        property("MonadZero - Annihilation: empty >>- f = empty")
+            <- forAll { (fArrow: ArrowOf<Int8, [Int8]>) -> Bool in
+                let f = fArrow.getArrow
+
+                let lhs: [Int8] = [Int8].empty >>- f
+                let rhs: [Int8] = .empty
+
+                return lhs == rhs
             }
     }
 
