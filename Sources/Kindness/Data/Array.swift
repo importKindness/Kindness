@@ -32,6 +32,8 @@ extension ArrayTag: AltTag {
     }
 }
 
+extension ArrayTag: AlternativeTag { }
+
 extension ArrayTag: ApplicativeTag {
     public static func _pure<A>(_ a: A) -> KindApplication<ArrayTag, A> {
         return [A]._pure(a)
@@ -103,6 +105,8 @@ extension Array: Alt {
     }
 }
 
+extension Array: Alternative { }
+
 extension Array: Applicative {
     public static func _pure(_ a: K1Arg) -> KindApplication<K1Tag, K1Arg> {
         return [a].kind
@@ -115,8 +119,10 @@ extension Array: Apply {
     ) -> (KindApplication<K1Tag, A>) -> KindApplication<K1Tag, B> {
         let fs = [(A) -> B].unkind(fab)
         return { kxs in
-            return [A].unkind(kxs).flatMap({ x in
-                return fs.map({ $0 <| x })
+            return fs.flatMap({ f -> [B] in
+                return [A].unkind(kxs).flatMap({ x -> B in
+                    return f(x)
+                })
             }).kind
         }
     }

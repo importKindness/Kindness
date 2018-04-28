@@ -37,6 +37,8 @@
 		41615A2B2094F36700B97CD0 /* Alt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41615A292094F36700B97CD0 /* Alt.swift */; };
 		41615A2D2094FDBF00B97CD0 /* Plus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41615A2C2094FDBF00B97CD0 /* Plus.swift */; };
 		41615A2E2094FDBF00B97CD0 /* Plus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41615A2C2094FDBF00B97CD0 /* Plus.swift */; };
+		41615A3020950A1500B97CD0 /* Alternative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41615A2F20950A1500B97CD0 /* Alternative.swift */; };
+		41615A3120950A1500B97CD0 /* Alternative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41615A2F20950A1500B97CD0 /* Alternative.swift */; };
 		4164AFE42093C90600998CCA /* Bind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4164AFE32093C90600998CCA /* Bind.swift */; };
 		4164AFE52093C90600998CCA /* Bind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4164AFE32093C90600998CCA /* Bind.swift */; };
 		4164AFE72093DFFB00998CCA /* Monad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4164AFE62093DFFB00998CCA /* Monad.swift */; };
@@ -134,6 +136,7 @@
 		4160CE47208AA3F200D0BBA2 /* SwiftCheck.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftCheck.framework; path = Carthage/Build/iOS/SwiftCheck.framework; sourceTree = "<group>"; };
 		41615A292094F36700B97CD0 /* Alt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alt.swift; sourceTree = "<group>"; };
 		41615A2C2094FDBF00B97CD0 /* Plus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plus.swift; sourceTree = "<group>"; };
+		41615A2F20950A1500B97CD0 /* Alternative.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alternative.swift; sourceTree = "<group>"; };
 		4164AFE32093C90600998CCA /* Bind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bind.swift; sourceTree = "<group>"; };
 		4164AFE62093DFFB00998CCA /* Monad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Monad.swift; sourceTree = "<group>"; };
 		418D969520924CE600102A31 /* Foldable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Foldable.swift; sourceTree = "<group>"; };
@@ -182,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				41615A292094F36700B97CD0 /* Alt.swift */,
+				41615A2F20950A1500B97CD0 /* Alternative.swift */,
 				418D969E209284AB00102A31 /* Applicative.swift */,
 				418D969B2092819900102A31 /* Apply.swift */,
 				4164AFE32093C90600998CCA /* Bind.swift */,
@@ -738,6 +742,7 @@
 				4160CE34208A8F3700D0BBA2 /* Functor.swift in Sources */,
 				41615A2A2094F36700B97CD0 /* Alt.swift in Sources */,
 				418D969C2092819900102A31 /* Apply.swift in Sources */,
+				41615A3020950A1500B97CD0 /* Alternative.swift in Sources */,
 				4164AFE72093DFFB00998CCA /* Monad.swift in Sources */,
 				4164AFE42093C90600998CCA /* Bind.swift in Sources */,
 				41615A2D2094FDBF00B97CD0 /* Plus.swift in Sources */,
@@ -769,6 +774,7 @@
 				4160CE35208A8F3700D0BBA2 /* Functor.swift in Sources */,
 				41615A2B2094F36700B97CD0 /* Alt.swift in Sources */,
 				418D969D2092819900102A31 /* Apply.swift in Sources */,
+				41615A3120950A1500B97CD0 /* Alternative.swift in Sources */,
 				4164AFE82093DFFB00998CCA /* Monad.swift in Sources */,
 				4164AFE52093C90600998CCA /* Bind.swift in Sources */,
 				41615A2E2094FDBF00B97CD0 /* Plus.swift in Sources */,

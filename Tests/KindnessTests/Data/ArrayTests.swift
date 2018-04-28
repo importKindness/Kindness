@@ -38,6 +38,34 @@ class ArrayTests: XCTestCase {
             }
     }
 
+    func testAlternativeDistributivity() {
+        property("Alternative - Distributivity: (f <|> g) <*> x == (f <*> x) <|> (g <*> x)")
+            <- forAll { (fArrows: [ArrowOf<Int8, Int8>], gArrows: [ArrowOf<Int8, Int8>], xs: [Int8]) -> Bool in
+                let f = fArrows.map { $0.getArrow }
+                let g = gArrows.map { $0.getArrow }
+
+                let lhs: [Int8] = (f <|> g) <*> xs
+
+                let rhsL: [Int8] = f <*> xs
+                let rhsR: [Int8] = g <*> xs
+                let rhs: [Int8] = rhsL <|> rhsR
+
+                return lhs == rhs
+            }
+    }
+
+    func testAlternativeAnn() {
+        property("Alternative - Annihilation: empty <*> f = empty")
+            <- forAll { (xs: [Int8]) -> Bool in
+                let emptyFs: [(Int8) -> Int8] = .empty
+
+                let lhs: [Int8] = emptyFs <*> xs
+                let rhs: [Int8] = .empty
+
+                return lhs == rhs
+            }
+    }
+
     func testApplicativeIdentity() {
         property("Applicative - Identity: pure(id) <*> v == v")
             <- forAll { (xs: [Int8]) -> Bool in
