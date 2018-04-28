@@ -16,12 +16,19 @@ infix operator <|>: AltPrecedence
 
 /// HKT tag for types conforming to `Alt`
 public protocol AltTag: FunctorTag {
+
+    /// `_alt` implementation for the tagged `Alt`
     static func _alt<A>(
         _ lhs: KindApplication<Self, A>
     ) -> (KindApplication<Self, A>) -> KindApplication<Self, A>
 }
 
 /// A type constructor with an associative binary op
+///
+/// Laws:
+///
+///     Associativity: (x <|> y) <|> z == x <|> (y <|> z)
+///     Distributivity: f <^> (x <|> y) == (f <^> x) <|> (f <^> y)
 public protocol Alt: Functor where K1Tag: AltTag {
     /// Append one type constructor to another of the same type
     ///

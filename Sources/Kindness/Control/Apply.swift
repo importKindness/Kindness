@@ -19,10 +19,7 @@ infix operator *>: FunctorPrecedence
 /// HKT tag type for types that conform to `Apply`
 public protocol ApplyTag: FunctorTag {
 
-    /// Given a function wrapped in a `Functor`, apply that function to arguments wrapped in the same `Functor`
-    ///
-    /// - Parameter fab: `KindApplication<FTag, (A) -> B>` wrapping the function to apply
-    /// - Returns: Function `(KindApplication<FTag, A>) -> KindApplication<FTag, B>`
+    /// `_apply` implementation for the tagged `Apply`
     static func _apply<A, B>(
         _ fab: KindApplication<Self, (A) -> B>
     ) -> (KindApplication<Self, A>) -> KindApplication<Self, B>
@@ -30,6 +27,10 @@ public protocol ApplyTag: FunctorTag {
 
 /// A `Functor` that supports applying a wrapped function to wrapped arguments:
 /// Applying `F<(A) -> B>` to `F<A>` to get `F<B>`
+///
+/// Laws:
+///
+///     Associative composition: (<<<) <^> f <*> g <*> h == f <*> (g <*> h)
 public protocol Apply: Functor where K1Tag: ApplyTag {
 
     /// Given a function wrapped in a `Functor`, apply that function to arguments wrapped in the same `Functor`

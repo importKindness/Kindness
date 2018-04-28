@@ -14,14 +14,18 @@
 
 /// HKT tag type for `Applicative`s.
 public protocol ApplicativeTag: ApplyTag {
-    /// Given a value of type `A`, lift that value into `KindApplication<Self, A>`
-    ///
-    /// - Parameter a: value to lift
-    /// - Returns: Kind application of `Self` with type `A` that contains the provided value
+    /// `_pure` implementation for the tagged `Applicative`
     static func _pure<A>(_ a: A) -> KindApplication<Self, A>
 }
 
 /// Extends `Apply` with the ability to lift of type A value a into Self<A>
+///
+/// Laws:
+///
+///     Identity: pure(id) <*> v == v
+///     Composition: pure(<<<) <*> f <*> g <*> h == f <*> (g <*> h)
+///     Homomorphism: pure(f) <*> pure(x) == pure(f(x))
+///     Interchange: u <*> pure(y) == pure ((|>) y) <*> u
 public protocol Applicative: Apply where K1Tag: ApplicativeTag {
     /// Given a value of type `A`, lift that value into `Self` represented as `KindApplication<K1Tag, A>`
     ///

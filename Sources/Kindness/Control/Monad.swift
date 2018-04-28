@@ -17,6 +17,11 @@ public protocol MonadTag: ApplicativeTag, BindTag { }
 
 /// Combines `Applicative` and `Bind`, supporting both lifting of values into `Self` and composing operations
 /// sequentially.
+///
+/// Laws:
+///
+///     Left Identity: pure(x) >>- f == f(x)
+///     Right Identity: x >>- pure == x
 public protocol Monad: Applicative, Bind { }
 
 /// Provides an implementation for `Apply` required method `_apply` based on `>>-`

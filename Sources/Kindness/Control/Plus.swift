@@ -15,13 +15,17 @@
 /// HKT tag for types conforming to `Plus`
 public protocol PlusTag: AltTag {
     /// Empty value of the tagged `Plus` as a `KindApplication`
-    ///
-    /// - Returns: Empty value of the tagged `Plus` as a `KindApplication`
     static func empty<A>() -> KindApplication<Self, A>
 }
 
 /// `Alt` with an empty value. Appending the empty value should return the original value. Appending a value to the
 /// empty value should return the appended value.
+///
+/// Laws:
+///
+///     Left Identity: empty <|> x == x
+///     Right Identity: x <|> empty == x
+///     Annihilation: f <^> empty == empty
 public protocol Plus: Alt where K1Tag: PlusTag {
 
     /// Empty value of `Self`. Appending this value to another value should return the original value. Appending another

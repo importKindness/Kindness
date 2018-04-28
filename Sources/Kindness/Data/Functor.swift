@@ -20,16 +20,17 @@ infix operator ^>: FunctorPrecedence
 /// HKT tag type for `Functor`s.
 public protocol FunctorTag {
 
-    /// Implementation of fmap for the tagged `Functor`. This can usually just call the `Functor`'s implementation but
-    /// allows for referencing the implementation when the fully qualified `Functor` is not available.
-    ///
-    /// - Parameter f: Function to be mapped
-    /// - Returns: A function from `(KindApplication<SelfTag, A>) -> KindApplication<SelfTag, B>`
+    /// `_fmap` implementation for the tagged `Functor`.
     static func _fmap<A, B>(_ f: @escaping (A) -> B) -> (KindApplication<Self, A>) -> KindApplication<Self, B>
 }
 
 /// A parameterized type that can be mapped over. Requires one method, `fmap`, that given a function `(A) -> B` returns
 /// a function `(Self<A>) -> Self<B>.
+///
+/// Laws:
+///
+///     Identity: fmap(id) == id
+///     Composition: fmap(f <<< g) = fmap(f) <<< fmap(g)
 public protocol Functor: K1 where K1Tag: FunctorTag {
 
     /// Maps a function `(A) -> B` to `(KindApplication<SelfTag, A>) -> KindApplication<SelfTag, B>`

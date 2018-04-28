@@ -14,7 +14,15 @@
 
 /// Semigroup with an empty value. Appending the empty value should return the previous value. Appending a new value to
 /// the empty value should return the new value.
+///
+/// Laws:
+///
+///     Left Identity: mempty <> x == x
+///     Right Identity: x <> mempty == x
 public protocol Monoid: Semigroup {
+
+    /// Empty value of `Self`. Appending this value to another value should return the other value. Appending another
+    /// value to this value should return the other value.
     static var mempty: Self { get }
 }
 

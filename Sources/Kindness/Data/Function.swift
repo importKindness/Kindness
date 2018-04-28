@@ -13,14 +13,36 @@
 // limitations under the License.
 
 infix operator •: CompositionPrecedenceRight
+infix operator >>>: CompositionPrecedenceRight
+infix operator <<<: CompositionPrecedenceRight
 
-/// Compose two functions to make a single function: "g after" f"
+/// Compose two functions to make a single function: "g after f"
 ///
 /// - Parameters:
 ///   - g: Function to perform second
 ///   - f: Function to perform first
 /// - Returns: Function from input of `f` to output of `g` that calls "g after f"
-public func •<A, B, C>(_ g: @escaping (B) -> C, _ f: @escaping (A) -> B) -> (A) -> C {
+public func • <A, B, C>(_ g: @escaping (B) -> C, _ f: @escaping (A) -> B) -> (A) -> C {
+    return { g(f($0)) }
+}
+
+/// Backward composition. Compose two functions to make a single function: "g after f"
+///
+/// - Parameters:
+///   - g: Function to perform second
+///   - f: Function to perform first
+/// - Returns: Function from input of `f` to output of `g` that calls "g after f"
+public func <<< <A, B, C>(_ g: @escaping (B) -> C, _ f: @escaping (A) -> B) -> (A) -> C {
+    return { g(f($0)) }
+}
+
+/// Forward composition. Compose two functions to make a single function: "f before g"
+///
+/// - Parameters:
+///   - f: Function to perform first
+///   - g: Function to perform second
+/// - Returns: Function from input of `f` to output of `g` that calls "f before g"
+public func >>> <A, B, C>(_ f: @escaping (A) -> B, _ g: @escaping (B) -> C) -> (A) -> C {
     return { g(f($0)) }
 }
 

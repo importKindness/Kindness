@@ -19,6 +19,8 @@ infix operator <=<: MonadPrecedence
 
 /// HKT tag type for types that conform to `Bind`.
 public protocol BindTag {
+
+    /// `_bind` implementation for the tagged `Bind`
     static func _bind<A, B>(
         _ m: KindApplication<Self, A>, _ f: @escaping (A) -> KindApplication<Self, B>
     ) -> KindApplication<Self, B>
@@ -26,6 +28,10 @@ public protocol BindTag {
 
 /// Extends `Apply` with the ability to compose operations with each operation having access to the result of the
 /// previous operation.
+///
+/// Laws:
+///
+///     Associativity: (x >>- f) >>- g = x >>- { k in f(k) >>- g }
 public protocol Bind: Apply where K1Tag: BindTag {
     /// Compose two operations with the second being determined by the output of the first
     ///

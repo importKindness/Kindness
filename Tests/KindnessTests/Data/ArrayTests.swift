@@ -19,15 +19,15 @@ import SwiftCheck
 import Kindness
 
 class ArrayTests: XCTestCase {
-    func testAltIsAssociative() {
-        property("alt is associative")
+    func testAltAssociativity() {
+        property("Alt - Associativity: (x <|> y) <|> z == x <|> (y <|> z)")
             <- forAll { (x: [Int8], y: [Int8], z: [Int8]) -> Bool in
                 return ((x <|> y) <|> z) == (x <|> (y <|> z))
             }
     }
 
-    func testAltIsDistributive() {
-        property("alt is distributive")
+    func testAltDistributivity() {
+        property("Alt - Distributivity: f <^> (x <|> y) == (f <^> x) <|> (f <^> y)")
             <- forAll { (x: [Int8], y: [Int8], fArrow: ArrowOf<Int8, Int8>) -> Bool in
                 let f = fArrow.getArrow
 
@@ -38,15 +38,15 @@ class ArrayTests: XCTestCase {
             }
     }
 
-    func testApplicativePreservesIdentity() {
-        property("applicative preserves identity")
+    func testApplicativeIdentity() {
+        property("Applicative - Identity: pure(id) <*> v == v")
             <- forAll { (xs: [Int8]) -> Bool in
                 return (pure(id) <*> xs) == xs
             }
     }
 
-    func testApplicativePreservesComposition() {
-        property("applicative preserves composition")
+    func testApplicativeComposition() {
+        property("Applicative - Composition: pure(<<<) <*> f <*> g <*> h == f <*> (g <*> h)")
             <- forAll { (fArrows: [ArrowOf<Int8, Int8>], gArrows: [ArrowOf<Int8, Int8>], h: [Int8]) -> Bool in
                 let f = fArrows.map { $0.getArrow }
                 let g = gArrows.map { $0.getArrow }
@@ -58,16 +58,16 @@ class ArrayTests: XCTestCase {
             }
     }
 
-    func testApplicativeHomomorphismLaw() {
-        property("applying pure(f) to pure(x) is the same as pure(f(x))")
+    func testApplicativeHomomorphism() {
+        property("Applicative - Homomorphism: pure(f) <*> pure(x) == pure(f(x))")
             <- forAll { (fArrow: ArrowOf<Int8, Int8>, x: Int8) -> Bool in
                 let f = fArrow.getArrow
                 return (pure(f) <*> (pure(x) as [Int8])) == pure(f(x))
             }
     }
 
-    func testApplicativeInterchangeLaw() {
-        property("applying a morphism to a pure value is the same as applying pure($value) to the morphism")
+    func testApplicativeInterchange() {
+        property("Applicative - Interchange: u <*> pure(y) == pure ((|>) y) <*> u")
             <- forAll { (fArrows: [ArrowOf<Int8, Int8>], x: Int8) -> Bool in
                 let f = fArrows.map { $0.getArrow }
 
@@ -78,21 +78,21 @@ class ArrayTests: XCTestCase {
             }
     }
 
-    func testApplyHasAssociativeComposition() {
-        property("apply has associative composition")
+    func testApplyAssociativeComposition() {
+        property("Apply - Associative composition: (<<<) <^> f <*> g <*> h == f <*> (g <*> h)")
             <- forAll { (fArrows: [ArrowOf<Int8, Int8>], gArrows: [ArrowOf<Int8, Int8>], h: [Int8]) -> Bool in
                 let f = fArrows.map { $0.getArrow }
                 let g = gArrows.map { $0.getArrow }
 
-                let lhs: [Int8] = curry(•) <^> f <*> g <*> h
+                let lhs: [Int8] = curry(<<<) <^> f <*> g <*> h
                 let rhs: [Int8] = f <*> (g <*> h)
 
                 return lhs == rhs
             }
     }
 
-    func testBindIsAssociative() {
-        property("bind is associative")
+    func testBindAssociativity() {
+        property("Bind - Associativity: (x >>- f) >>- g = x >>- { k in f(k) >>- g }")
             <- forAll { (xs: [Int8], fArrow: ArrowOf<Int8, [Int8]>, gArrow: ArrowOf<Int8, [Int8]>) -> Bool in
                 let f = fArrow.getArrow
                 let g = gArrow.getArrow
@@ -101,24 +101,28 @@ class ArrayTests: XCTestCase {
             }
     }
 
-    func testFunctorPreservesIdentity() {
-        property("functor preserves identity")
+    func testFunctorIdentity() {
+        property("Functor - Identity: fmap(id) == id")
             <- forAll { (xs: [Int8]) -> Bool in
                 return (id <^> xs) == (id <| xs)
             }
     }
 
     func testFunctorPreservesComposition() {
-        property("functor preserves composition")
+        property("Functory - Composition: fmap(f <<< g) = fmap(f) <<< fmap(g))")
             <- forAll { (xs: [Int8], fArrow: ArrowOf<Int8, Int8>, gArrow: ArrowOf<Int8, Int8>) -> Bool in
                 let f = fArrow.getArrow
                 let g = gArrow.getArrow
-                return (g • f <^> xs) == (fmap(g) • fmap(f) <| xs)
+
+                let lhs: [Int8] = fmap(f <<< g) <| xs
+                let rhs: [Int8] = (fmap(f) <<< fmap(g)) <| xs
+
+                return lhs == rhs
             }
     }
 
-    func testBindLeftIdentity() {
-        property("bind has left identity")
+    func testMonadLeftIdentity() {
+        property("Monad - Left Identity: pure(x) >>- f == f(x)")
             <- forAll { (x: Int8, fArrow: ArrowOf<Int8, [Int8]>) in
                 let f = fArrow.getArrow
 
@@ -126,43 +130,43 @@ class ArrayTests: XCTestCase {
             }
     }
 
-    func testBindRightIdentity() {
-        property("bind has right identity")
+    func testMonadRightIdentity() {
+        property("Monad - Right Identity: x >>- pure == x")
             <- forAll { (x: [Int8]) in
                 return (x >>- pure) == x
             }
     }
 
-    func testAppendingToMemptyReturnsAppendedValue() {
-        property("appending to mempty returns the appended value")
+    func testMonoidLeftIdentity() {
+        property("Mpnoid - Left Identity: mempty <> x == x")
             <- forAll { (xs: [Int8]) in
                 return .mempty <> xs == xs
             }
     }
 
-    func testAppendingMemptyReturnsOriginalValue() {
-        property("appending mempty returns original value")
+    func testMonoidRightIdentity() {
+        property("Monoid - Right Identity: x <> mempty == x")
             <- forAll { (xs: [Int8]) in
                 return xs <> .mempty == xs
             }
     }
 
-    func testAppendingToEmptyReturnsAppendedValue() {
-        property("appending to empty returns the appended value")
+    func testPlusLeftIdentity() {
+        property("Plus - Left Identity: empty <|> x == x")
             <- forAll { (xs: [Int8]) in
-                return .empty <> xs == xs
+                return (.empty <|> xs) == xs
             }
     }
 
-    func testAppendingEmptyReturnsOriginalValue() {
-        property("appending empty returns original value")
+    func testPlusRightIdentity() {
+        property("Plus - Right Identity: x <|> empty == x")
             <- forAll { (xs: [Int8]) in
-                return xs <> .empty == xs
+                return (xs <|> .empty) == xs
             }
     }
 
-    func testMappingEmptyIsEmpty() {
-        property("mapping over empty is empty")
+    func testPlusAnnihilation() {
+        property("Plus - Annihilation: f <^> empty == empty")
             <- forAll { (fArrow: ArrowOf<Int8, Int8>) -> Bool in
                 let f = fArrow.getArrow
 
@@ -177,8 +181,8 @@ class ArrayTests: XCTestCase {
         XCTAssertEqual([Int8].empty, [Int8].mempty)
     }
 
-    func testSemigroupBinaryOpIsAssociative() {
-        property("semigroup binary op is associative")
+    func testSemigroupAssociativity() {
+        property("Semigroup - Associativity: (x <> y) <> z == x <> (y <> z)")
             <- forAll { (x: [Int8], y: [Int8], z: [Int8]) in
                 return (x <> y) <> z == x <> (y <> z)
             }

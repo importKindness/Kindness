@@ -82,15 +82,39 @@ public extension FoldableByFoldMap {
 
 /// HKT tag type for `Foldables`s.
 public protocol FoldableTag {
+
+    /// `_foldr` implementation for the tagged `Foldable`
     static func _foldr<A, B>(_ f: @escaping (A, B) -> B) -> (B) -> (KindApplication<Self, A>) -> B
+
+    /// `_fold` implementation for the tagged `Foldable`
     static func _foldl<A, B>(_ f: @escaping (B, A) -> B) -> (B) -> (KindApplication<Self, A>) -> B
+
+    /// `_foldMap` implementation for the tagged `Foldable`
     static func _foldMap<A, M: Monoid>(_ f: @escaping (A) -> M) -> (KindApplication<Self, A>) -> M
 }
 
 /// Types that can be folded
 public protocol Foldable: K1 where K1Tag: FoldableTag {
+
+    /// Fold from right to left
+    ///
+    /// - Parameter f: Function to perform each step of the fold
+    /// - Returns: Function that given an initial structure and accumulation value, folds the initial structure from
+    /// right to left.
     static func _foldr<B>(_ f: @escaping (K1Arg, B) -> B) -> (B) -> (KindApplication<K1Tag, K1Arg>) -> B
+
+    /// Fold from left to right
+    ///
+    /// - Parameter f: Function to perform each step of the fold
+    /// - Returns: Function that given an initial structure and accumulation value, folds the initial structure from
+    /// left to right.
     static func _foldl<B>(_ f: @escaping (B, K1Arg) -> B) -> (B) -> (KindApplication<K1Tag, K1Arg>) -> B
+
+    /// Fold from right to left by mapping each value into a monoid and appending
+    ///
+    /// - Parameter f: Function to perform each step of the fold
+    /// - Returns: Function that given an initial structure folds the initial structure from right to left by mapping
+    /// each value into a monoid and prepending. The starting accumulator value is the empty value for the monoid.
     static func _foldMap<M: Monoid>(_ f: @escaping (K1Arg) -> M) -> (KindApplication<K1Tag, K1Arg>) -> M
 }
 

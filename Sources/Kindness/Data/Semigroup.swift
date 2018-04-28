@@ -15,6 +15,10 @@
 infix operator <>: AdditionPrecedence
 
 /// A type with an associative binary operation
+///
+/// Laws:
+///
+///     Associativity: (x <> y) <> z == x <> (y <> z)
 public protocol Semigroup {
     /// Append the value on the right to the value on the left
     ///
