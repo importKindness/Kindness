@@ -80,6 +80,8 @@ extension ArrayTag: FunctorTag {
 
 extension ArrayTag: MonadTag { }
 
+extension ArrayTag: MonadPlusTag { }
+
 extension ArrayTag: MonadZeroTag { }
 
 extension ArrayTag: PlusTag {
@@ -155,6 +157,8 @@ extension Array: Functor {
 }
 
 extension Array: Monad { }
+
+extension Array: MonadPlus { }
 
 extension Array: MonadZero { }
 

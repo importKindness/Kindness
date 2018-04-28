@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/// HKT tag for types conforming to `MonadZero`
-public protocol MonadZeroTag: AlternativeTag, MonadTag { }
+/// HKT tag for types conforming to `MonadPlus`
+public protocol MonadPlusTag: MonadZeroTag { }
 
-/// Combines `Alternative` and `Monad`, supporting an empty element, applying wrapped functions to wrapped values,
-/// lifting values into `Self`, and sequencing dependent operations.
+/// Adds a Distributivity law to `MonadZero`
 ///
 /// Laws:
 ///
-///     Annihilation: empty >>- f = empty
-public protocol MonadZero: Alternative, Monad { }
+///     Distributivity: (x <|> y) >>- f == (x >>- f) <|> (y >>- f)
+public protocol MonadPlus: MonadZero { }

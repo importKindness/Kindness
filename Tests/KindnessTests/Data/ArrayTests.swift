@@ -165,6 +165,18 @@ class ArrayTests: XCTestCase {
             }
     }
 
+    func testMonadPlusDistributivity() {
+        property("MonadPlus - Distributivity: (x <|> y) >>- f == (x >>- f) <|> (y >>- f)")
+            <- forAll { (x: [Int8], y: [Int8], fArrow: ArrowOf<Int8, [Int8]>) -> Bool in
+                let f = fArrow.getArrow
+
+                let lhs: [Int8] = (x <|> y) >>- f
+                let rhs: [Int8] = (x >>- f) <|> (y >>- f)
+
+                return lhs == rhs
+            }
+    }
+
     func testMonadZeroAnnihilation() {
         property("MonadZero - Annihilation: empty >>- f = empty")
             <- forAll { (fArrow: ArrowOf<Int8, [Int8]>) -> Bool in

@@ -41,6 +41,8 @@
 		41615A3120950A1500B97CD0 /* Alternative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41615A2F20950A1500B97CD0 /* Alternative.swift */; };
 		41615A332095126D00B97CD0 /* MonadZero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41615A322095126D00B97CD0 /* MonadZero.swift */; };
 		41615A342095126D00B97CD0 /* MonadZero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41615A322095126D00B97CD0 /* MonadZero.swift */; };
+		41615A36209514AE00B97CD0 /* MonadPlus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41615A35209514AE00B97CD0 /* MonadPlus.swift */; };
+		41615A37209514AE00B97CD0 /* MonadPlus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41615A35209514AE00B97CD0 /* MonadPlus.swift */; };
 		4164AFE42093C90600998CCA /* Bind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4164AFE32093C90600998CCA /* Bind.swift */; };
 		4164AFE52093C90600998CCA /* Bind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4164AFE32093C90600998CCA /* Bind.swift */; };
 		4164AFE72093DFFB00998CCA /* Monad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4164AFE62093DFFB00998CCA /* Monad.swift */; };
@@ -140,6 +142,7 @@
 		41615A2C2094FDBF00B97CD0 /* Plus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plus.swift; sourceTree = "<group>"; };
 		41615A2F20950A1500B97CD0 /* Alternative.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alternative.swift; sourceTree = "<group>"; };
 		41615A322095126D00B97CD0 /* MonadZero.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonadZero.swift; sourceTree = "<group>"; };
+		41615A35209514AE00B97CD0 /* MonadPlus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonadPlus.swift; sourceTree = "<group>"; };
 		4164AFE32093C90600998CCA /* Bind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bind.swift; sourceTree = "<group>"; };
 		4164AFE62093DFFB00998CCA /* Monad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Monad.swift; sourceTree = "<group>"; };
 		418D969520924CE600102A31 /* Foldable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Foldable.swift; sourceTree = "<group>"; };
@@ -193,6 +196,7 @@
 				418D969B2092819900102A31 /* Apply.swift */,
 				4164AFE32093C90600998CCA /* Bind.swift */,
 				4164AFE62093DFFB00998CCA /* Monad.swift */,
+				41615A35209514AE00B97CD0 /* MonadPlus.swift */,
 				41615A322095126D00B97CD0 /* MonadZero.swift */,
 				41615A2C2094FDBF00B97CD0 /* Plus.swift */,
 			);
@@ -739,6 +743,7 @@
 				4160CE37208A900100D0BBA2 /* Array.swift in Sources */,
 				4160CE41208A964300D0BBA2 /* Precedence.swift in Sources */,
 				4160CE3B208A90CF00D0BBA2 /* Hole.swift in Sources */,
+				41615A36209514AE00B97CD0 /* MonadPlus.swift in Sources */,
 				414D8488208A849D00C52931 /* Kinds.swift in Sources */,
 				4102538E209133DF00769002 /* Semigroup.swift in Sources */,
 				410253912091388500769002 /* Monoid.swift in Sources */,
@@ -772,6 +777,7 @@
 				4160CE38208A900100D0BBA2 /* Array.swift in Sources */,
 				4160CE42208A964300D0BBA2 /* Precedence.swift in Sources */,
 				4160CE3C208A90CF00D0BBA2 /* Hole.swift in Sources */,
+				41615A37209514AE00B97CD0 /* MonadPlus.swift in Sources */,
 				414D8489208A849D00C52931 /* Kinds.swift in Sources */,
 				4102538F209133DF00769002 /* Semigroup.swift in Sources */,
 				410253922091388500769002 /* Monoid.swift in Sources */,
