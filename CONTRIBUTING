@@ -4,7 +4,13 @@ We welcome and encourage contributions to Kindness. Before submitting contributi
 
 ## Contribution Steps
 
-TBD
+* Look through existing issues and pull requests to make sure your intended change is not already being addressed.
+* Raise an issue outlining your intended change to make sure it is aligned with the direction of the project and serve as an indication to other developers that your change may be in progress. This can help further avoid duplicate or unnecessary effort.
+* Fork this repository.
+* Create a branch with a name reflecting the changes you are making.
+* Make your changes. Try to keep changes relatively small for each pull request to help expedite the review process. If you have a large change to make, consider breaking it up into several smaller changes.
+* Create a pull request with your changes targeting the master branch of the main repository.
+* Once checks pass and review is complete (some additional changes may be required to make checks pass or satisfy review), the change can be merged by someone with commit access to the main repository.
 
 # Code of Conduct
 
