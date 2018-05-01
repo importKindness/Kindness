@@ -32,24 +32,24 @@ public protocol K1 {
     /// All type arguments needed for `KindApplication` of the `K1Tag`
     typealias K1TagArgs = K1Arg
 
-    /// Type of `KindApplication` with the same `Arg` as `Self.K1TagArgs`
-    typealias K1Self = KindApplication<K1Tag, K1TagArgs>
-
-    /// Type of `KindApplication` with an alternative `Arg` compared to `Self.K1TagArgs`
-    typealias K1Other<A> = KindApplication<K1Tag, A>
-
     /// Representation as a `KindApplication` of the `K1Tag`
-    var kind: K1Self { get }
+    var kind: KindApplication<K1Tag, K1TagArgs> { get }
 
     /// Given a `KindApplication` of the `K1Tag` where the `Arg` matches `Self.K1TagArgs`, return an instance / value
     /// of the receiver
     ///
     /// - Parameter kind: `KindApplication` of the `K1Tag` with an `Arg` matching `Self.K1TagArgs`
     /// - Returns: An instance / value of the receiver
-    static func unkind(_ kind: K1Self) -> Self
+    static func unkind(_ kind: KindApplication<K1Tag, K1TagArgs>) -> Self
 }
 
 extension K1 {
+
+    /// Type of `KindApplication` with the same `Arg` as `Self.K1TagArgs`
+    public typealias K1Self = KindApplication<K1Tag, K1TagArgs>
+
+    /// Type of `KindApplication` with an alternative `Arg` compared to `Self.K1TagArgs`
+    public typealias K1Other<A> = KindApplication<K1Tag, A>
 
     /// Static alternative to `var kind: K1Self` for use in function composition.
     ///
