@@ -15,9 +15,44 @@
 import XCTest
 
 #if !os(macOS)
+
+extension ArrayTests {
+    static var allTests: [(String, (ArrayTests) -> () throws -> Void)] = [
+        ("testAltAssociativity", testAltAssociativity),
+        ("testAltDistributivity", testAltDistributivity),
+        ("testAlternativeAnnihilation", testAlternativeAnnihilation),
+        ("testAlternativeDistributivity", testAlternativeDistributivity),
+        ("testApplicativeComposition", testApplicativeComposition),
+        ("testApplicativeHomomorphism", testApplicativeHomomorphism),
+        ("testApplicativeIdentity", testApplicativeIdentity),
+        ("testApplicativeInterchange", testApplicativeInterchange),
+        ("testApplyAssociativeComposition", testApplyAssociativeComposition),
+        ("testBindAssociativity", testBindAssociativity),
+        ("testEmptyEqualsMempty", testEmptyEqualsMempty),
+        ("testFunctorIdentity", testFunctorIdentity),
+        ("testFunctorPreservesComposition", testFunctorPreservesComposition),
+        ("testMonadLeftIdentity", testMonadLeftIdentity),
+        ("testMonadRightIdentity", testMonadRightIdentity),
+        ("testMonadZeroAnnihilation", testMonadZeroAnnihilation),
+        ("testMonoidLeftIdentity", testMonoidLeftIdentity),
+        ("testMonoidRightIdentity", testMonoidRightIdentity),
+        ("testPlusAnnihilation", testPlusAnnihilation),
+        ("testPlusLeftIdentity", testPlusLeftIdentity),
+        ("testPlusRightIdentity", testPlusRightIdentity),
+        ("testSemigroupAssociativity", testSemigroupAssociativity)
+    ]
+}
+
+extension MonoidTests {
+    static var allTests: [(String, (MonoidTests) -> () throws -> Void)] = [
+        ("testPowerRepeatsMonoidProvidedNumberOfTimes", testPowerRepeatsMonoidProvidedNumberOfTimes)
+    ]
+}
+
 public func allTests() -> [XCTestCaseEntry] {
     return [
-        testCase(ArrayTests.allTests)
+        testCase(ArrayTests.allTests),
+        testCase(MonoidTests.allTests)
     ]
 }
 #endif

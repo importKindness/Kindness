@@ -16,7 +16,6 @@ import XCTest
 
 import KindnessTests
 
-var tests = [XCTestCaseEntry]()
+var tests = allTests()
 
-tests += ArrayTests.allTests()
 XCTMain(tests)
