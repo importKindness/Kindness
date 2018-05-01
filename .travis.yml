@@ -4,12 +4,14 @@ matrix:
       language: objective-c
       osx_image: xcode9.3
       before_install:
+        - bundle install --path ./vendor/bundle
         - brew update && brew bundle
         - carthage checkout
         - carthage build --no-skip-current --platform osx
       script:
         - set -o pipefail
         - xcodebuild clean test -workspace Kindness.xcworkspace -scheme 'Kindness OSX' | XCPRETTY_JSON_FILE_OUTPUT=build/kindness-osx-xcodebuild.json bundle exec xcpretty -f `bundle exec xcpretty-json-formatter`
+        - bundle exec danger --verbose
     - os: osx
       language: objective-c
       osx_image: xcode9.3
@@ -21,7 +23,6 @@ matrix:
       script:
         - set -o pipefail
         - xcodebuild clean test -workspace Kindness.xcworkspace -scheme 'Kindness iOS' -destination "platform=iOS Simulator,name=iPad Pro (12.9-inch) (2nd generation)" | XCPRETTY_JSON_FILE_OUTPUT=build/kindness-ios-xcodebuild.json bundle exec xcpretty -f `bundle exec xcpretty-json-formatter`
-        - bundle exec danger --verbose
     - os: linux
       language: generic
       sudo: required
