@@ -17,6 +17,7 @@ matrix:
         - bundle install --path ./vendor/bundle
         - brew update && brew bundle
         - carthage checkout
+        - carthage build --no-skip-current --platform ios --platform osx
       script:
         - set -o pipefail
         - xcodebuild clean test -scheme 'Kindness iOS' -destination "platform=iOS Simulator,name=iPad Pro (12.9-inch) (2nd generation)" | XCPRETTY_JSON_FILE_OUTPUT=build/kindness-ios-xcodebuild.json bundle exec xcpretty -f `bundle exec xcpretty-json-formatter`
