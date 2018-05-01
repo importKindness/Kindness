@@ -20,7 +20,7 @@ matrix:
         - carthage build --no-skip-current --platform ios
       script:
         - set -o pipefail
-        - xcodebuild clean testm -workspace Kindness.xcworkspace -scheme 'Kindness iOS' -destination "platform=iOS Simulator,name=iPad Pro (12.9-inch) (2nd generation)" | XCPRETTY_JSON_FILE_OUTPUT=build/kindness-ios-xcodebuild.json bundle exec xcpretty -f `bundle exec xcpretty-json-formatter`
+        - xcodebuild clean test -workspace Kindness.xcworkspace -scheme 'Kindness iOS' -destination "platform=iOS Simulator,name=iPad Pro (12.9-inch) (2nd generation)" | XCPRETTY_JSON_FILE_OUTPUT=build/kindness-ios-xcodebuild.json bundle exec xcpretty -f `bundle exec xcpretty-json-formatter`
         - bundle exec danger --verbose
     - os: linux
       language: generic
