@@ -1,6 +1,3 @@
-xcode_summary.inline_mode = true
-xcode_summary.report 'kindness-osx-xcodebuild.json'
-
 swiftlint.config_file = '../.swiftlint.yml'
 swiftlint.max_num_violations = 0
 
