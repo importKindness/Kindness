@@ -29,27 +29,27 @@ public protocol K1 {
     /// Type of the argument in the K1 position
     associatedtype K1Arg
 
-    /// All type arguments needed for `KindApplication` of the `K1Tag`
-    typealias K1TagArgs = K1Arg
-
     /// Representation as a `KindApplication` of the `K1Tag`
-    var kind: KindApplication<K1Tag, K1TagArgs> { get }
+    var kind: K1Self { get }
 
     /// Given a `KindApplication` of the `K1Tag` where the `Arg` matches `Self.K1TagArgs`, return an instance / value
     /// of the receiver
     ///
     /// - Parameter kind: `KindApplication` of the `K1Tag` with an `Arg` matching `Self.K1TagArgs`
     /// - Returns: An instance / value of the receiver
-    static func unkind(_ kind: KindApplication<K1Tag, K1TagArgs>) -> Self
+    static func unkind(_ kind: K1Self) -> Self
 }
 
-extension K1 {
+public extension K1 {
+
+    /// All type arguments needed for `KindApplication` of the `K1Tag`
+    typealias K1TagArgs = K1Arg
 
     /// Type of `KindApplication` with the same `Arg` as `Self.K1TagArgs`
-    public typealias K1Self = KindApplication<K1Tag, K1TagArgs>
+    typealias K1Self = KindApplication<K1Tag, K1TagArgs>
 
     /// Type of `KindApplication` with an alternative `Arg` compared to `Self.K1TagArgs`
-    public typealias K1Other<A> = KindApplication<K1Tag, A>
+    typealias K1Other<A> = KindApplication<K1Tag, A>
 
     /// Static alternative to `var kind: K1Self` for use in function composition.
     ///
@@ -69,15 +69,6 @@ public protocol K2: K1 {
     /// Type of the argument in the K2 position
     associatedtype K2Arg
 
-    /// All type arguments needed for `KindApplication` of the `K2Tag`
-    typealias K2TagArgs = (K2Arg, K1TagArgs)
-
-    /// Type of `KindApplication` with the same `Arg` as `Self.K2TagArgs`
-    typealias K2Self = KindApplication<K2Tag, K2TagArgs>
-
-    /// Type of `KindApplication` with an alternative `Arg` compared to `Self.K2TagArgs`
-    typealias K2Other<A, B> = KindApplication<K2Tag, (A, B)>
-
     /// Representation as a `KindApplication` of the `K2Tag`
     var kind2: K2Self { get }
 
@@ -89,13 +80,22 @@ public protocol K2: K1 {
     static func unkind2(_ kind: K2Self) -> Self
 }
 
-extension K2 {
+public extension K2 {
+
+    /// All type arguments needed for `KindApplication` of the `K2Tag`
+    typealias K2TagArgs = (K2Arg, K1TagArgs)
+
+    /// Type of `KindApplication` with the same `Arg` as `Self.K2TagArgs`
+    typealias K2Self = KindApplication<K2Tag, K2TagArgs>
+
+    /// Type of `KindApplication` with an alternative `Arg` compared to `Self.K2TagArgs`
+    typealias K2Other<A, B> = KindApplication<K2Tag, (A, B)>
 
     /// Static alternative to `var kind2: K2Self` for use in function composition.
     ///
     /// - Parameter k: Instance / value of `Self`
     /// - Returns: Representation as a `KindApplication` of the `K2Tag`
-    public static func kind2(_ k: Self) -> K2Self {
+    static func kind2(_ k: Self) -> K2Self {
         return k.kind2
     }
 }
@@ -109,15 +109,6 @@ public protocol K3: K2 {
     /// Type of the argument in the K3 position
     associatedtype K3Arg
 
-    /// All type arguments needed for `KindApplication` of the `K3Tag`
-    typealias K3TagArgs = (K3Arg, K2TagArgs)
-
-    /// Type of `KindApplication` with the same `Arg` as `Self.K3TagArgs`
-    typealias K3Self = KindApplication<K3Tag, K3TagArgs>
-
-    /// Type of `KindApplication` with alternative `Arg` compared to `Self.K3TagArgs`
-    typealias K3Other<A, B, C> = KindApplication<K3Tag, (A, B, C)>
-
     /// Representation as a `KindApplication` of the `K3Tag`
     var kind3: K3Self { get }
 
@@ -129,13 +120,22 @@ public protocol K3: K2 {
     static func unkind3(_ kind: K3Self) -> Self
 }
 
-extension K3 {
+public extension K3 {
+
+    /// All type arguments needed for `KindApplication` of the `K3Tag`
+    typealias K3TagArgs = (K3Arg, K2TagArgs)
+
+    /// Type of `KindApplication` with the same `Arg` as `Self.K3TagArgs`
+    typealias K3Self = KindApplication<K3Tag, K3TagArgs>
+
+    /// Type of `KindApplication` with alternative `Arg` compared to `Self.K3TagArgs`
+    typealias K3Other<A, B, C> = KindApplication<K3Tag, (A, B, C)>
 
     /// Static alternative to `var kind3: K3Self` for use in function composition.
     ///
     /// - Parameter k: Instance / value of `Self`
     /// - Returns: Representation as a `KindApplication` of the `K2Tag`
-    public static func kind3(_ k: Self) -> K3Self {
+    static func kind3(_ k: Self) -> K3Self {
         return k.kind3
     }
 }
