@@ -58,6 +58,36 @@ public func |> <A, B> (_ a: A, _ f: (A) -> B) -> B {
     return f(a)
 }
 
+/// Applies the argument on the left to the function on the right
+///
+/// - Parameters:
+///   - a: Argument to apply
+///   - f: Function to call
+/// - Returns: Result of calling `f` with `a`
+public func |> <A, B, C> (_ a: A, _ f: @escaping (A, B) -> C) -> (B) -> C {
+    return { b in f(a, b) }
+}
+
+/// Applies the argument on the left to the function on the right
+///
+/// - Parameters:
+///   - a: Argument to apply
+///   - f: Function to call
+/// - Returns: Result of calling `f` with `a`
+public func |> <A, B, C, D> (_ a: A, _ f: @escaping (A, B, C) -> D) -> (B, C) -> D {
+    return { b, c in f(a, b, c) }
+}
+
+/// Applies the argument on the left to the function on the right
+///
+/// - Parameters:
+///   - a: Argument to apply
+///   - f: Function to call
+/// - Returns: Result of calling `f` with `a`
+public func |> <A, B, C, D, E> (_ a: A, _ f: @escaping (A, B, C, D) -> E) -> (B, C, D) -> E {
+    return { b, c, d in f(a, b, c, d) }
+}
+
 infix operator <|: ApplyPrecedence
 
 /// Applies the argument on the right to the function on the left
@@ -68,6 +98,36 @@ infix operator <|: ApplyPrecedence
 /// - Returns: Result of calling `f` with `a`
 public func <| <A, B> (_ f: (A) -> B, _ a: A) -> B {
     return f(a)
+}
+
+/// Applies the argument on the right to the function on the left
+///
+/// - Parameters:
+///   - f: Function to call
+///   - a: Argument to apply
+/// - Returns: Result of calling `f` with `a`
+public func <| <A, B, C> (_ f: @escaping (A, B) -> C, _ a: A) -> (B) -> C {
+    return { b in f(a, b) }
+}
+
+/// Applies the argument on the right to the function on the left
+///
+/// - Parameters:
+///   - f: Function to call
+///   - a: Argument to apply
+/// - Returns: Result of calling `f` with `a`
+public func <| <A, B, C, D> (_ f: @escaping (A, B, C) -> D, _ a: A) -> (B, C) -> D {
+    return { b, c in f(a, b, c) }
+}
+
+/// Applies the argument on the right to the function on the left
+///
+/// - Parameters:
+///   - f: Function to call
+///   - a: Argument to apply
+/// - Returns: Result of calling `f` with `a`
+public func <| <A, B, C, D, E> (_ f: @escaping (A, B, C, D) -> E, _ a: A) -> (B, C, D) -> E {
+    return { b, c, d in f(a, b, c, d) }
 }
 
 /// Returns the value passed in unchanged

@@ -142,8 +142,8 @@ class ArrayTests: XCTestCase {
                 let f = fArrow.getArrow
                 let g = gArrow.getArrow
 
-                let lhs: [Int8] = fmap(f <<< g) <| xs
-                let rhs: [Int8] = (fmap(f) <<< fmap(g)) <| xs
+                let lhs: [Int8] = fmap(f <<< g, xs)
+                let rhs: [Int8] = ((fmap <| f) <<< (fmap <| g)) <| xs
 
                 return lhs == rhs
             }

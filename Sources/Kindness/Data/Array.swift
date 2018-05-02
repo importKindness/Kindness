@@ -42,9 +42,10 @@ extension ArrayTag: ApplicativeTag {
 
 extension ArrayTag: ApplyTag {
     public static func _apply<A, B>(
-        _ fab: KindApplication<ArrayTag, (A) -> B>
-    ) -> (KindApplication<ArrayTag, A>) -> KindApplication<ArrayTag, B> {
-        return [(A) -> B]._apply(fab)
+        _ fab: KindApplication<ArrayTag, (A) -> B>,
+        _ value: KindApplication<ArrayTag, A>
+    ) -> KindApplication<ArrayTag, B> {
+        return [(A) -> B]._apply(fab, value)
     }
 }
 
@@ -72,9 +73,10 @@ extension ArrayTag: FoldableTag {
 
 extension ArrayTag: FunctorTag {
     public static func _fmap<A, B>(
-        _ f: @escaping (A) -> B
-    ) -> (KindApplication<ArrayTag, A>) -> KindApplication<ArrayTag, B> {
-        return [A]._fmap(f)
+        _ f: @escaping (A) -> B,
+        _ value: KindApplication<ArrayTag, A>
+    ) -> KindApplication<ArrayTag, B> {
+        return [A]._fmap(f, value)
     }
 }
 
@@ -121,16 +123,15 @@ extension Array: Applicative {
 
 extension Array: Apply {
     public static func _apply<A, B>(
-        _ fab: KindApplication<K1Tag, (A) -> B>
-    ) -> (KindApplication<K1Tag, A>) -> KindApplication<K1Tag, B> {
+        _ fab: KindApplication<K1Tag, (A) -> B>,
+        _ value: KindApplication<K1Tag, A>
+    ) -> KindApplication<K1Tag, B> {
         let fs = [(A) -> B].unkind(fab)
-        return { kxs in
-            return fs.flatMap({ f -> [B] in
-                return [A].unkind(kxs).flatMap({ x -> B in
-                    return f(x)
-                })
-            }).kind
-        }
+        return fs.flatMap({ f -> [B] in
+            return [A].unkind(value).flatMap({ x -> B in
+                return f(x)
+            })
+        }).kind
     }
 }
 
@@ -151,8 +152,8 @@ extension Array: Foldable, FoldableByFoldL {
 }
 
 extension Array: Functor {
-    public static func _fmap<T>(_ f: @escaping (Element) -> T) -> (K1Self) -> K1Other<T> {
-        return [T].kind • { $0.map(f) } • [Element].unkind
+    public static func _fmap<T>(_ f: @escaping (Element) -> T, _ value: K1Self) -> K1Other<T> {
+        return ([T].kind • { $0.map(f) } • [Element].unkind) <| value
     }
 }
 
