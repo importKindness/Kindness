@@ -11,10 +11,11 @@ matrix:
         - brew update && brew bundle
         - carthage checkout
         - carthage build --no-skip-current --platform osx
+      before_script:
+        - bundle exec danger --verbose
       script:
         - set -o pipefail
         - xcodebuild clean test -workspace Kindness.xcworkspace -scheme 'Kindness OSX' | XCPRETTY_JSON_FILE_OUTPUT=build/kindness-osx-xcodebuild.json bundle exec xcpretty -f `bundle exec xcpretty-json-formatter`
-        - bundle exec danger --verbose
     - os: osx
       language: objective-c
       osx_image: xcode9.3
