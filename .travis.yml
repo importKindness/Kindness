@@ -12,6 +12,7 @@ matrix:
         - carthage checkout
         - carthage build --no-skip-current --platform osx
       before_script:
+        - swiftlint version
         - bundle exec danger --verbose
       script:
         - set -o pipefail
