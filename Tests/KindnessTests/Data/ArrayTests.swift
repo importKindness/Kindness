@@ -19,23 +19,8 @@ import SwiftCheck
 import Kindness
 
 class ArrayTests: XCTestCase {
-    func testAltAssociativity() {
-        property("Alt - Associativity: (x <|> y) <|> z == x <|> (y <|> z)")
-            <- forAll { (x: [Int8], y: [Int8], z: [Int8]) -> Bool in
-                return ((x <|> y) <|> z) == (x <|> (y <|> z))
-            }
-    }
-
-    func testAltDistributivity() {
-        property("Alt - Distributivity: f <^> (x <|> y) == (f <^> x) <|> (f <^> y)")
-            <- forAll { (x: [Int8], y: [Int8], fArrow: ArrowOf<Int8, Int8>) -> Bool in
-                let f = fArrow.getArrow
-
-                let lhs: [Int8] = f <^> (x <|> y)
-                let rhs: [Int8] = (f <^> x) <|> (f <^> y)
-
-                return lhs == rhs
-            }
+    func testAltLaws() {
+        checkAltLaws(for: [Int8].self)
     }
 
     func testAlternativeDistributivity() {
