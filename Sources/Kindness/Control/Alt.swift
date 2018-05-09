@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-infix operator <|>: AltPrecedence
+infix operator <|>: LogicalConjunctionPrecedence
 
 /// HKT tag for types conforming to `Alt`
 public protocol AltTag: FunctorTag {

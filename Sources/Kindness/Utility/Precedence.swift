@@ -12,35 +12,118 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-precedencegroup CompositionPrecedenceRight {
-    higherThan: CompositionPrecedenceLeft
+precedencegroup InfixR9 {
+    higherThan: InfixL8, InfixR8, BitwiseShiftPrecedence
     associativity: right
 }
 
-precedencegroup CompositionPrecedenceLeft {
-    higherThan: BitwiseShiftPrecedence
+precedencegroup InfixL9 {
+    higherThan: InfixL8, InfixR8, BitwiseShiftPrecedence
     associativity: left
 }
 
-precedencegroup FunctorPrecedence {
+precedencegroup InfixR8 {
+    lowerThan: BitwiseShiftPrecedence
+    higherThan: MultiplicationPrecedence, InfixR7
+    associativity: right
+}
+
+precedencegroup InfixL8 {
+    lowerThan: BitwiseShiftPrecedence
+    higherThan: MultiplicationPrecedence, InfixR7
+    associativity: left
+}
+
+precedencegroup InfixR7 {
+    lowerThan: BitwiseShiftPrecedence
+    higherThan: AdditionPrecedence, InfixR6
+    associativity: right
+}
+
+//precedencegroup InfixL7 { // Use MultiplicationPrecedence
+//    lowerThan: BitwiseShiftPrecedence
+//    higherThan: AdditionPrecedence, InfixR6
+//    associativity: left
+//}
+
+precedencegroup InfixR6 {
+    lowerThan: MultiplicationPrecedence
+    higherThan: InfixL5, InfixR5, RangeFormationPrecedence
+    associativity: right
+}
+
+//precedencegroup InfixL6 { // Use AdditionPrecedence
+//    lowerThan: MultiplicationPrecedence
+//    higherThan: InfixL5, InfixR5, RangeFormationPrecedence
+//    associativity: left
+//}
+
+precedencegroup InfixR5 {
+    lowerThan: NilCoalescingPrecedence
+    higherThan: InfixL4, InfixR4, ComparisonPrecedence
+    associativity: right
+}
+
+precedencegroup InfixL5 {
+    lowerThan: NilCoalescingPrecedence
+    higherThan: InfixL4, InfixR4, ComparisonPrecedence
+    associativity: left
+}
+
+precedencegroup InfixR4 {
+    lowerThan: NilCoalescingPrecedence
+    higherThan: LogicalConjunctionPrecedence, InfixR3, ComparisonPrecedence
+    associativity: right
+}
+
+precedencegroup InfixL4 {
+    lowerThan: NilCoalescingPrecedence
+    higherThan: LogicalConjunctionPrecedence, InfixR3, ComparisonPrecedence
+    associativity: left
+}
+
+precedencegroup InfixR3 {
     lowerThan: ComparisonPrecedence
-    higherThan: LogicalConjunctionPrecedence
-    associativity: left
+    higherThan: LogicalDisjunctionPrecedence, InfixR2
+    associativity: right
 }
 
-precedencegroup MonadPrecedence {
+//precedencegroup InfixL3 { // Use LogicalConjunctionPrecedence
+//    lowerThan: ComparisonPrecedence
+//    higherThan: LogicalDisjunctionPrecedence, InfixR2
+//    associativity: left
+//}
+
+precedencegroup InfixR2 {
+    lowerThan: LogicalConjunctionPrecedence
+    higherThan: InfixR1
+    associativity: right
+}
+
+//precedencegroup InfixL2 { Use LogicalDisjunctionPrecedence
+//    lowerThan: LogicalConjunctionPrecedence
+//    higherThan: InfixL1, InfixR1, LogicalDisjunctionPrecedence
+//    associativity: left
+//}
+
+precedencegroup InfixR1 {
     lowerThan: LogicalDisjunctionPrecedence
-    higherThan: AltPrecedence
-    associativity: left
+    higherThan: InfixL0, InfixR0
+    associativity: right
 }
 
-precedencegroup AltPrecedence {
+precedencegroup InfixL1 {
     lowerThan: LogicalDisjunctionPrecedence
-    higherThan: ApplyPrecedence
+    higherThan: InfixL0, InfixR0
     associativity: left
 }
 
-precedencegroup ApplyPrecedence {
+precedencegroup InfixR0 {
     lowerThan: LogicalDisjunctionPrecedence
     associativity: right
+}
+
+precedencegroup InfixL0 {
+    lowerThan: LogicalDisjunctionPrecedence
+    associativity: left
 }

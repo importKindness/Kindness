@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-infix operator >>-: MonadPrecedence
-infix operator -<<: MonadPrecedence
-infix operator >=>: MonadPrecedence
-infix operator <=<: MonadPrecedence
+infix operator >>-: InfixL1
+infix operator -<<: InfixR1
+infix operator >=>: InfixR1
+infix operator <=<: InfixR1
 
 /// HKT tag type for types that conform to `Bind`.
 public protocol BindTag {

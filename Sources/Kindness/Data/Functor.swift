@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-infix operator <^>: FunctorPrecedence
-infix operator <&>: FunctorPrecedence
-infix operator <^: FunctorPrecedence
-infix operator ^>: FunctorPrecedence
+infix operator <^>: InfixL4
+infix operator <&>: InfixL4
+infix operator <^: InfixL4
+infix operator ^>: InfixL4
 
 /// HKT tag type for `Functor`s.
 public protocol FunctorTag {

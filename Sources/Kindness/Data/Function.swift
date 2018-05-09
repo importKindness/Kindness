@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-infix operator •: CompositionPrecedenceRight
-infix operator >>>: CompositionPrecedenceRight
-infix operator <<<: CompositionPrecedenceRight
+infix operator •: InfixR9
+infix operator >>>: InfixR9
+infix operator <<<: InfixR9
 
 /// Compose two functions to make a single function: "g after f"
 ///
@@ -46,7 +46,7 @@ public func >>> <A, B, C>(_ f: @escaping (A) -> B, _ g: @escaping (B) -> C) -> (
     return { g(f($0)) }
 }
 
-infix operator |>: ApplyPrecedence
+infix operator |>: InfixL1
 
 /// Applies the argument on the left to the function on the right
 ///
@@ -88,7 +88,7 @@ public func |> <A, B, C, D, E> (_ a: A, _ f: @escaping (A, B, C, D) -> E) -> (B,
     return { b, c, d in f(a, b, c, d) }
 }
 
-infix operator <|: ApplyPrecedence
+infix operator <|: InfixR0
 
 /// Applies the argument on the right to the function on the left
 ///
