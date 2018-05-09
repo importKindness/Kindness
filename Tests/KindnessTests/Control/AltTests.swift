@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import XCTest
-
 import SwiftCheck
 
 import Kindness
@@ -25,7 +23,7 @@ func checkAltAssociativityLaw<A: Alt & Arbitrary & Equatable>(for: A.Type) {
         }
 }
 
-func checkAltDistributivity<A: Alt & Arbitrary & Equatable>(
+func checkAltDistributivityLaw<A: Alt & Arbitrary & Equatable>(
     for: A.Type
 ) where A.K1Arg: CoArbitrary & Arbitrary & Hashable {
     property("Alt - Distributivity: f <^> (x <|> y) == (f <^> x) <|> (f <^> y)")
@@ -41,5 +39,5 @@ func checkAltDistributivity<A: Alt & Arbitrary & Equatable>(
 
 func checkAltLaws<A: Alt & Arbitrary & Equatable>(for: A.Type) where A.K1Arg: CoArbitrary & Arbitrary & Hashable {
     checkAltAssociativityLaw(for: A.self)
-    checkAltDistributivity(for: A.self)
+    checkAltDistributivityLaw(for: A.self)
 }

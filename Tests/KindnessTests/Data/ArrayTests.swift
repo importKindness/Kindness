@@ -51,103 +51,24 @@ class ArrayTests: XCTestCase {
             }
     }
 
-    func testApplicativeIdentity() {
-        property("Applicative - Identity: pure(id) <*> v == v")
-            <- forAll { (xs: [Int8]) -> Bool in
-                return (pure(id) <*> xs) == xs
-            }
+    func testApplicativeLaws() {
+        checkApplicativeLaws(for: [Int8].self, fabType: [ArrowOf<Int8, Int8>].self)
     }
 
-    func testApplicativeComposition() {
-        property("Applicative - Composition: pure(<<<) <*> f <*> g <*> h == f <*> (g <*> h)")
-            <- forAll { (fArrows: [ArrowOf<Int8, Int8>], gArrows: [ArrowOf<Int8, Int8>], h: [Int8]) -> Bool in
-                let f = fArrows.map { $0.getArrow }
-                let g = gArrows.map { $0.getArrow }
-
-                let lhs: [Int8] = pure(curry(•)) <*> f <*> g <*> h
-                let rhs: [Int8] = f <*> (g <*> h)
-
-                return lhs == rhs
-            }
+    func testApplyLaws() {
+        checkApplyLaws(for: [Int8].self, fabType: [ArrowOf<Int8, Int8>].self)
     }
 
-    func testApplicativeHomomorphism() {
-        property("Applicative - Homomorphism: pure(f) <*> pure(x) == pure(f(x))")
-            <- forAll { (fArrow: ArrowOf<Int8, Int8>, x: Int8) -> Bool in
-                let f = fArrow.getArrow
-                return (pure(f) <*> (pure(x) as [Int8])) == pure(f(x))
-            }
+    func testBindLaws() {
+        checkBindLaws(for: [Int8].self)
     }
 
-    func testApplicativeInterchange() {
-        property("Applicative - Interchange: u <*> pure(y) == pure ((|>) y) <*> u")
-            <- forAll { (fArrows: [ArrowOf<Int8, Int8>], x: Int8) -> Bool in
-                let f = fArrows.map { $0.getArrow }
-
-                let lhs: [Int8] = f <*> pure(x)
-                let rhs: [Int8] = pure(curry(|>)(x)) <*> f
-
-                return lhs == rhs
-            }
+    func testFunctorLaws() {
+        checkFunctorLaws(for: [Int8].self)
     }
 
-    func testApplyAssociativeComposition() {
-        property("Apply - Associative composition: (<<<) <^> f <*> g <*> h == f <*> (g <*> h)")
-            <- forAll { (fArrows: [ArrowOf<Int8, Int8>], gArrows: [ArrowOf<Int8, Int8>], h: [Int8]) -> Bool in
-                let f = fArrows.map { $0.getArrow }
-                let g = gArrows.map { $0.getArrow }
-
-                let lhs: [Int8] = curry(<<<) <^> f <*> g <*> h
-                let rhs: [Int8] = f <*> (g <*> h)
-
-                return lhs == rhs
-            }
-    }
-
-    func testBindAssociativity() {
-        property("Bind - Associativity: (x >>- f) >>- g = x >>- { k in f(k) >>- g }")
-            <- forAll { (xs: [Int8], fArrow: ArrowOf<Int8, [Int8]>, gArrow: ArrowOf<Int8, [Int8]>) -> Bool in
-                let f = fArrow.getArrow
-                let g = gArrow.getArrow
-
-                return ((xs >>- f) >>- g) == (xs >>- { k -> [Int8] in f(k) >>- g })
-            }
-    }
-
-    func testFunctorIdentity() {
-        property("Functor - Identity: fmap(id) == id")
-            <- forAll { (xs: [Int8]) -> Bool in
-                return (id <^> xs) == (id <| xs)
-            }
-    }
-
-    func testFunctorPreservesComposition() {
-        property("Functory - Composition: fmap(f <<< g) = fmap(f) <<< fmap(g))")
-            <- forAll { (xs: [Int8], fArrow: ArrowOf<Int8, Int8>, gArrow: ArrowOf<Int8, Int8>) -> Bool in
-                let f = fArrow.getArrow
-                let g = gArrow.getArrow
-
-                let lhs: [Int8] = fmap(f <<< g, xs)
-                let rhs: [Int8] = ((fmap <| f) <<< (fmap <| g)) <| xs
-
-                return lhs == rhs
-            }
-    }
-
-    func testMonadLeftIdentity() {
-        property("Monad - Left Identity: pure(x) >>- f == f(x)")
-            <- forAll { (x: Int8, fArrow: ArrowOf<Int8, [Int8]>) in
-                let f = fArrow.getArrow
-
-                return (pure(x) as [Int8] >>- f) == f(x)
-            }
-    }
-
-    func testMonadRightIdentity() {
-        property("Monad - Right Identity: x >>- pure == x")
-            <- forAll { (x: [Int8]) in
-                return (x >>- pure) == x
-            }
+    func testMonadLaws() {
+        checkMonadLaws(for: [Int8].self)
     }
 
     func testMonadPlusDistributivity() {

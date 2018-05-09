@@ -21,17 +21,12 @@ extension ArrayTests {
         ("testAltLaws", testAltLaws),
         ("testAlternativeAnnihilation", testAlternativeAnnihilation),
         ("testAlternativeDistributivity", testAlternativeDistributivity),
-        ("testApplicativeComposition", testApplicativeComposition),
-        ("testApplicativeHomomorphism", testApplicativeHomomorphism),
-        ("testApplicativeIdentity", testApplicativeIdentity),
-        ("testApplicativeInterchange", testApplicativeInterchange),
-        ("testApplyAssociativeComposition", testApplyAssociativeComposition),
-        ("testBindAssociativity", testBindAssociativity),
+        ("testApplicativeLaws", testApplicativeLaws),
+        ("testApplyLaws", testApplyLaws),
+        ("testBindLaws", testBindLaws),
         ("testEmptyEqualsMempty", testEmptyEqualsMempty),
-        ("testFunctorIdentity", testFunctorIdentity),
-        ("testFunctorPreservesComposition", testFunctorPreservesComposition),
-        ("testMonadLeftIdentity", testMonadLeftIdentity),
-        ("testMonadRightIdentity", testMonadRightIdentity),
+        ("testFunctorLaws", testFunctorLaws),
+        ("testMonadLaws", testMonadLaws),
         ("testMonadZeroAnnihilation", testMonadZeroAnnihilation),
         ("testMonoidLeftIdentity", testMonoidLeftIdentity),
         ("testMonoidRightIdentity", testMonoidRightIdentity),
@@ -39,6 +34,18 @@ extension ArrayTests {
         ("testPlusLeftIdentity", testPlusLeftIdentity),
         ("testPlusRightIdentity", testPlusRightIdentity),
         ("testSemigroupAssociativity", testSemigroupAssociativity)
+    ]
+}
+
+extension EitherTests {
+    static var allTests: [(String, (EitherTests) -> () throws -> Void)] = [
+        ("testAltLaws", testAltLaws),
+        ("testApplicativeLaws", testApplicativeLaws),
+        ("testApplyLaws", testApplyLaws),
+        ("testBindLaws", testBindLaws),
+        ("testExtendLaws", testExtendLaws),
+        ("testFunctorLaws", testFunctorLaws),
+        ("testMonadLaws", testMonadLaws)
     ]
 }
 
