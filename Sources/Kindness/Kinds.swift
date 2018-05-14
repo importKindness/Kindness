@@ -129,7 +129,7 @@ public extension K3 {
     typealias K3Self = KindApplication<K3Tag, K3TagArgs>
 
     /// Type of `KindApplication` with alternative `Arg` compared to `Self.K3TagArgs`
-    typealias K3Other<A, B, C> = KindApplication<K3Tag, (A, B, C)>
+    typealias K3Other<A, B, C> = KindApplication<K3Tag, (A, (B, C))>
 
     /// Static alternative to `var kind3: K3Self` for use in function composition.
     ///

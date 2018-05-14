@@ -82,7 +82,7 @@ public struct EitherK2Tag {
     }
 
     fileprivate func unsafeUnwrap<L, R>() -> Either<L, R> {
-        return value as! Either<L, R>
+        return value as! Either<L, R> //swiftlint:disable:this force_cast
     }
 }
 
@@ -98,9 +98,14 @@ public enum Either<L, R> {
 extension Either: Equatable where L: Equatable, R: Equatable {
     public static func == (lhs: Either<L, R>, rhs: Either<L, R>) -> Bool {
         switch (lhs, rhs) {
-        case let (.left(l), .left(r)): return l == r
-        case let (.right(l), .right(r)): return l == r
-        default: return false
+        case let (.left(l), .left(r)):
+            return l == r
+
+        case let (.right(l), .right(r)):
+            return l == r
+
+        default:
+            return false
         }
     }
 }
@@ -206,8 +211,11 @@ extension Either: Extend {
 extension Either: Functor {
     public static func _fmap<T>(_ f: @escaping (K1Arg) -> T, _ value: K1Self) -> K1Other<T> {
         switch unkind(value) {
-        case .left(let l): return Either<L, T>.left(l).kind
-        case .right(let r): return Either<L, T>.right(f(r)).kind
+        case .left(let l):
+            return Either<L, T>.left(l).kind
+
+        case .right(let r):
+            return Either<L, T>.right(f(r)).kind
         }
     }
 }
