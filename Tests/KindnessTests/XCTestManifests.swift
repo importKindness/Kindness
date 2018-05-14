@@ -19,8 +19,7 @@ import XCTest
 extension ArrayTests {
     static var allTests: [(String, (ArrayTests) -> () throws -> Void)] = [
         ("testAltLaws", testAltLaws),
-        ("testAlternativeAnnihilation", testAlternativeAnnihilation),
-        ("testAlternativeDistributivity", testAlternativeDistributivity),
+        ("testAlternativeLaws", testAlternativeLaws),
         ("testApplicativeLaws", testApplicativeLaws),
         ("testApplyLaws", testApplyLaws),
         ("testBindLaws", testBindLaws),

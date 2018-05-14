@@ -13,6 +13,8 @@
 		410253922091388500769002 /* Monoid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410253902091388500769002 /* Monoid.swift */; };
 		4102539420913BE500769002 /* MonoidTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4102539320913BE500769002 /* MonoidTests.swift */; };
 		4102539520913BE500769002 /* MonoidTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4102539320913BE500769002 /* MonoidTests.swift */; };
+		414A4B3820A9CC13007D7CEF /* AlternativeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414A4B3720A9CC13007D7CEF /* AlternativeTests.swift */; };
+		414A4B3920A9CC13007D7CEF /* AlternativeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414A4B3720A9CC13007D7CEF /* AlternativeTests.swift */; };
 		414D8414208A5BB800C52931 /* Kindness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 414D840A208A5BB800C52931 /* Kindness.framework */; };
 		414D8432208A5C5400C52931 /* Kindness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 414D8429208A5C5300C52931 /* Kindness.framework */; };
 		414D8488208A849D00C52931 /* Kinds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414D8487208A849D00C52931 /* Kinds.swift */; };
@@ -125,6 +127,7 @@
 		4102538D209133DF00769002 /* Semigroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Semigroup.swift; sourceTree = "<group>"; };
 		410253902091388500769002 /* Monoid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Monoid.swift; sourceTree = "<group>"; };
 		4102539320913BE500769002 /* MonoidTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonoidTests.swift; sourceTree = "<group>"; };
+		414A4B3720A9CC13007D7CEF /* AlternativeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternativeTests.swift; sourceTree = "<group>"; };
 		414D840A208A5BB800C52931 /* Kindness.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Kindness.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		414D8413208A5BB800C52931 /* KindnessTests_iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KindnessTests_iOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		414D8429208A5C5300C52931 /* Kindness.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Kindness.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -465,6 +468,7 @@
 		4175E1AF2099FE030036566A /* Control */ = {
 			isa = PBXGroup;
 			children = (
+				414A4B3720A9CC13007D7CEF /* AlternativeTests.swift */,
 				4175E1B02099FE190036566A /* AltTests.swift */,
 				41670989209D0D6C00076483 /* ApplicativeTests.swift */,
 				41670983209D07A800076483 /* ApplyTests.swift */,
@@ -834,6 +838,7 @@
 				4167099320A331DD00076483 /* MonadTests.swift in Sources */,
 				4102539420913BE500769002 /* MonoidTests.swift in Sources */,
 				4175E1B12099FE190036566A /* AltTests.swift in Sources */,
+				414A4B3820A9CC13007D7CEF /* AlternativeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -880,6 +885,7 @@
 				4167099420A331DD00076483 /* MonadTests.swift in Sources */,
 				4102539520913BE500769002 /* MonoidTests.swift in Sources */,
 				4175E1B22099FE190036566A /* AltTests.swift in Sources */,
+				414A4B3920A9CC13007D7CEF /* AlternativeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

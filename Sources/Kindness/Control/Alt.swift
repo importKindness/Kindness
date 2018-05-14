@@ -79,3 +79,15 @@ public func <|> <A: Alt>(_ lhs: KindApplication<A.K1Tag, A.K1Arg>, _ rhs: A) -> 
 public func <|> <A: Alt>(_ lhs: KindApplication<A.K1Tag, A.K1Arg>, _ rhs: KindApplication<A.K1Tag, A.K1Arg>) -> A {
     return A.unkind(A._alt(lhs) <| rhs)
 }
+
+/// Append rhs after lhs
+///
+/// - Parameters:
+///   - lhs: Type constructor to which `rhs` should be appended
+///   - rhs: Type constructor to append to `lhs`
+/// - Returns: Result of appending `rhs` to `lhs`
+public func <|> <FTag: AltTag, A>(
+    _ lhs: KindApplication<FTag, A>, _ rhs: KindApplication<FTag, A>
+) -> KindApplication<FTag, A> {
+    return FTag._alt(lhs) <| rhs
+}
