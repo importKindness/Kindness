@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4100A36420B3038B00417E5B /* Identity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4100A36320B3038B00417E5B /* Identity.swift */; };
+		4100A36520B3038B00417E5B /* Identity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4100A36320B3038B00417E5B /* Identity.swift */; };
+		4100A36720B3045200417E5B /* IdentityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4100A36620B3045200417E5B /* IdentityTests.swift */; };
+		4100A36820B3045200417E5B /* IdentityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4100A36620B3045200417E5B /* IdentityTests.swift */; };
 		4102538E209133DF00769002 /* Semigroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4102538D209133DF00769002 /* Semigroup.swift */; };
 		4102538F209133DF00769002 /* Semigroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4102538D209133DF00769002 /* Semigroup.swift */; };
 		410253912091388500769002 /* Monoid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410253902091388500769002 /* Monoid.swift */; };
@@ -124,6 +128,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4100A36320B3038B00417E5B /* Identity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identity.swift; sourceTree = "<group>"; };
+		4100A36620B3045200417E5B /* IdentityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentityTests.swift; sourceTree = "<group>"; };
 		4102538D209133DF00769002 /* Semigroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Semigroup.swift; sourceTree = "<group>"; };
 		410253902091388500769002 /* Monoid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Monoid.swift; sourceTree = "<group>"; };
 		4102539320913BE500769002 /* MonoidTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonoidTests.swift; sourceTree = "<group>"; };
@@ -440,6 +446,7 @@
 				418D969520924CE600102A31 /* Foldable.swift */,
 				4160CE33208A8F3700D0BBA2 /* Functor.swift */,
 				4160CE3D208A95B200D0BBA2 /* Function.swift */,
+				4100A36320B3038B00417E5B /* Identity.swift */,
 				410253902091388500769002 /* Monoid.swift */,
 				4102538D209133DF00769002 /* Semigroup.swift */,
 			);
@@ -460,6 +467,7 @@
 			children = (
 				4160CE44208AA3C100D0BBA2 /* ArrayTests.swift */,
 				4167097B209D012A00076483 /* EitherTests.swift */,
+				4100A36620B3045200417E5B /* IdentityTests.swift */,
 				4102539320913BE500769002 /* MonoidTests.swift */,
 			);
 			path = Data;
@@ -820,6 +828,7 @@
 				4164AFE42093C90600998CCA /* Bind.swift in Sources */,
 				41615A2D2094FDBF00B97CD0 /* Plus.swift in Sources */,
 				4167096D209CD3FB00076483 /* Extend.swift in Sources */,
+				4100A36420B3038B00417E5B /* Identity.swift in Sources */,
 				4160CE3E208A95B200D0BBA2 /* Function.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -835,6 +844,7 @@
 				41670981209D016000076483 /* EitherTests.swift in Sources */,
 				41670984209D07A800076483 /* ApplyTests.swift in Sources */,
 				4167097F209D015A00076483 /* FunctorTests.swift in Sources */,
+				4100A36720B3045200417E5B /* IdentityTests.swift in Sources */,
 				4167099320A331DD00076483 /* MonadTests.swift in Sources */,
 				4102539420913BE500769002 /* MonoidTests.swift in Sources */,
 				4175E1B12099FE190036566A /* AltTests.swift in Sources */,
@@ -867,6 +877,7 @@
 				4164AFE52093C90600998CCA /* Bind.swift in Sources */,
 				41615A2E2094FDBF00B97CD0 /* Plus.swift in Sources */,
 				4167096E209CD3FB00076483 /* Extend.swift in Sources */,
+				4100A36520B3038B00417E5B /* Identity.swift in Sources */,
 				4160CE3F208A95B200D0BBA2 /* Function.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -882,6 +893,7 @@
 				41670982209D016000076483 /* EitherTests.swift in Sources */,
 				41670985209D07A800076483 /* ApplyTests.swift in Sources */,
 				41670980209D015A00076483 /* FunctorTests.swift in Sources */,
+				4100A36820B3045200417E5B /* IdentityTests.swift in Sources */,
 				4167099420A331DD00076483 /* MonadTests.swift in Sources */,
 				4102539520913BE500769002 /* MonoidTests.swift in Sources */,
 				4175E1B22099FE190036566A /* AltTests.swift in Sources */,
