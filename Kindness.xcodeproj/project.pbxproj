@@ -11,6 +11,10 @@
 		4100A36520B3038B00417E5B /* Identity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4100A36320B3038B00417E5B /* Identity.swift */; };
 		4100A36720B3045200417E5B /* IdentityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4100A36620B3045200417E5B /* IdentityTests.swift */; };
 		4100A36820B3045200417E5B /* IdentityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4100A36620B3045200417E5B /* IdentityTests.swift */; };
+		4100A36D20B5A78400417E5B /* MonadTrans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4100A36C20B5A78400417E5B /* MonadTrans.swift */; };
+		4100A36E20B5A78400417E5B /* MonadTrans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4100A36C20B5A78400417E5B /* MonadTrans.swift */; };
+		4100A37120B5AC2900417E5B /* ReaderT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4100A37020B5AC2900417E5B /* ReaderT.swift */; };
+		4100A37220B5AC2900417E5B /* ReaderT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4100A37020B5AC2900417E5B /* ReaderT.swift */; };
 		4102538E209133DF00769002 /* Semigroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4102538D209133DF00769002 /* Semigroup.swift */; };
 		4102538F209133DF00769002 /* Semigroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4102538D209133DF00769002 /* Semigroup.swift */; };
 		410253912091388500769002 /* Monoid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410253902091388500769002 /* Monoid.swift */; };
@@ -130,6 +134,8 @@
 /* Begin PBXFileReference section */
 		4100A36320B3038B00417E5B /* Identity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identity.swift; sourceTree = "<group>"; };
 		4100A36620B3045200417E5B /* IdentityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentityTests.swift; sourceTree = "<group>"; };
+		4100A36C20B5A78400417E5B /* MonadTrans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonadTrans.swift; sourceTree = "<group>"; };
+		4100A37020B5AC2900417E5B /* ReaderT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderT.swift; sourceTree = "<group>"; };
 		4102538D209133DF00769002 /* Semigroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Semigroup.swift; sourceTree = "<group>"; };
 		410253902091388500769002 /* Monoid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Monoid.swift; sourceTree = "<group>"; };
 		4102539320913BE500769002 /* MonoidTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonoidTests.swift; sourceTree = "<group>"; };
@@ -232,9 +238,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4100A36A20B5A75100417E5B /* Monad */ = {
+			isa = PBXGroup;
+			children = (
+				4100A36F20B5AC1D00417E5B /* Reader */,
+				4100A36C20B5A78400417E5B /* MonadTrans.swift */,
+			);
+			path = Monad;
+			sourceTree = "<group>";
+		};
+		4100A36F20B5AC1D00417E5B /* Reader */ = {
+			isa = PBXGroup;
+			children = (
+				4100A37020B5AC2900417E5B /* ReaderT.swift */,
+			);
+			path = Reader;
+			sourceTree = "<group>";
+		};
 		412A7D20208E593700581C76 /* Control */ = {
 			isa = PBXGroup;
 			children = (
+				4100A36A20B5A75100417E5B /* Monad */,
 				41615A292094F36700B97CD0 /* Alt.swift */,
 				41615A2F20950A1500B97CD0 /* Alternative.swift */,
 				418D969E209284AB00102A31 /* Applicative.swift */,
@@ -811,12 +835,14 @@
 				41670976209CF91800076483 /* Comonad.swift in Sources */,
 				41670973209CDC2000076483 /* Duplicate.swift in Sources */,
 				4160CE37208A900100D0BBA2 /* Array.swift in Sources */,
+				4100A37120B5AC2900417E5B /* ReaderT.swift in Sources */,
 				4160CE41208A964300D0BBA2 /* Precedence.swift in Sources */,
 				4160CE3B208A90CF00D0BBA2 /* Hole.swift in Sources */,
 				41615A36209514AE00B97CD0 /* MonadPlus.swift in Sources */,
 				414D8488208A849D00C52931 /* Kinds.swift in Sources */,
 				4102538E209133DF00769002 /* Semigroup.swift in Sources */,
 				41670979209CFE0800076483 /* Either.swift in Sources */,
+				4100A36D20B5A78400417E5B /* MonadTrans.swift in Sources */,
 				410253912091388500769002 /* Monoid.swift in Sources */,
 				418D969F209284AB00102A31 /* Applicative.swift in Sources */,
 				4160CE34208A8F3700D0BBA2 /* Functor.swift in Sources */,
@@ -860,12 +886,14 @@
 				41670977209CF91800076483 /* Comonad.swift in Sources */,
 				41670974209CDC2000076483 /* Duplicate.swift in Sources */,
 				4160CE38208A900100D0BBA2 /* Array.swift in Sources */,
+				4100A37220B5AC2900417E5B /* ReaderT.swift in Sources */,
 				4160CE42208A964300D0BBA2 /* Precedence.swift in Sources */,
 				4160CE3C208A90CF00D0BBA2 /* Hole.swift in Sources */,
 				41615A37209514AE00B97CD0 /* MonadPlus.swift in Sources */,
 				414D8489208A849D00C52931 /* Kinds.swift in Sources */,
 				4102538F209133DF00769002 /* Semigroup.swift in Sources */,
 				4167097A209CFE0800076483 /* Either.swift in Sources */,
+				4100A36E20B5A78400417E5B /* MonadTrans.swift in Sources */,
 				410253922091388500769002 /* Monoid.swift in Sources */,
 				418D96A0209284AB00102A31 /* Applicative.swift in Sources */,
 				4160CE35208A8F3700D0BBA2 /* Functor.swift in Sources */,
