@@ -16,31 +16,55 @@ import SwiftCheck
 
 import Kindness
 
-func checkFunctorIdentityLaw<F: Functor & Arbitrary & Equatable>(for: F.Type) {
-    property("Functor - Identity: fmap(id) == id")
-        <- forAll { (xs: F) -> Bool in
-            return (id <^> xs) == (id <| xs)
-        }
+private func functorIdentityLaw<A: Arbitrary, F: Functor, E: Equatable>(
+    makeFunctor: @escaping (A) -> F,
+    makeEquatable: @escaping (F) -> E
+) -> Property {
+    return forAll { (a: A) -> Bool in
+        let xs = makeFunctor(a)
+
+        let lhs = makeEquatable(id <^> xs)
+        let rhs = makeEquatable(id <| xs)
+
+        return lhs == rhs
+    }
 }
 
-func checkFunctorCompositionLaw<F: Functor & Arbitrary & Equatable>(
-    for: F.Type
-) where F.K1Arg: Arbitrary & CoArbitrary & Hashable {
-    property("Functory - Composition: fmap(f <<< g) = fmap(f) <<< fmap(g))")
-        <- forAll { (xs: F, fArrow: ArrowOf<F.K1Arg, F.K1Arg>, gArrow: ArrowOf<F.K1Arg, F.K1Arg>) -> Bool in
-            let f = fArrow.getArrow
-            let g = gArrow.getArrow
+private func functorCompositionLaw<A: Arbitrary, F: Functor, E: Equatable>(
+    makeFunctor: @escaping (A) -> F,
+    makeEquatable: @escaping (F) -> E
+) -> Property where F.K1Arg: Arbitrary & CoArbitrary & Hashable {
+    return forAll { (a: A, fArrow: ArrowOf<F.K1Arg, F.K1Arg>, gArrow: ArrowOf<F.K1Arg, F.K1Arg>) -> Bool in
+        let xs = makeFunctor(a)
 
-            let lhs: F = fmap(f <<< g, xs)
-            let rhs: F = ((fmap <| f) <<< (fmap <| g)) <| xs
+        let f = fArrow.getArrow
+        let g = gArrow.getArrow
 
-            return lhs == rhs
-        }
+        let lhs = makeEquatable(fmap(f <<< g, xs))
+        let rhs = makeEquatable(((fmap <| f) <<< (fmap <| g)) <| xs)
+
+        return lhs == rhs
+    }
 }
 
 func checkFunctorLaws<F: Functor & Arbitrary & Equatable>(
     for: F.Type
 ) where F.K1Arg: Arbitrary & CoArbitrary & Hashable {
-    checkFunctorIdentityLaw(for: F.self)
-    checkFunctorCompositionLaw(for: F.self)
+    let idF: (F) -> F = id
+
+    property("\(F.self): Functor - Identity: fmap(id) == id")
+        <- functorIdentityLaw(makeFunctor: idF, makeEquatable: idF)
+
+    property("\(F.self): Functor - Composition: fmap(f <<< g) = fmap(f) <<< fmap(g))")
+        <- functorCompositionLaw(makeFunctor: idF, makeEquatable: idF)
+}
+
+func functorLaws<A: Arbitrary, F: Functor, E: Equatable>(
+    makeFunctor: @escaping (A) -> F,
+    makeEquatable: @escaping (F) -> E
+) -> Property where F.K1Arg: Arbitrary & CoArbitrary & Hashable {
+    return conjoin(
+        functorIdentityLaw(makeFunctor: makeFunctor, makeEquatable: makeEquatable),
+        functorCompositionLaw(makeFunctor: makeFunctor, makeEquatable: makeEquatable)
+    )
 }

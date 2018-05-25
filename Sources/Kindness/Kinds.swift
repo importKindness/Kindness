@@ -55,7 +55,7 @@ public extension K1 {
     ///
     /// - Parameter k: Instance / value of `Self`
     /// - Returns: Representation as a `KindApplication` of the `K1Tag`
-    public static func kind(_ k: Self) -> K1Self {
+    static func kind(_ k: Self) -> K1Self {
         return k.kind
     }
 }
@@ -95,7 +95,7 @@ public extension K2 {
     ///
     /// - Parameter k: Instance / value of `Self`
     /// - Returns: Representation as a `KindApplication` of the `K2Tag`
-    static func kind2(_ k: Self) -> K2Self {
+    public static func kind2(_ k: Self) -> K2Self {
         return k.kind2
     }
 }

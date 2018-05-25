@@ -87,6 +87,8 @@
 		418D969D2092819900102A31 /* Apply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418D969B2092819900102A31 /* Apply.swift */; };
 		418D969F209284AB00102A31 /* Applicative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418D969E209284AB00102A31 /* Applicative.swift */; };
 		418D96A0209284AB00102A31 /* Applicative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418D969E209284AB00102A31 /* Applicative.swift */; };
+		4193B9A520B840F0007A49E0 /* ReaderTTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4193B9A420B840F0007A49E0 /* ReaderTTests.swift */; };
+		4193B9A620B840F0007A49E0 /* ReaderTTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4193B9A420B840F0007A49E0 /* ReaderTTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -199,6 +201,7 @@
 		418D969520924CE600102A31 /* Foldable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Foldable.swift; sourceTree = "<group>"; };
 		418D969B2092819900102A31 /* Apply.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Apply.swift; sourceTree = "<group>"; };
 		418D969E209284AB00102A31 /* Applicative.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Applicative.swift; sourceTree = "<group>"; };
+		4193B9A420B840F0007A49E0 /* ReaderTTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderTTests.swift; sourceTree = "<group>"; };
 		41AB23D6208E10C000A2C722 /* ensureNoProjectBuildSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ensureNoProjectBuildSettings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -241,18 +244,10 @@
 		4100A36A20B5A75100417E5B /* Monad */ = {
 			isa = PBXGroup;
 			children = (
-				4100A36F20B5AC1D00417E5B /* Reader */,
 				4100A36C20B5A78400417E5B /* MonadTrans.swift */,
-			);
-			path = Monad;
-			sourceTree = "<group>";
-		};
-		4100A36F20B5AC1D00417E5B /* Reader */ = {
-			isa = PBXGroup;
-			children = (
 				4100A37020B5AC2900417E5B /* ReaderT.swift */,
 			);
-			path = Reader;
+			path = Monad;
 			sourceTree = "<group>";
 		};
 		412A7D20208E593700581C76 /* Control */ = {
@@ -500,6 +495,7 @@
 		4175E1AF2099FE030036566A /* Control */ = {
 			isa = PBXGroup;
 			children = (
+				4193B9A320B840CC007A49E0 /* Monad */,
 				414A4B3720A9CC13007D7CEF /* AlternativeTests.swift */,
 				4175E1B02099FE190036566A /* AltTests.swift */,
 				41670989209D0D6C00076483 /* ApplicativeTests.swift */,
@@ -510,6 +506,14 @@
 				4167099220A331DD00076483 /* MonadTests.swift */,
 			);
 			path = Control;
+			sourceTree = "<group>";
+		};
+		4193B9A320B840CC007A49E0 /* Monad */ = {
+			isa = PBXGroup;
+			children = (
+				4193B9A420B840F0007A49E0 /* ReaderTTests.swift */,
+			);
+			path = Monad;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -871,6 +875,7 @@
 				41670984209D07A800076483 /* ApplyTests.swift in Sources */,
 				4167097F209D015A00076483 /* FunctorTests.swift in Sources */,
 				4100A36720B3045200417E5B /* IdentityTests.swift in Sources */,
+				4193B9A520B840F0007A49E0 /* ReaderTTests.swift in Sources */,
 				4167099320A331DD00076483 /* MonadTests.swift in Sources */,
 				4102539420913BE500769002 /* MonoidTests.swift in Sources */,
 				4175E1B12099FE190036566A /* AltTests.swift in Sources */,
@@ -922,6 +927,7 @@
 				41670985209D07A800076483 /* ApplyTests.swift in Sources */,
 				41670980209D015A00076483 /* FunctorTests.swift in Sources */,
 				4100A36820B3045200417E5B /* IdentityTests.swift in Sources */,
+				4193B9A620B840F0007A49E0 /* ReaderTTests.swift in Sources */,
 				4167099420A331DD00076483 /* MonadTests.swift in Sources */,
 				4102539520913BE500769002 /* MonoidTests.swift in Sources */,
 				4175E1B22099FE190036566A /* AltTests.swift in Sources */,
