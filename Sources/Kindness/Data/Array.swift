@@ -129,7 +129,7 @@ extension Array: Apply {
     ) -> KindApplication<K1Tag, B> {
         let fs = [(A) -> B].unkind(fab)
         return fs.flatMap({ f -> [B] in
-            return [A].unkind(value).flatMap({ x -> B in
+            return [A].unkind(value).map({ x -> B in
                 return f(x)
             })
         }).kind
