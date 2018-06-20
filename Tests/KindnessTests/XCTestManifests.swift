@@ -26,12 +26,11 @@ extension ArrayTests {
         ("testEmptyEqualsMempty", testEmptyEqualsMempty),
         ("testFunctorLaws", testFunctorLaws),
         ("testMonadLaws", testMonadLaws),
-        ("testMonadZeroAnnihilation", testMonadZeroAnnihilation),
+        ("testMonadPlusLaws", testMonadZeroAnnihilation),
+        ("testMonadZeroLaws", testMonadZeroAnnihilation),
         ("testMonoidLeftIdentity", testMonoidLeftIdentity),
         ("testMonoidRightIdentity", testMonoidRightIdentity),
-        ("testPlusAnnihilation", testPlusAnnihilation),
-        ("testPlusLeftIdentity", testPlusLeftIdentity),
-        ("testPlusRightIdentity", testPlusRightIdentity),
+        ("testPlusLaws", testPlusAnnihilation),
         ("testSemigroupAssociativity", testSemigroupAssociativity)
     ]
 }
@@ -48,16 +47,46 @@ extension EitherTests {
     ]
 }
 
+extension IdentityTests {
+    static var allTests: [(String, (IdentityTests) -> () throws -> Void)] = [
+        ("testAltLaws", testAltLaws),
+        ("testApplicativeLaws", testApplicativeLaws),
+        ("testApplyLaws", testApplyLaws),
+        ("testBindLaws", testBindLaws),
+        ("testExtendLaws", testExtendLaws),
+        ("testFunctorLaws", testFunctorLaws),
+        ("testMonadLaws", testMonadLaws)
+    ]
+}
+
 extension MonoidTests {
     static var allTests: [(String, (MonoidTests) -> () throws -> Void)] = [
         ("testPowerRepeatsMonoidProvidedNumberOfTimes", testPowerRepeatsMonoidProvidedNumberOfTimes)
     ]
 }
 
+extension ReaderTTests {
+    static var allTests: [(String, (ReaderTTests) -> () throws -> Void)] = [
+        ("testAlternativeLaws", testAlternativeLaws),
+        ("testAltLaws", testAltLaws),
+        ("testApplicativeLaws", testApplicativeLaws),
+        ("testApplyLaws", testApplyLaws),
+        ("testBindLaws", testBindLaws),
+        ("testFunctorLaws", testFunctorLaws),
+        ("testMonadLaws", testMonadLaws),
+        ("testMonadPlusLaws", testMonadPlusLaws),
+        ("testMonadZeroLaws", testMonadZeroLaws),
+        ("testPlusLaws", testPlusLaws)
+    ]
+}
+
 public func allTests() -> [XCTestCaseEntry] {
     return [
         testCase(ArrayTests.allTests),
-        testCase(MonoidTests.allTests)
+        testCase(EitherTests.allTests),
+        testCase(IdentityTests.allTests),
+        testCase(MonoidTests.allTests),
+        testCase(ReaderTTests.allTests)
     ]
 }
 #endif
