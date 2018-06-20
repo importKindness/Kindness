@@ -26,11 +26,11 @@ extension ArrayTests {
         ("testEmptyEqualsMempty", testEmptyEqualsMempty),
         ("testFunctorLaws", testFunctorLaws),
         ("testMonadLaws", testMonadLaws),
-        ("testMonadPlusLaws", testMonadZeroAnnihilation),
-        ("testMonadZeroLaws", testMonadZeroAnnihilation),
+        ("testMonadPlusLaws", testMonadPlusLaws),
+        ("testMonadZeroLaws", testMonadZeroLaws),
         ("testMonoidLeftIdentity", testMonoidLeftIdentity),
         ("testMonoidRightIdentity", testMonoidRightIdentity),
-        ("testPlusLaws", testPlusAnnihilation),
+        ("testPlusLaws", testPlusLaws),
         ("testSemigroupAssociativity", testSemigroupAssociativity)
     ]
 }
