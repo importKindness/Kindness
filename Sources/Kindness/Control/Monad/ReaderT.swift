@@ -30,7 +30,7 @@ public struct ReaderTImplK1Tag<Environment, MTag: MonadTag> {
 extension ReaderTImplK1Tag: AltTag where MTag: AltTag {
     public static func _alt<A>(
         _ lhs: KindApplication<ReaderTImplK1Tag<Environment, MTag>, A>
-    ) -> (KindApplication<ReaderTImplK1Tag<Environment, MTag>, A>) -> KindApplication<ReaderTImplK1Tag<Environment, MTag>, A> {
+    ) -> (KindApplication<ReaderTImplK1Tag<Environment, MTag>, A>) -> KindApplication<ReaderTImplK1Tag<Environment, MTag>, A> { //swiftlint:disable:this line_length
         return ReaderTImpl<Environment, MTag, A>._alt(lhs)
     }
 }
@@ -45,7 +45,8 @@ extension ReaderTImplK1Tag: ApplicativeTag {
 
 extension ReaderTImplK1Tag: ApplyTag {
     public static func _apply<A, B>(
-        _ fab: KindApplication<ReaderTImplK1Tag<Environment, MTag>, (A) -> B>, _ value: KindApplication<ReaderTImplK1Tag<Environment, MTag>, A>
+        _ fab: KindApplication<ReaderTImplK1Tag<Environment, MTag>, (A) -> B>,
+        _ value: KindApplication<ReaderTImplK1Tag<Environment, MTag>, A>
     ) -> KindApplication<ReaderTImplK1Tag<Environment, MTag>, B> {
         return ReaderTImpl<Environment, MTag, A>._apply(fab, value)
     }
@@ -53,7 +54,8 @@ extension ReaderTImplK1Tag: ApplyTag {
 
 extension ReaderTImplK1Tag: BindTag {
     public static func _bind<A, B>(
-        _ m: KindApplication<ReaderTImplK1Tag<Environment, MTag>, A>, _ f: @escaping (A) -> KindApplication<ReaderTImplK1Tag<Environment, MTag>, B>
+        _ m: KindApplication<ReaderTImplK1Tag<Environment, MTag>, A>,
+        _ f: @escaping (A) -> KindApplication<ReaderTImplK1Tag<Environment, MTag>, B>
     ) -> KindApplication<ReaderTImplK1Tag<Environment, MTag>, B> {
         return ReaderTImpl<Environment, MTag, A>.unkind(m)._bind(f)
     }
