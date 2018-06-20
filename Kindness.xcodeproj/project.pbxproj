@@ -21,6 +21,12 @@
 		410253922091388500769002 /* Monoid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410253902091388500769002 /* Monoid.swift */; };
 		4102539420913BE500769002 /* MonoidTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4102539320913BE500769002 /* MonoidTests.swift */; };
 		4102539520913BE500769002 /* MonoidTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4102539320913BE500769002 /* MonoidTests.swift */; };
+		410DA97820D2A85B008F799D /* PlusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410DA97720D2A85B008F799D /* PlusTests.swift */; };
+		410DA97920D2A85B008F799D /* PlusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410DA97720D2A85B008F799D /* PlusTests.swift */; };
+		413E100E20DA938D00E482C0 /* MonadZeroTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413E100D20DA938D00E482C0 /* MonadZeroTests.swift */; };
+		413E100F20DA938D00E482C0 /* MonadZeroTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413E100D20DA938D00E482C0 /* MonadZeroTests.swift */; };
+		413E101120DA967700E482C0 /* MonadPlusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413E101020DA967700E482C0 /* MonadPlusTests.swift */; };
+		413E101220DA967700E482C0 /* MonadPlusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413E101020DA967700E482C0 /* MonadPlusTests.swift */; };
 		414A4B3820A9CC13007D7CEF /* AlternativeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414A4B3720A9CC13007D7CEF /* AlternativeTests.swift */; };
 		414A4B3920A9CC13007D7CEF /* AlternativeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414A4B3720A9CC13007D7CEF /* AlternativeTests.swift */; };
 		414D8414208A5BB800C52931 /* Kindness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 414D840A208A5BB800C52931 /* Kindness.framework */; };
@@ -141,6 +147,9 @@
 		4102538D209133DF00769002 /* Semigroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Semigroup.swift; sourceTree = "<group>"; };
 		410253902091388500769002 /* Monoid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Monoid.swift; sourceTree = "<group>"; };
 		4102539320913BE500769002 /* MonoidTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonoidTests.swift; sourceTree = "<group>"; };
+		410DA97720D2A85B008F799D /* PlusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusTests.swift; sourceTree = "<group>"; };
+		413E100D20DA938D00E482C0 /* MonadZeroTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonadZeroTests.swift; sourceTree = "<group>"; };
+		413E101020DA967700E482C0 /* MonadPlusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonadPlusTests.swift; sourceTree = "<group>"; };
 		414A4B3720A9CC13007D7CEF /* AlternativeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternativeTests.swift; sourceTree = "<group>"; };
 		414D840A208A5BB800C52931 /* Kindness.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Kindness.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		414D8413208A5BB800C52931 /* KindnessTests_iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KindnessTests_iOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -504,6 +513,9 @@
 				4167099820A334DB00076483 /* ExtendTests.swift */,
 				4167097E209D015A00076483 /* FunctorTests.swift */,
 				4167099220A331DD00076483 /* MonadTests.swift */,
+				413E101020DA967700E482C0 /* MonadPlusTests.swift */,
+				413E100D20DA938D00E482C0 /* MonadZeroTests.swift */,
+				410DA97720D2A85B008F799D /* PlusTests.swift */,
 			);
 			path = Control;
 			sourceTree = "<group>";
@@ -867,11 +879,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				413E100E20DA938D00E482C0 /* MonadZeroTests.swift in Sources */,
 				4160CE45208AA3C100D0BBA2 /* ArrayTests.swift in Sources */,
 				4167099920A334DB00076483 /* ExtendTests.swift in Sources */,
 				4167098A209D0D6C00076483 /* ApplicativeTests.swift in Sources */,
 				41670990209D1B0100076483 /* BindTests.swift in Sources */,
+				413E101120DA967700E482C0 /* MonadPlusTests.swift in Sources */,
 				41670981209D016000076483 /* EitherTests.swift in Sources */,
+				410DA97820D2A85B008F799D /* PlusTests.swift in Sources */,
 				41670984209D07A800076483 /* ApplyTests.swift in Sources */,
 				4167097F209D015A00076483 /* FunctorTests.swift in Sources */,
 				4100A36720B3045200417E5B /* IdentityTests.swift in Sources */,
@@ -919,11 +934,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				413E100F20DA938D00E482C0 /* MonadZeroTests.swift in Sources */,
 				4160CE46208AA3C100D0BBA2 /* ArrayTests.swift in Sources */,
 				4167099A20A334DB00076483 /* ExtendTests.swift in Sources */,
 				4167098B209D0D6C00076483 /* ApplicativeTests.swift in Sources */,
 				41670991209D1B0100076483 /* BindTests.swift in Sources */,
+				413E101220DA967700E482C0 /* MonadPlusTests.swift in Sources */,
 				41670982209D016000076483 /* EitherTests.swift in Sources */,
+				410DA97920D2A85B008F799D /* PlusTests.swift in Sources */,
 				41670985209D07A800076483 /* ApplyTests.swift in Sources */,
 				41670980209D015A00076483 /* FunctorTests.swift in Sources */,
 				4100A36820B3045200417E5B /* IdentityTests.swift in Sources */,

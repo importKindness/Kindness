@@ -16,23 +16,48 @@ import SwiftCheck
 
 import Kindness
 
-func checkApplyAssociativeCompositionLaw<F: Apply & Arbitrary & Equatable, G: Apply & Arbitrary>(
-    for: F.Type, fabType: G.Type
-) where F.K1Arg: Arbitrary & CoArbitrary & Hashable, F.K1Tag == G.K1Tag, G.K1Arg == ArrowOf<F.K1Arg, F.K1Arg> {
-    property("Apply - Associative composition: (<<<) <^> f <*> g <*> h == f <*> (g <*> h)")
-        <- forAll { (fArrows: G, gArrows: G, h: F) -> Bool in
-            let f = { $0.getArrow } <^> fArrows
-            let g = { $0.getArrow } <^> gArrows
+private func applyAssociativeCompositionLaw<A: Arbitrary, F: Apply, E: Equatable, B: Arbitrary, FAB: Apply>(
+    makeFunctor: @escaping (A) -> F,
+    makeEquatable: @escaping (F) -> E,
+    makeFAB: @escaping (B) -> FAB
+) -> Property where
+    F.K1Arg: Arbitrary & CoArbitrary & Hashable,
+    F.K1Tag == FAB.K1Tag,
+    FAB.K1Arg == ArrowOf<F.K1Arg, F.K1Arg> {
+        return forAll { (fArrows: B, gArrows: B, a: A) -> Bool in
+            let h = makeFunctor(a)
 
-            let lhs: F = curry(<<<) <^> f <*> g <*> h
-            let rhs: F = f <*> (g <*> h)
+            let f = { $0.getArrow } <^> makeFAB(fArrows)
+            let g = { $0.getArrow } <^> makeFAB(gArrows)
+
+            let lhs: E = makeEquatable(curry(<<<) <^> f <*> g <*> h)
+            let rhs: E = makeEquatable(f <*> (g <*> h))
 
             return lhs == rhs
         }
 }
 
-func checkApplyLaws<F: Apply & Arbitrary & Equatable, G: Apply & Arbitrary>(
-    for: F.Type, fabType: G.Type
-) where F.K1Arg: Arbitrary & CoArbitrary & Hashable, F.K1Tag == G.K1Tag, G.K1Arg == ArrowOf<F.K1Arg, F.K1Arg> {
-    return checkApplyAssociativeCompositionLaw(for: F.self, fabType: G.self)
+func checkApplyLaws<F: Apply & Arbitrary & Equatable, FAB: Apply & Arbitrary>(
+    for: F.Type, fabType: FAB.Type
+) where F.K1Arg: Arbitrary & CoArbitrary & Hashable, F.K1Tag == FAB.K1Tag, FAB.K1Arg == ArrowOf<F.K1Arg, F.K1Arg> {
+    let idF: (F) -> F = id
+    let idFAB: (FAB) -> (FAB) = id
+
+    property("\(F.self): Apply - Associative composition: (<<<) <^> f <*> g <*> h == f <*> (g <*> h)")
+        <- applyAssociativeCompositionLaw(makeFunctor: idF, makeEquatable: idF, makeFAB: idFAB)
+}
+
+func applyLaws<A: Arbitrary, F: Apply, E: Equatable, B: Arbitrary, FAB: Apply>(
+    makeFunctor: @escaping (A) -> F,
+    makeEquatable: @escaping (F) -> E,
+    makeFAB: @escaping (B) -> FAB
+) -> Property where
+    F.K1Arg: Arbitrary & CoArbitrary & Hashable,
+    F.K1Tag == FAB.K1Tag,
+    FAB.K1Arg == ArrowOf<F.K1Arg, F.K1Arg> {
+        return applyAssociativeCompositionLaw(
+            makeFunctor: makeFunctor,
+            makeEquatable: makeEquatable,
+            makeFAB: makeFAB
+        )
 }

@@ -47,28 +47,12 @@ class ArrayTests: XCTestCase {
         checkMonadLaws(for: [Int8].self)
     }
 
-    func testMonadPlusDistributivity() {
-        property("MonadPlus - Distributivity: (x <|> y) >>- f == (x >>- f) <|> (y >>- f)")
-            <- forAll { (x: [Int8], y: [Int8], fArrow: ArrowOf<Int8, [Int8]>) -> Bool in
-                let f = fArrow.getArrow
-
-                let lhs: [Int8] = (x <|> y) >>- f
-                let rhs: [Int8] = (x >>- f) <|> (y >>- f)
-
-                return lhs == rhs
-            }
+    func testMonadPlusLaws() {
+        checkMonadPlusLaws(for: [Int8].self)
     }
 
-    func testMonadZeroAnnihilation() {
-        property("MonadZero - Annihilation: empty >>- f = empty")
-            <- forAll { (fArrow: ArrowOf<Int8, [Int8]>) -> Bool in
-                let f = fArrow.getArrow
-
-                let lhs: [Int8] = [Int8].empty >>- f
-                let rhs: [Int8] = .empty
-
-                return lhs == rhs
-            }
+    func testMonadZeroLaws() {
+        checkMonadZeroLaws(for: [Int8].self)
     }
 
     func testMonoidLeftIdentity() {
@@ -85,30 +69,8 @@ class ArrayTests: XCTestCase {
             }
     }
 
-    func testPlusLeftIdentity() {
-        property("Plus - Left Identity: empty <|> x == x")
-            <- forAll { (xs: [Int8]) in
-                return (.empty <|> xs) == xs
-            }
-    }
-
-    func testPlusRightIdentity() {
-        property("Plus - Right Identity: x <|> empty == x")
-            <- forAll { (xs: [Int8]) in
-                return (xs <|> .empty) == xs
-            }
-    }
-
-    func testPlusAnnihilation() {
-        property("Plus - Annihilation: f <^> empty == empty")
-            <- forAll { (fArrow: ArrowOf<Int8, Int8>) -> Bool in
-                let f = fArrow.getArrow
-
-                let lhs: [Int8] = f <^> [Int8].empty
-                let rhs: [Int8] = .empty
-
-                return lhs == rhs
-            }
+    func testPlusLaws() {
+        checkPlusLaws(for: [Int8].self)
     }
 
     func testEmptyEqualsMempty() {

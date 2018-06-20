@@ -16,19 +16,33 @@ import SwiftCheck
 
 import Kindness
 
-func checkBindAssociativityLaw<F: Bind & Arbitrary & Equatable>(for: F.Type) where F.K1Arg: CoArbitrary & Hashable {
-    property("Bind - Associativity: (x >>- f) >>- g = x >>- { k in f(k) >>- g }")
-        <- forAll { (xs: F, fArrow: ArrowOf<F.K1Arg, F>, gArrow: ArrowOf<F.K1Arg, F>) -> Bool in
-            let f = fArrow.getArrow
-            let g = gArrow.getArrow
+func bindAssociativityLaw<A: Arbitrary, F: Bind, E: Equatable>(
+    makeFunctor: @escaping (A) -> F,
+    makeEquatable: @escaping (F) -> E
+) -> Property where F.K1Arg: CoArbitrary & Hashable {
+    return forAll { (a: A, fArrow: ArrowOf<F.K1Arg, A>, gArrow: ArrowOf<F.K1Arg, A>) -> Bool in
+        let xs = makeFunctor(a)
 
-            let lhs: F = (xs >>- f) >>- g
-            let rhs: F = xs >>- { k -> F in f(k) >>- g }
+        let f = makeFunctor • fArrow.getArrow
+        let g = makeFunctor • gArrow.getArrow
 
-            return lhs == rhs
-        }
+        let lhs: E = makeEquatable((xs >>- f) >>- g)
+        let rhs: E = makeEquatable(xs >>- { k -> F in f(k) >>- g })
+
+        return lhs == rhs
+    }
 }
 
 func checkBindLaws<F: Bind & Arbitrary & Equatable>(for: F.Type) where F.K1Arg: CoArbitrary & Hashable {
-    checkBindAssociativityLaw(for: F.self)
+    let idF: (F) -> F = id
+
+    property("Bind - Associativity: (x >>- f) >>- g = x >>- { k in f(k) >>- g }")
+        <- bindAssociativityLaw(makeFunctor: idF, makeEquatable: idF)
+}
+
+func bindLaws<A: Arbitrary, F: Bind, E: Equatable>(
+    makeFunctor: @escaping (A) -> F,
+    makeEquatable: @escaping (F) -> E
+) -> Property where F.K1Arg: CoArbitrary & Hashable {
+    return bindAssociativityLaw(makeFunctor: makeFunctor, makeEquatable: makeEquatable)
 }

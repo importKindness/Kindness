@@ -16,28 +16,50 @@ import SwiftCheck
 
 import Kindness
 
-func checkMonadLeftIdentityLaw<M: Monad & Arbitrary & Equatable>(
-    for: M.Type
-) where M.K1Arg: Arbitrary & CoArbitrary & Hashable {
-    property("\(M.self) - Monad - Left Identity: pure(x) >>- f == f(x)")
-        <- forAll { (x: M.K1Arg, fArrow: ArrowOf<M.K1Arg, M>) in
-            let f = fArrow.getArrow
+func monadLeftIdentityLaw<A: Arbitrary, M: Monad, E: Equatable>(
+    makeMonad: @escaping (A) -> M,
+    makeEquatable: @escaping (M) -> E
+) -> Property where M.K1Arg: Arbitrary & CoArbitrary & Hashable {
+    return forAll { (x: M.K1Arg, fArrow: ArrowOf<M.K1Arg, A>) in
+        let f = makeMonad • fArrow.getArrow
 
-            let lhs: M = pure(x) >>- f
-            let rhs: M = f(x)
+        let lhs: E = makeEquatable(pure(x) >>- f)
+        let rhs: E = makeEquatable(f(x))
 
-            return lhs == rhs
-        }
+        return lhs == rhs
+    }
 }
 
-func checkMonadRightIdentityLaw<M: Monad & Arbitrary & Equatable>(for: M.Type) {
-    property("\(M.self) - Monad - Right Identity: x >>- pure == x")
-        <- forAll { (x: [Int8]) in
-            return (x >>- pure) == x
-        }
+func monadRightIdentityLaw<A: Arbitrary, M: Monad, E: Equatable>(
+    makeMonad: @escaping (A) -> M,
+    makeEquatable: @escaping (M) -> E
+) -> Property {
+    return forAll { (a: A) in
+        let x = makeMonad(a)
+
+        let lhs: E = makeEquatable(x >>- pure)
+        let rhs: E = makeEquatable(x)
+
+        return lhs == rhs
+    }
 }
 
 func checkMonadLaws<M: Monad & Arbitrary & Equatable>(for: M.Type) where M.K1Arg: Arbitrary & CoArbitrary & Hashable {
-    checkMonadLeftIdentityLaw(for: M.self)
-    checkMonadRightIdentityLaw(for: M.self)
+    let idM: (M) -> M = id
+
+    property("\(M.self) - Monad - Left Identity: pure(x) >>- f == f(x)")
+        <- monadLeftIdentityLaw(makeMonad: idM, makeEquatable: idM)
+
+    property("\(M.self) - Monad - Right Identity: x >>- pure == x")
+        <- monadRightIdentityLaw(makeMonad: idM, makeEquatable: idM)
+}
+
+func monadLaws<A: Arbitrary, M: Monad, E: Equatable>(
+    makeMonad: @escaping (A) -> M,
+    makeEquatable: @escaping (M) -> E
+) -> Property where M.K1Arg: Arbitrary & CoArbitrary & Hashable {
+    return conjoin(
+        monadLeftIdentityLaw(makeMonad: makeMonad, makeEquatable: makeEquatable),
+        monadRightIdentityLaw(makeMonad: makeMonad, makeEquatable: makeEquatable)
+    )
 }

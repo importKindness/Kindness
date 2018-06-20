@@ -29,12 +29,11 @@ public protocol ApplyByMonad: Monad { }
 
 public extension ApplyByMonad {
     static func _apply<A, B>(
-        _ fab: KindApplication<K1Tag, (A) -> B>
-    ) -> (KindApplication<K1Tag, A>) -> KindApplication<K1Tag, B> {
-        return { fa in
-            return fab >>- { ab in
-                return fa >>- pure • ab
-            }
+        _ fab: KindApplication<K1Tag, (A) -> B>,
+        _ fa: KindApplication<K1Tag, A>
+    ) -> KindApplication<K1Tag, B> {
+        return fab >>- { ab in
+            return fa >>- pure • ab
         }
     }
 }
@@ -43,9 +42,7 @@ public extension ApplyByMonad {
 public protocol FunctorByMonad: Monad { }
 
 public extension FunctorByMonad {
-    static func _fmap<T>(_ f: @escaping (K1Arg) -> T) -> (K1Self) -> K1Other<T> {
-        return { fa in
-            return fa >>- pure • f
-        }
+    static func _fmap<T>(_ f: @escaping (K1Arg) -> T, _ fa: K1Self) -> K1Other<T> {
+        return fa >>- pure • f
     }
 }

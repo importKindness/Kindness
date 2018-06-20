@@ -16,34 +16,45 @@ import SwiftCheck
 
 import Kindness
 
-func checkAlternativeDistributivityLaw<A: Alternative & Arbitrary & Equatable, FAB: Alternative & Arbitrary>(
-    for: A.Type,
-    fabType: FAB.Type
-) where A.K1Arg: Arbitrary & CoArbitrary & Hashable, A.K1Tag == FAB.K1Tag, FAB.K1Arg == ArrowOf<A.K1Arg, A.K1Arg> {
-    property("Alternative - Distributivity: (f <|> g) <*> x == (f <*> x) <|> (g <*> x)")
-        <- forAll { (fArrows: FAB, gArrows: FAB, xs: A) -> Bool in
-            let f = { $0.getArrow } <^> fArrows
-            let g = { $0.getArrow } <^> gArrows
+func alternativeDistributivityLaw<A: Arbitrary, F: Alternative, E: Equatable, B: Arbitrary, FAB: Alternative>(
+    makeFunctor: @escaping (A) -> F,
+    makeEquatable: @escaping (F) -> E,
+    makeFAB: @escaping (B) -> FAB
+) -> Property where
+    F.K1Arg: Arbitrary & CoArbitrary & Hashable,
+    F.K1Tag == FAB.K1Tag,
+    FAB.K1Arg == ArrowOf<F.K1Arg, F.K1Arg> {
+        return forAll { (fArrows: B, gArrows: B, a: A) -> Bool in
+            let xs = makeFunctor(a)
 
-            let lhs: A = (f <|> g) <*> xs
+            let f = { $0.getArrow } <^> makeFAB(fArrows)
+            let g = { $0.getArrow } <^> makeFAB(gArrows)
 
-            let rhsL: A = f <*> xs
-            let rhsR: A = g <*> xs
-            let rhs: A = rhsL <|> rhsR
+            let lhs: E = makeEquatable((f <|> g) <*> xs)
+
+            let rhsL: F = f <*> xs
+            let rhsR: F = g <*> xs
+            let rhs: E = makeEquatable(rhsL <|> rhsR)
 
             return lhs == rhs
         }
 }
 
-func checkAlternativeAnnihilationLaw<A: Alternative & Arbitrary & Equatable, FAB: Alternative>(
-    for: A.Type, fabType: FAB.Type
-) where A.K1Tag == FAB.K1Tag, FAB.K1Arg == ArrowOf<A.K1Arg, A.K1Arg> {
-    property("Alternative - Annihilation: empty <*> f = empty")
-        <- forAll { (xs: A) -> Bool in
+func alternativeAnnihilationLaw<A: Arbitrary, F: Alternative, E: Equatable, FAB: Alternative>(
+    makeFunctor: @escaping (A) -> F,
+    makeEquatable: @escaping (F) -> E,
+    fabType: FAB.Type
+) -> Property where
+    F.K1Arg: Arbitrary & CoArbitrary & Hashable,
+    F.K1Tag == FAB.K1Tag,
+    FAB.K1Arg == ArrowOf<F.K1Arg, F.K1Arg> {
+        return forAll { (a: A) -> Bool in
+            let xs = makeFunctor(a)
+
             let emptyFs = { $0.getArrow } <^> FAB.empty
 
-            let lhs: A = emptyFs <*> xs
-            let rhs: A = .empty
+            let lhs: E = makeEquatable(emptyFs <*> xs)
+            let rhs: E = makeEquatable(.empty)
 
             return lhs == rhs
         }
@@ -53,6 +64,26 @@ func checkAlternativeLaws<A: Alternative & Arbitrary & Equatable, FAB: Alternati
     for: A.Type,
     fabType: FAB.Type
 ) where A.K1Arg: Arbitrary & CoArbitrary & Hashable, A.K1Tag == FAB.K1Tag, FAB.K1Arg == ArrowOf<A.K1Arg, A.K1Arg> {
-    checkAlternativeDistributivityLaw(for: A.self, fabType: FAB.self)
-    checkAlternativeAnnihilationLaw(for: A.self, fabType: FAB.self)
+    let idA: (A) -> A = id
+    let idFAB: (FAB) -> FAB = id
+
+    property("Alternative - Distributivity: (f <|> g) <*> x == (f <*> x) <|> (g <*> x)")
+        <- alternativeDistributivityLaw(makeFunctor: idA, makeEquatable: idA, makeFAB: idFAB)
+
+    property("Alternative - Annihilation: empty <*> f = empty")
+        <- alternativeAnnihilationLaw(makeFunctor: idA, makeEquatable: idA, fabType: FAB.self)
+}
+
+func alternativeLaws<A: Arbitrary, F: Alternative, E: Equatable, B: Arbitrary, FAB: Alternative>(
+    makeFunctor: @escaping (A) -> F,
+    makeEquatable: @escaping (F) -> E,
+    makeFAB: @escaping (B) -> FAB
+) -> Property where
+    F.K1Arg: Arbitrary & CoArbitrary & Hashable,
+    F.K1Tag == FAB.K1Tag,
+    FAB.K1Arg == ArrowOf<F.K1Arg, F.K1Arg> {
+        return conjoin(
+            alternativeDistributivityLaw(makeFunctor: makeFunctor, makeEquatable: makeEquatable, makeFAB: makeFAB),
+            alternativeAnnihilationLaw(makeFunctor: makeFunctor, makeEquatable: makeEquatable, fabType: FAB.self)
+        )
 }

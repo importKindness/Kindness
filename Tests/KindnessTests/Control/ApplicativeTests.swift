@@ -16,61 +16,101 @@ import SwiftCheck
 
 import Kindness
 
-func checkApplicativeIdentityLaw<F: Applicative & Arbitrary & Equatable>(for: F.Type) {
+func applicativeIdentityLaw<A: Arbitrary, F: Applicative, E: Equatable>(
+    makeFunctor: @escaping (A) -> F,
+    makeEquatable: @escaping (F) -> E
+) -> Property {
+    return forAll { (a: A) -> Bool in
+        let f = makeFunctor(a)
+
+        let lhs = makeEquatable(pure(id) <*> f)
+        let rhs = makeEquatable(f)
+        return lhs == rhs
+    }
+}
+
+func applicativeCompositionLaw<A: Arbitrary, F: Applicative, E: Equatable, B: Arbitrary, FAB: Applicative>(
+    makeFunctor: @escaping (A) -> F,
+    makeEquatable: @escaping (F) -> E,
+    makeFAB: @escaping (B) -> FAB
+) -> Property where
+    F.K1Arg: Arbitrary & CoArbitrary & Hashable,
+    F.K1Tag == FAB.K1Tag,
+    FAB.K1Arg == ArrowOf<F.K1Arg, F.K1Arg> {
+        return forAll { (fArrows: B, gArrows: B, a: A) -> Bool in
+            let h = makeFunctor(a)
+
+            let f = { $0.getArrow } <^> makeFAB(fArrows)
+            let g = { $0.getArrow } <^> makeFAB(gArrows)
+
+            let lhs: E = makeEquatable(pure(curry(•)) <*> f <*> g <*> h)
+            let rhs: E = makeEquatable(f <*> (g <*> h))
+
+            return lhs == rhs
+        }
+}
+
+func applicativeHomomorphismLaw<F: Applicative, E: Equatable>(
+    makeEquatable: @escaping (F) -> E
+) -> Property where F.K1Arg: Arbitrary & CoArbitrary & Hashable {
+    return forAll { (fArrow: ArrowOf<F.K1Arg, F.K1Arg>, x: F.K1Arg) -> Bool in
+        let f = fArrow.getArrow
+
+        let lhs: E = makeEquatable(pure(f) <*> (pure(x) as F))
+        let rhs: E = makeEquatable(pure(f(x)))
+
+        return lhs == rhs
+    }
+}
+
+func applicativeInterchangeLaw<F: Applicative, E: Equatable, B: Arbitrary, FAB: Applicative>(
+    makeEquatable: @escaping (F) -> E,
+    makeFAB: @escaping (B) -> FAB
+) -> Property where
+    F.K1Arg: Arbitrary & CoArbitrary & Hashable,
+    F.K1Tag == FAB.K1Tag,
+    FAB.K1Arg == ArrowOf<F.K1Arg, F.K1Arg> {
+        return forAll { (fArrows: B, x: F.K1Arg) -> Bool in
+            let f = { $0.getArrow } <^> makeFAB(fArrows)
+
+            let lhs: E = makeEquatable(f <*> pure(x))
+            let rhs: E = makeEquatable(pure(curry(|>)(x)) <*> f)
+
+            return lhs == rhs
+        }
+}
+
+func checkApplicativeLaws<F: Applicative & Arbitrary & Equatable, FAB: Applicative & Arbitrary>(
+    for: F.Type, fabType: FAB.Type
+) where F.K1Arg: Arbitrary & CoArbitrary & Hashable, F.K1Tag == FAB.K1Tag, FAB.K1Arg == ArrowOf<F.K1Arg, F.K1Arg> {
+    let idF: (F) -> F = id
+    let idFAB: (FAB) -> (FAB) = id
+
     property("Applicative - Identity: pure(id) <*> v == v")
-        <- forAll { (xs: F) -> Bool in
-            return (pure(id) <*> xs) == xs
-        }
-}
+        <- applicativeIdentityLaw(makeFunctor: idF, makeEquatable: idF)
 
-func checkApplicativeCompositionLaw<F: Applicative & Arbitrary & Equatable, G: Applicative & Arbitrary>(
-    for: F.Type, fabType: G.Type
-) where F.K1Arg: Arbitrary & CoArbitrary & Hashable, F.K1Tag == G.K1Tag, G.K1Arg == ArrowOf<F.K1Arg, F.K1Arg> {
     property("Applicative - Composition: pure(<<<) <*> f <*> g <*> h == f <*> (g <*> h)")
-        <- forAll { (fArrows: G, gArrows: G, h: F) -> Bool in
-            let f = { $0.getArrow } <^> fArrows
-            let g = { $0.getArrow } <^> gArrows
+        <- applicativeCompositionLaw(makeFunctor: idF, makeEquatable: idF, makeFAB: idFAB)
 
-            let lhs: F = pure(curry(•)) <*> f <*> g <*> h
-            let rhs: F = f <*> (g <*> h)
-
-            return lhs == rhs
-        }
-}
-
-func checkApplicativeHomomorphismLaw<F: Applicative & Arbitrary & Equatable>(
-    for: F.Type
-) where F.K1Arg: Arbitrary & CoArbitrary & Hashable {
     property("Applicative - Homomorphism: pure(f) <*> pure(x) == pure(f(x))")
-        <- forAll { (fArrow: ArrowOf<F.K1Arg, F.K1Arg>, x: F.K1Arg) -> Bool in
-            let f = fArrow.getArrow
+        <- applicativeHomomorphismLaw(makeEquatable: idF)
 
-            let lhs: F = pure(f) <*> (pure(x) as F)
-            let rhs: F = pure(f(x))
-
-            return lhs == rhs
-        }
-}
-
-func checkApplicativeInterchangeLaw<F: Applicative & Arbitrary & Equatable, G: Applicative & Arbitrary>(
-    for: F.Type, fabType: G.Type
-) where F.K1Arg: Arbitrary & CoArbitrary & Hashable, F.K1Tag == G.K1Tag, G.K1Arg == ArrowOf<F.K1Arg, F.K1Arg> {
     property("Applicative - Interchange: u <*> pure(y) == pure ((|>) y) <*> u")
-        <- forAll { (fArrows: G, x: F.K1Arg) -> Bool in
-            let f = { $0.getArrow } <^> fArrows
-
-            let lhs: F = f <*> pure(x)
-            let rhs: F = pure(curry(|>)(x)) <*> f
-
-            return lhs == rhs
-        }
+        <- applicativeInterchangeLaw(makeEquatable: idF, makeFAB: idFAB)
 }
 
-func checkApplicativeLaws<F: Applicative & Arbitrary & Equatable, G: Applicative & Arbitrary>(
-    for: F.Type, fabType: G.Type
-) where F.K1Arg: Arbitrary & CoArbitrary & Hashable, F.K1Tag == G.K1Tag, G.K1Arg == ArrowOf<F.K1Arg, F.K1Arg> {
-    checkApplicativeIdentityLaw(for: F.self)
-    checkApplicativeCompositionLaw(for: F.self, fabType: G.self)
-    checkApplicativeHomomorphismLaw(for: F.self)
-    checkApplicativeInterchangeLaw(for: F.self, fabType: G.self)
+func applicativeLaws<A: Arbitrary, F: Applicative, E: Equatable, B: Arbitrary, FAB: Applicative>(
+    makeFunctor: @escaping (A) -> F,
+    makeEquatable: @escaping (F) -> E,
+    makeFAB: @escaping (B) -> FAB
+) -> Property where
+    F.K1Arg: Arbitrary & CoArbitrary & Hashable,
+    F.K1Tag == FAB.K1Tag,
+    FAB.K1Arg == ArrowOf<F.K1Arg, F.K1Arg> {
+        return conjoin(
+            applicativeIdentityLaw(makeFunctor: makeFunctor, makeEquatable: makeEquatable),
+            applicativeCompositionLaw(makeFunctor: makeFunctor, makeEquatable: makeEquatable, makeFAB: makeFAB),
+            applicativeHomomorphismLaw(makeEquatable: makeEquatable),
+            applicativeInterchangeLaw(makeEquatable: makeEquatable, makeFAB: makeFAB)
+        )
 }

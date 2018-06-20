@@ -16,28 +16,55 @@ import SwiftCheck
 
 import Kindness
 
-func checkAltAssociativityLaw<A: Alt & Arbitrary & Equatable>(for: A.Type) {
-    property("Alt - Associativity: (x <|> y) <|> z == x <|> (y <|> z)")
-        <- forAll { (x: A, y: A, z: A) -> Bool in
-            return ((x <|> y) <|> z) == (x <|> (y <|> z))
-        }
+func altAssociativityLaw<A: Arbitrary, F: Alt, E: Equatable>(
+    makeFunctor: @escaping (A) -> F,
+    makeEquatable: @escaping (F) -> E
+) -> Property {
+    return forAll { (ax: A, ay: A, az: A) -> Bool in
+        let x = makeFunctor(ax)
+        let y = makeFunctor(ay)
+        let z = makeFunctor(az)
+
+        let lhs: E = makeEquatable((x <|> y) <|> z)
+        let rhs: E = makeEquatable(x <|> (y <|> z))
+
+        return lhs == rhs
+    }
 }
 
-func checkAltDistributivityLaw<A: Alt & Arbitrary & Equatable>(
-    for: A.Type
-) where A.K1Arg: CoArbitrary & Arbitrary & Hashable {
-    property("Alt - Distributivity: f <^> (x <|> y) == (f <^> x) <|> (f <^> y)")
-        <- forAll { (x: A, y: A, fArrow: ArrowOf<A.K1Arg, A.K1Arg>) -> Bool in
-            let f = fArrow.getArrow
+func altDistributivityLaw<A: Arbitrary, F: Alt, E: Equatable>(
+    makeFunctor: @escaping (A) -> F,
+    makeEquatable: @escaping (F) -> E
+) -> Property where F.K1Arg: Arbitrary & CoArbitrary & Hashable {
+    return forAll { (ax: A, ay: A, fArrow: ArrowOf<F.K1Arg, F.K1Arg>) -> Bool in
+        let x = makeFunctor(ax)
+        let y = makeFunctor(ay)
 
-            let lhs: A = f <^> (x <|> y)
-            let rhs: A = (f <^> x) <|> (f <^> y)
+        let f = fArrow.getArrow
 
-            return lhs == rhs
-        }
+        let lhs: E = makeEquatable(f <^> (x <|> y))
+        let rhs: E = makeEquatable((f <^> x) <|> (f <^> y))
+
+        return lhs == rhs
+    }
 }
 
 func checkAltLaws<A: Alt & Arbitrary & Equatable>(for: A.Type) where A.K1Arg: CoArbitrary & Arbitrary & Hashable {
-    checkAltAssociativityLaw(for: A.self)
-    checkAltDistributivityLaw(for: A.self)
+    let idA: (A) -> A = id
+
+    property("Alt - Associativity: (x <|> y) <|> z == x <|> (y <|> z)")
+        <- altAssociativityLaw(makeFunctor: idA, makeEquatable: idA)
+
+    property("Alt - Distributivity: f <^> (x <|> y) == (f <^> x) <|> (f <^> y)")
+        <- altDistributivityLaw(makeFunctor: idA, makeEquatable: idA)
+}
+
+func altLaws<A: Arbitrary, F: Alt, E: Equatable>(
+    makeFunctor: @escaping (A) -> F,
+    makeEquatable: @escaping (F) -> E
+) -> Property where F.K1Arg: Arbitrary & CoArbitrary & Hashable {
+    return conjoin(
+        altAssociativityLaw(makeFunctor: makeFunctor, makeEquatable: makeEquatable),
+        altDistributivityLaw(makeFunctor: makeFunctor, makeEquatable: makeEquatable)
+    )
 }

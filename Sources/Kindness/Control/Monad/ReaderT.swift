@@ -27,11 +27,55 @@ public struct ReaderTImplK1Tag<Environment, MTag: MonadTag> {
     }
 }
 
+extension ReaderTImplK1Tag: AltTag where MTag: AltTag {
+    public static func _alt<A>(
+        _ lhs: KindApplication<ReaderTImplK1Tag<Environment, MTag>, A>
+    ) -> (KindApplication<ReaderTImplK1Tag<Environment, MTag>, A>) -> KindApplication<ReaderTImplK1Tag<Environment, MTag>, A> {
+        return ReaderTImpl<Environment, MTag, A>._alt(lhs)
+    }
+}
+
+extension ReaderTImplK1Tag: AlternativeTag where MTag: AlternativeTag { }
+
+extension ReaderTImplK1Tag: ApplicativeTag {
+    public static func _pure<A>(_ a: A) -> KindApplication<ReaderTImplK1Tag<Environment, MTag>, A> {
+        return ReaderTImpl<Environment, MTag, A>._pure(a)
+    }
+}
+
+extension ReaderTImplK1Tag: ApplyTag {
+    public static func _apply<A, B>(
+        _ fab: KindApplication<ReaderTImplK1Tag<Environment, MTag>, (A) -> B>, _ value: KindApplication<ReaderTImplK1Tag<Environment, MTag>, A>
+    ) -> KindApplication<ReaderTImplK1Tag<Environment, MTag>, B> {
+        return ReaderTImpl<Environment, MTag, A>._apply(fab, value)
+    }
+}
+
+extension ReaderTImplK1Tag: BindTag {
+    public static func _bind<A, B>(
+        _ m: KindApplication<ReaderTImplK1Tag<Environment, MTag>, A>, _ f: @escaping (A) -> KindApplication<ReaderTImplK1Tag<Environment, MTag>, B>
+    ) -> KindApplication<ReaderTImplK1Tag<Environment, MTag>, B> {
+        return ReaderTImpl<Environment, MTag, A>.unkind(m)._bind(f)
+    }
+}
+
 extension ReaderTImplK1Tag: FunctorTag {
     public static func _fmap<A, B>(
         _ f: @escaping (A) -> B, _ value: KindApplication<ReaderTImplK1Tag<Environment, MTag>, A>
     ) -> KindApplication<ReaderTImplK1Tag<Environment, MTag>, B> {
         return ReaderTImpl<Environment, MTag, A>._fmap(f, value)
+    }
+}
+
+extension ReaderTImplK1Tag: MonadTag { }
+
+extension ReaderTImplK1Tag: MonadPlusTag where MTag: MonadPlusTag { }
+
+extension ReaderTImplK1Tag: MonadZeroTag where MTag: MonadZeroTag { }
+
+extension ReaderTImplK1Tag: PlusTag where MTag: PlusTag {
+    public static func empty<A>() -> KindApplication<ReaderTImplK1Tag<Environment, MTag>, A> {
+        return ReaderTImpl<Environment, MTag, A>.empty.kind
     }
 }
 
@@ -62,7 +106,6 @@ public struct ReaderTImplK3Tag {
 }
 
 public typealias ReaderT<Environment, M: Monad> = ReaderTImpl<Environment, M.K1Tag, M.K1Arg>
-public typealias Reader<Environment, A> = ReaderT<Environment, Identity<A>>
 
 /// Implementation of ReaderT, a monad transformer that adds a shared environment a computation can reference.
 public struct ReaderTImpl<Environment, MTag: MonadTag, A> {
@@ -77,12 +120,12 @@ public struct ReaderTImpl<Environment, MTag: MonadTag, A> {
     }
 
     /// Run the receiving ReaderT with the provided environment.
-    public func run(_ r: Environment) -> KindApplication<MTag, A> {
+    public func runReaderT(_ r: Environment) -> KindApplication<MTag, A> {
         return runReaderTImpl(r)
     }
 
     /// Run the receiving ReaderT with the provided environment.
-    public func run<M: Monad>(_ r: Environment) -> M where M.K1Tag == MTag, M.K1Arg == A {
+    public func runReaderT<M: Monad>(_ r: Environment) -> M where M.K1Tag == MTag, M.K1Arg == A {
         return M.unkind • runReaderTImpl <| r
     }
 
@@ -145,12 +188,60 @@ extension ReaderTImpl: K3 {
     }
 }
 
-extension ReaderTImpl: Functor {
-    public static func _fmap<T>(
-        _ f: @escaping (K1Arg) -> T, _ value: KindApplication<K1Tag, K1Arg>
-    ) -> KindApplication<K1Tag, T> {
-        return ReaderTImpl<Environment, MTag, T> { environment -> KindApplication<MTag, T> in
-            return MTag._fmap(f, unkind(value).run(environment))
-        } .kind
+extension ReaderT: Alt where MTag: AltTag {
+    public static func _alt(
+        _ lhs: KindApplication<K1Tag, K1Arg>
+    ) -> (KindApplication<K1Tag, K1Arg>) -> KindApplication<K1Tag, K1Arg> {
+        return { rhs in
+            return ReaderTImpl { environment in
+                return unkind(lhs).runReaderT(environment) <|> unkind(rhs).runReaderT(environment)
+            } .kind
+        }
+    }
+}
+
+extension ReaderT: Alternative where MTag: AlternativeTag { }
+
+extension ReaderT: Monad, FunctorByMonad, ApplyByMonad {
+    public static func _pure(
+        _ a: ReaderTImpl<Environment, MTag, A>.K1Arg
+    ) -> KindApplication<K1Tag, K1Arg> {
+        return ReaderTImpl<Environment, MTag, A> { _ in MTag._pure(a) } .kind
+    }
+
+    public func _bind<B>(
+        _ f: @escaping (K1Arg) -> KindApplication<K1Tag, B>
+    ) -> KindApplication<K1Tag, B> {
+        return ReaderTImpl<Environment, MTag, B>({ environment in
+            return MTag._bind(self.runReaderT(environment), { a in
+                return ReaderTImpl<Environment, MTag, B>.unkind(f(a)).runReaderT(environment)
+            })
+        }).kind
+    }
+}
+
+extension ReaderT: MonadPlus where MTag: MonadPlusTag { }
+
+extension ReaderT: MonadZero where MTag: MonadZeroTag { }
+
+extension ReaderT: Plus where MTag: PlusTag {
+    public static var empty: ReaderTImpl<Environment, MTag, A> {
+        return ReaderTImpl(const(MTag.empty()))
+    }
+}
+
+public typealias Reader<Environment, A> = ReaderT<Environment, Identity<A>>
+
+public extension ReaderT where MTag == IdentityK1Tag {
+    /// Run the receiving ReaderT with the provided environment.
+    public func runReader(_ environment: Environment) -> A {
+        return Identity<A>.unkind(runReaderTImpl(environment)).value
+    }
+
+    /// Modify the output Monad for the receiving ReaderT
+    public func mapReader<B>(
+        _ f: @escaping (K1Arg) -> B
+    ) -> Reader<Environment, B> {
+        return Reader<Environment, B>(MTag._pure • f • self.runReader)
     }
 }
