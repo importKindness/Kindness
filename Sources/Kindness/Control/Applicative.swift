@@ -54,8 +54,8 @@ public func pure<ATag: ApplicativeTag, A>(_ a: A) -> KindApplication<ATag, A> {
 /// Provides an implementation for `Functor` required method `_fmap` based on `_pure` and `<*>`
 public protocol FunctorByApplicative: Applicative { }
 
-public extension FunctorByApplicative {
-    static func _fmap<T>(_ f: @escaping (K1Arg) -> T) -> (K1Self) -> K1Other<T> {
+extension FunctorByApplicative {
+    public static func _fmap<T>(_ f: @escaping (K1Arg) -> T) -> (K1Self) -> K1Other<T> {
         return { a in pure(f) <*> a }
     }
 }

@@ -91,8 +91,8 @@ extension Identity: Equatable where A: Equatable {
 }
 
 extension Identity: Hashable where A: Hashable {
-    public var hashValue: Int {
-        return value.hashValue
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(value)
     }
 }
 

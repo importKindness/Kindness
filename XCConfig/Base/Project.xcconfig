@@ -135,7 +135,7 @@ CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES
 // Swift Compiler - General
 
 // Swift Compiler - Language
-SWIFT_VERSION = 4.0
+SWIFT_VERSION = 5.0
 
 // Swift Compiler - Search Paths
 

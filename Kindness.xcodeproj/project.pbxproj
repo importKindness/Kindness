@@ -648,9 +648,11 @@
 					};
 					414D8428208A5C5300C52931 = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 1020;
 					};
 					414D8430208A5C5400C52931 = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -660,6 +662,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 414D8400208A5BB800C52931;
 			productRefGroup = 414D840B208A5BB800C52931 /* Products */;
@@ -770,7 +773,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Scripts/ensureNoProjectBuildSettings.swift\" \"${PROJECT_FILE_PATH}/project.pbxproj\" \"${TARGET_NAME}\"\nSTATUS_CODE=$?\ntouch \"${DERIVED_FILE_DIR}/XCCONFIG_CHECK_RAN_${TARGET_NAME}\"\nexit ${STATUS_CODE}";
+			shellScript = "\"${SRCROOT}/Scripts/ensureNoProjectBuildSettings.swift\" \"${PROJECT_FILE_PATH}/project.pbxproj\" \"${TARGET_NAME}\"\nSTATUS_CODE=$?\ntouch \"${DERIVED_FILE_DIR}/XCCONFIG_CHECK_RAN_${TARGET_NAME}\"\nexit ${STATUS_CODE}\n";
 		};
 		417196BE208C084500E96BD6 /* Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;

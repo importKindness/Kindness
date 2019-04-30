@@ -111,13 +111,13 @@ extension Either: Equatable where L: Equatable, R: Equatable {
 }
 
 extension Either: Hashable where L: Hashable, R: Hashable {
-    public var hashValue: Int {
+    public func hash(into hasher: inout Hasher) {
         switch self {
         case .left(let l):
-            return l.hashValue
+            return hasher.combine(l.hashValue)
 
         case .right(let r):
-            return r.hashValue
+            return hasher.combine(r.hashValue)
         }
     }
 }

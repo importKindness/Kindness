@@ -27,8 +27,8 @@ public protocol Monad: Applicative, Bind where K1Tag: MonadTag { }
 /// Provides an implementation for `Apply` required method `_apply` based on `>>-`
 public protocol ApplyByMonad: Monad { }
 
-public extension ApplyByMonad {
-    static func _apply<A, B>(
+extension ApplyByMonad {
+    public static func _apply<A, B>(
         _ fab: KindApplication<K1Tag, (A) -> B>,
         _ fa: KindApplication<K1Tag, A>
     ) -> KindApplication<K1Tag, B> {
@@ -41,8 +41,8 @@ public extension ApplyByMonad {
 /// Provides an implementation for `Functor` required method `_fmap` based on `>>-`
 public protocol FunctorByMonad: Monad { }
 
-public extension FunctorByMonad {
-    static func _fmap<T>(_ f: @escaping (K1Arg) -> T, _ fa: K1Self) -> K1Other<T> {
+extension FunctorByMonad {
+    public static func _fmap<T>(_ f: @escaping (K1Arg) -> T, _ fa: K1Self) -> K1Other<T> {
         return fa >>- pure • f
     }
 }

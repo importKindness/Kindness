@@ -51,8 +51,8 @@ public func extract<FTag: ComonadTag, A>(_ w: KindApplication<FTag, A>) -> A {
 
 public protocol ComonadByDuplicate: Duplicate { }
 
-public extension ComonadByDuplicate {
-    func _extend<B>(_ f: @escaping (K1Self) -> B) -> KindApplication<K1Tag, B> {
+extension ComonadByDuplicate {
+    public func _extend<B>(_ f: @escaping (K1Self) -> B) -> KindApplication<K1Tag, B> {
         return f <^> K1Tag._duplicate(self.kind)
     }
 }
@@ -60,8 +60,8 @@ public extension ComonadByDuplicate {
 /// Provides a default implementation for `_duplicate` based on `_extend`.
 public protocol ComonadByExtend: Extend { }
 
-public extension ComonadByExtend {
-    static func _duplicate(_ w: K1Self) -> KindApplication<K1Tag, K1Self> {
+extension ComonadByExtend {
+    public static func _duplicate(_ w: K1Self) -> KindApplication<K1Tag, K1Self> {
         return K1Tag._extend(id, w)
     }
 }

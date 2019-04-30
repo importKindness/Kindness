@@ -18,14 +18,14 @@ public protocol FoldableByFoldR: K1 {
     static func _foldr<B>(_ f: @escaping (K1Arg, B) -> B) -> (B) -> (KindApplication<K1Tag, K1Arg>) -> B
 }
 
-public extension FoldableByFoldR {
-    static func _foldMap<M: Monoid>(_ f: @escaping (K1Arg) -> M) -> (KindApplication<K1Tag, K1Arg>) -> M {
+extension FoldableByFoldR {
+    public static func _foldMap<M: Monoid>(_ f: @escaping (K1Arg) -> M) -> (KindApplication<K1Tag, K1Arg>) -> M {
         return _foldr({ x, acc in
             return f(x) <> acc
         })(.mempty)
     }
 
-    static func _foldl<B>(_ f: @escaping (B, K1Arg) -> B) -> (B) -> (KindApplication<K1Tag, K1Arg>) -> B {
+    public static func _foldl<B>(_ f: @escaping (B, K1Arg) -> B) -> (B) -> (KindApplication<K1Tag, K1Arg>) -> B {
         return { b in
             return { fa in
                 return (_foldMap(Dual.init • Endo.init • (flip • curry <| f)) <| fa).unDual.appEndo <| b
@@ -40,14 +40,14 @@ public protocol FoldableByFoldL: K1 {
     static func _foldl<B>(_ f: @escaping (B, K1Arg) -> B) -> (B) -> (KindApplication<K1Tag, K1Arg>) -> B
 }
 
-public extension FoldableByFoldL {
-    static func _foldMap<M: Monoid>(_ f: @escaping (K1Arg) -> M) -> (KindApplication<K1Tag, K1Arg>) -> M {
+extension FoldableByFoldL {
+    public static func _foldMap<M: Monoid>(_ f: @escaping (K1Arg) -> M) -> (KindApplication<K1Tag, K1Arg>) -> M {
         return _foldl({ acc, x in
             return acc <> f(x)
         })(.mempty)
     }
 
-    static func _foldr<B>(_ f: @escaping (K1Arg, B) -> B) -> (B) -> (KindApplication<K1Tag, K1Arg>) -> B {
+    public static func _foldr<B>(_ f: @escaping (K1Arg, B) -> B) -> (B) -> (KindApplication<K1Tag, K1Arg>) -> B {
         return { b in
             return { fa in
                 return (_foldMap(Endo.init • curry(f)) <| fa).appEndo <| b
@@ -62,8 +62,8 @@ public protocol FoldableByFoldMap: K1 {
     static func _foldMap<M: Monoid>(_ f: @escaping (K1Arg) -> M) -> (KindApplication<K1Tag, K1Arg>) -> M
 }
 
-public extension FoldableByFoldMap {
-    static func _foldr<B>(_ f: @escaping (K1Arg, B) -> B) -> (B) -> (KindApplication<K1Tag, K1Arg>) -> B {
+extension FoldableByFoldMap {
+    public static func _foldr<B>(_ f: @escaping (K1Arg, B) -> B) -> (B) -> (KindApplication<K1Tag, K1Arg>) -> B {
         return { b in
             return { fa in
                 return (_foldMap(Endo.init • curry(f)) <| fa).appEndo <| b
@@ -71,7 +71,7 @@ public extension FoldableByFoldMap {
         }
     }
 
-    static func _foldl<B>(_ f: @escaping (B, K1Arg) -> B) -> (B) -> (KindApplication<K1Tag, K1Arg>) -> B {
+    public static func _foldl<B>(_ f: @escaping (B, K1Arg) -> B) -> (B) -> (KindApplication<K1Tag, K1Arg>) -> B {
         return { b in
             return { fa in
                 return (_foldMap(Dual.init • Endo.init • (flip • curry <| f)) <| fa).unDual.appEndo <| b

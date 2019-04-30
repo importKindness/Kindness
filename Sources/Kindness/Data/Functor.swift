@@ -40,13 +40,13 @@ public protocol Functor: K1 where K1Tag: FunctorTag {
     static func _fmap<T>(_ f: @escaping (K1Arg) -> T, _ value: K1Self) -> K1Other<T>
 }
 
-public extension Functor {
+extension Functor {
 
     /// Maps a function `(A) -> B` over self to return `Self<B>`
     ///
     /// - Parameter f: Function to be mapped
     /// - Returns: `Self<B>` result of passing self to the mapped function `(Self<A>) -> Self<B>`
-    func _fmap<F: Functor>(_ f: @escaping (K1Arg) -> F.K1Arg) -> F where F.K1Tag == K1Tag {
+    public func _fmap<F: Functor>(_ f: @escaping (K1Arg) -> F.K1Arg) -> F where F.K1Tag == K1Tag {
         return f <^> self
     }
 }

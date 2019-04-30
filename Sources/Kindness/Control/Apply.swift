@@ -44,13 +44,13 @@ public protocol Apply: Functor where K1Tag: ApplyTag {
     ) -> KindApplication<K1Tag, B>
 }
 
-public extension Apply {
+extension Apply {
 
     /// Given a function wrapped in a `Functor`, apply that function to arguments wrapped in the same `Functor`
     ///
     /// - Parameter fab: `F<(A) -> B>` wrapping the function to apply
     /// - Returns: Function `(F<A>) -> F<B>`
-    static func _apply<F: Apply, G: Apply, H: Apply>(
+    public static func _apply<F: Apply, G: Apply, H: Apply>(
         _ fab: F
     ) -> (G) -> H where F.K1Tag == G.K1Tag, G.K1Tag == H.K1Tag, F.K1Arg == ((G.K1Arg) -> H.K1Arg) {
         return { fab <*> $0 }

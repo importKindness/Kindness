@@ -234,7 +234,7 @@ extension ReaderT: Plus where MTag: PlusTag {
 
 public typealias Reader<Environment, A> = ReaderT<Environment, Identity<A>>
 
-public extension ReaderT where MTag == IdentityK1Tag {
+extension ReaderT where MTag == IdentityK1Tag {
     /// Run the receiving ReaderT with the provided environment.
     public func runReader(_ environment: Environment) -> A {
         return Identity<A>.unkind(runReaderTImpl(environment)).value

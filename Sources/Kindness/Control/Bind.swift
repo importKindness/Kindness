@@ -40,8 +40,8 @@ public protocol Bind: Apply where K1Tag: BindTag {
     func _bind<B>(_ f: @escaping (K1Arg) -> KindApplication<K1Tag, B>) -> KindApplication<K1Tag, B>
 }
 
-public extension Bind where K1Arg: Bind, K1Arg.K1Tag == K1Tag {
-    func _join() -> K1Arg {
+extension Bind where K1Arg: Bind, K1Arg.K1Tag == K1Tag {
+    public func _join() -> K1Arg {
         return self >>- id
     }
 }

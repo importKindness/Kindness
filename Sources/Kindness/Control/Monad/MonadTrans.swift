@@ -32,12 +32,12 @@ public protocol MonadTrans: K2 where K2Tag: MonadTransTag, K2Arg == K1Tag, K2Tag
     static func _lift<MTag: MonadTag>(_ m: KindApplication<MTag, K1Arg>) -> KindApplication<K2Tag, K2TagArgs>
 }
 
-public extension MonadTrans {
+extension MonadTrans {
     /// Lifts a Monad into a transformed Monad that adds the effects of `Self`.
     ///
     /// - Parameter m: Monad to lift
     /// - Returns: Transformed Monad combining the effects of `Self` with the original Monad.
-    static func lift<M: Monad>(_ m: M) -> Self where K2Tag.MTag == M.K1Tag, M.K1Arg == K1Arg {
+    public static func lift<M: Monad>(_ m: M) -> Self where K2Tag.MTag == M.K1Tag, M.K1Arg == K1Arg {
         return (unkind2 • _lift) <| m.kind
     }
 }
