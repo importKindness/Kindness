@@ -16,7 +16,7 @@ import SwiftCheck
 
 import Kindness
 
-func applicativeIdentityLaw<A: Arbitrary, F: Applicative, E: Equatable>(
+public func applicativeIdentityLaw<A: Arbitrary, F: Applicative, E: Equatable>(
     makeFunctor: @escaping (A) -> F,
     makeEquatable: @escaping (F) -> E
 ) -> Property {
@@ -29,7 +29,7 @@ func applicativeIdentityLaw<A: Arbitrary, F: Applicative, E: Equatable>(
     }
 }
 
-func applicativeCompositionLaw<A: Arbitrary, F: Applicative, E: Equatable, B: Arbitrary, FAB: Applicative>(
+public func applicativeCompositionLaw<A: Arbitrary, F: Applicative, E: Equatable, B: Arbitrary, FAB: Applicative>(
     makeFunctor: @escaping (A) -> F,
     makeEquatable: @escaping (F) -> E,
     makeFAB: @escaping (B) -> FAB
@@ -50,7 +50,7 @@ func applicativeCompositionLaw<A: Arbitrary, F: Applicative, E: Equatable, B: Ar
         }
 }
 
-func applicativeHomomorphismLaw<F: Applicative, E: Equatable>(
+public func applicativeHomomorphismLaw<F: Applicative, E: Equatable>(
     makeEquatable: @escaping (F) -> E
 ) -> Property where F.K1Arg: Arbitrary & CoArbitrary & Hashable {
     return forAll { (fArrow: ArrowOf<F.K1Arg, F.K1Arg>, x: F.K1Arg) -> Bool in
@@ -63,7 +63,7 @@ func applicativeHomomorphismLaw<F: Applicative, E: Equatable>(
     }
 }
 
-func applicativeInterchangeLaw<F: Applicative, E: Equatable, B: Arbitrary, FAB: Applicative>(
+public func applicativeInterchangeLaw<F: Applicative, E: Equatable, B: Arbitrary, FAB: Applicative>(
     makeEquatable: @escaping (F) -> E,
     makeFAB: @escaping (B) -> FAB
 ) -> Property where
@@ -80,7 +80,7 @@ func applicativeInterchangeLaw<F: Applicative, E: Equatable, B: Arbitrary, FAB: 
         }
 }
 
-func checkApplicativeLaws<F: Applicative & Arbitrary & Equatable, FAB: Applicative & Arbitrary>(
+public func checkApplicativeLaws<F: Applicative & Arbitrary & Equatable, FAB: Applicative & Arbitrary>(
     for: F.Type, fabType: FAB.Type
 ) where F.K1Arg: Arbitrary & CoArbitrary & Hashable, F.K1Tag == FAB.K1Tag, FAB.K1Arg == ArrowOf<F.K1Arg, F.K1Arg> {
     let idF: (F) -> F = id
@@ -99,7 +99,7 @@ func checkApplicativeLaws<F: Applicative & Arbitrary & Equatable, FAB: Applicati
         <- applicativeInterchangeLaw(makeEquatable: idF, makeFAB: idFAB)
 }
 
-func applicativeLaws<A: Arbitrary, F: Applicative, E: Equatable, B: Arbitrary, FAB: Applicative>(
+public func applicativeLaws<A: Arbitrary, F: Applicative, E: Equatable, B: Arbitrary, FAB: Applicative>(
     makeFunctor: @escaping (A) -> F,
     makeEquatable: @escaping (F) -> E,
     makeFAB: @escaping (B) -> FAB

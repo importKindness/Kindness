@@ -17,22 +17,7 @@ import XCTest
 import SwiftCheck
 
 import Kindness
-
-extension Identity: Arbitrary where A: Arbitrary {
-    public static var arbitrary: Gen<Identity<A>> {
-        return A.arbitrary.map(Identity.init)
-    }
-
-    public static func shrink(_ x: Identity<A>) -> [Identity<A>] {
-        return A.shrink(x.value).map(Identity.init)
-    }
-}
-
-extension Identity: CoArbitrary where A: CoArbitrary {
-    public static func coarbitrary<C>(_ x: Identity<A>) -> ((Gen<C>) -> Gen<C>) {
-        return A.coarbitrary(x.value)
-    }
-}
+import SwiftCheckKindness
 
 class IdentityTests: XCTestCase {
     func testAltLaws() {

@@ -20,6 +20,8 @@ LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/../Frameworks @loader_pa
 // Localization
 
 // Packaging
+INFOPLIST_FILE = Resources/$(BASE_PRODUCT_NAME)/Info.plist
+PRODUCT_BUNDLE_IDENTIFIER = org.importkindness.$(BASE_PRODUCT_NAME)
 
 // Search Paths
 FRAMEWORK_SEARCH_PATHS = $(inherited) $(PROJECT_DIR)/Carthage/Build/Mac

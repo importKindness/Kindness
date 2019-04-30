@@ -17,30 +17,7 @@ import XCTest
 import SwiftCheck
 
 import Kindness
-
-struct ReaderTOf<Environment: CoArbitrary & Hashable, M: Monad & Arbitrary> {
-    let readerT: ReaderT<Environment, M>
-    let arrow: ArrowOf<Environment, M>
-
-    init(_ arrow: ArrowOf<Environment, M>) {
-        self.readerT = ReaderT<Environment, M>(arrow.getArrow)
-        self.arrow = arrow
-    }
-
-    static func makeReaderT(_ of: ReaderTOf<Environment, M>) -> ReaderT<Environment, M> {
-        return of.readerT
-    }
-}
-
-extension ReaderTOf: Arbitrary where Environment: CoArbitrary & Hashable, M: Arbitrary {
-    static var arbitrary: Gen<ReaderTOf<Environment, M>> {
-        return ArrowOf<Environment, M>.arbitrary.map(ReaderTOf.init)
-    }
-
-    static func shrink(_ x: ReaderTOf<Environment, M>) -> [ReaderTOf<Environment, M>] {
-        return ArrowOf<Environment, M>.shrink(x.arrow).map(ReaderTOf.init)
-    }
-}
+import SwiftCheckKindness
 
 private func makeEquatable(with e: UInt8) -> (ReaderT<UInt8, Identity<Int8>>) -> Identity<Int8> {
     return { reader in

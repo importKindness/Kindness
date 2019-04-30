@@ -5,25 +5,19 @@
 // Build Locations
 
 // Build Options
+APPLICATION_EXTENSION_API_ONLY = NO
 
 // Deployment
-INSTALL_PATH = $(LOCAL_LIBRARY_DIR)/Frameworks
-SKIP_INSTALL = YES
 
 // Headers
 
 // Kernel Module
 
 // Linking
-DYLIB_COMPATIBILITY_VERSION = 1
-DYLIB_CURRENT_VERSION = 1
-DYLIB_INSTALL_NAME_BASE = @rpath
 
 // Localization
 
 // Packaging
-DEFINES_MODULE = YES
-PRODUCT_NAME = $(BASE_PRODUCT_NAME)
 
 // Search Paths
 
@@ -88,3 +82,4 @@ PRODUCT_NAME = $(BASE_PRODUCT_NAME)
 // Swift Compiler - Warnings Policies
 
 // User-Defined
+BASE_PRODUCT_NAME = SwiftCheckKindness

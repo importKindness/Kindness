@@ -10,6 +10,10 @@ let package = Package(
         .library(
             name: "Kindness",
             targets: ["Kindness"]
+        ),
+        .library(
+            name: "SwiftCheckKindness",
+            targets: ["SwiftCheckKindness"]
         )
     ],
     dependencies: [
@@ -25,6 +29,10 @@ let package = Package(
         ),
         .testTarget(
             name: "KindnessTests",
+            dependencies: ["Kindness", "SwiftCheck", "SwiftCheckKindness"]
+        ),
+        .target(
+            name: "SwiftCheckKindness",
             dependencies: ["Kindness", "SwiftCheck"]
         )
     ]

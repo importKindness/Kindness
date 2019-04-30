@@ -22,7 +22,7 @@ import Kindness
 ///     Right Identity: x <|> empty == x
 ///     Annihilation: f <^> empty == empty
 
-func plusLeftIdentityLaw<A: Arbitrary, F: Plus, E: Equatable>(
+public func plusLeftIdentityLaw<A: Arbitrary, F: Plus, E: Equatable>(
     makeFunctor: @escaping (A) -> F,
     makeEquatable: @escaping (F) -> E
 ) -> Property {
@@ -36,7 +36,7 @@ func plusLeftIdentityLaw<A: Arbitrary, F: Plus, E: Equatable>(
     }
 }
 
-func plusRightIdentityLaw<A: Arbitrary, F: Plus, E: Equatable>(
+public func plusRightIdentityLaw<A: Arbitrary, F: Plus, E: Equatable>(
     makeFunctor: @escaping (A) -> F,
     makeEquatable: @escaping (F) -> E
 ) -> Property {
@@ -50,7 +50,7 @@ func plusRightIdentityLaw<A: Arbitrary, F: Plus, E: Equatable>(
     }
 }
 
-func plusAnnihilationLaw<A: Arbitrary, F: Plus, E: Equatable>(
+public func plusAnnihilationLaw<A: Arbitrary, F: Plus, E: Equatable>(
     makeFunctor: @escaping (A) -> F,
     makeEquatable: @escaping (F) -> E
 ) -> Property where F.K1Arg: Arbitrary & CoArbitrary & Hashable {
@@ -64,7 +64,7 @@ func plusAnnihilationLaw<A: Arbitrary, F: Plus, E: Equatable>(
     }
 }
 
-func checkPlusLaws<F: Plus & Arbitrary & Equatable>(for: F.Type) where F.K1Arg: Arbitrary & CoArbitrary & Hashable {
+public func checkPlusLaws<F: Plus & Arbitrary & Equatable>(for: F.Type) where F.K1Arg: Arbitrary & CoArbitrary & Hashable {
     let idF: (F) -> F = id
 
     property("Plus - Left Identity: empty <|> x == x")
@@ -77,7 +77,7 @@ func checkPlusLaws<F: Plus & Arbitrary & Equatable>(for: F.Type) where F.K1Arg: 
         <- plusAnnihilationLaw(makeFunctor: idF, makeEquatable: idF)
 }
 
-func plusLaws<A: Arbitrary, F: Plus, E: Equatable>(
+public func plusLaws<A: Arbitrary, F: Plus, E: Equatable>(
     makeFunctor: @escaping (A) -> F,
     makeEquatable: @escaping (F) -> E
 ) -> Property where F.K1Arg: Arbitrary & CoArbitrary & Hashable {

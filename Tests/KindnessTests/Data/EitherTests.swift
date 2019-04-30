@@ -17,37 +17,7 @@ import XCTest
 import SwiftCheck
 
 import Kindness
-
-extension Either: Arbitrary where L: Arbitrary, R: Arbitrary {
-    public static var arbitrary: Gen<Either<L, R>> {
-        return Gen.one(of: [
-            L.arbitrary.map(Either<L, R>.left),
-            R.arbitrary.map(Either<L, R>.right)
-        ])
-    }
-
-    public static func shrink(_ x: Either<L, R>) -> [Either<L, R>] {
-        switch x {
-        case .left(let l):
-            return L.shrink(l).map(Either<L, R>.left)
-
-        case .right(let r):
-            return R.shrink(r).map(Either<L, R>.right)
-        }
-    }
-}
-
-extension Either: CoArbitrary where L: CoArbitrary, R: CoArbitrary {
-    public static func coarbitrary<C>(_ x: Either<L, R>) -> ((Gen<C>) -> Gen<C>) {
-        switch x {
-        case .left(let l):
-            return L.coarbitrary(l)
-
-        case .right(let r):
-            return R.coarbitrary(r)
-        }
-    }
-}
+import SwiftCheckKindness
 
 class EitherTests: XCTestCase {
     func testAltLaws() {

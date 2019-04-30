@@ -17,6 +17,7 @@ import XCTest
 import SwiftCheck
 
 import Kindness
+import SwiftCheckKindness
 
 class ArrayTests: XCTestCase {
     func testAltLaws() {

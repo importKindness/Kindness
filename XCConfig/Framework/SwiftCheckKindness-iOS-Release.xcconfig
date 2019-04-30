@@ -1,4 +1,5 @@
-#include "./Framework-OSX.xcconfig"
+#include "./Framework-iOS.xcconfig"
+#include "./SwiftCheckKindness.xcconfig"
 
 // Architectures
 

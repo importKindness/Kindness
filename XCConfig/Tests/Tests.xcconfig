@@ -19,8 +19,6 @@ ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
 // Localization
 
 // Packaging
-INFOPLIST_FILE = Resources/KindnessTests/Info.plist
-PRODUCT_BUNDLE_IDENTIFIER = com.ellispeck.kindnessTests
 
 // Search Paths
 
@@ -85,3 +83,4 @@ PRODUCT_BUNDLE_IDENTIFIER = com.ellispeck.kindnessTests
 // Swift Compiler - Warnings Policies
 
 // User-Defined
+BASE_PRODUCT_NAME = KindnessTests

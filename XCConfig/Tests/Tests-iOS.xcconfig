@@ -20,7 +20,7 @@
 // Localization
 
 // Packaging
-PRODUCT_NAME = KindnessTests_iOS
+PRODUCT_NAME = $(BASE_PRODUCT_NAME)_iOS
 
 // Search Paths
 

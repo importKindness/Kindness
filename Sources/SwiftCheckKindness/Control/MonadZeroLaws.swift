@@ -16,33 +16,30 @@ import SwiftCheck
 
 import Kindness
 
-func monadPlusDistributivityLaw<A: Arbitrary, M: MonadPlus, E: Equatable>(
+public func monadZeroAnnihilationLaw<A: Arbitrary, M: MonadZero, E: Equatable>(
     makeMonad: @escaping (A) -> M,
     makeEquatable: @escaping (M) -> E
 ) -> Property where M.K1Arg: CoArbitrary & Hashable {
-    return forAll { (a: A, b: A, fArrow: ArrowOf<M.K1Arg, A>) -> Bool in
-        let x = makeMonad(a)
-        let y = makeMonad(b)
-
+    return forAll { (fArrow: ArrowOf<M.K1Arg, A>) -> Bool in
         let f = makeMonad • fArrow.getArrow
 
-        let lhs: E = makeEquatable((x <|> y) >>- f)
-        let rhs: E = makeEquatable((x >>- f) <|> (y >>- f))
+        let lhs: E = makeEquatable(M.empty >>- f)
+        let rhs: E = makeEquatable(M.empty)
 
         return lhs == rhs
     }
 }
 
-func checkMonadPlusLaws<M: MonadPlus & Arbitrary & Equatable>(for: M.Type) where M.K1Arg: CoArbitrary & Hashable {
+public func checkMonadZeroLaws<M: MonadZero & Arbitrary & Equatable>(for: M.Type) where M.K1Arg: CoArbitrary & Hashable {
     let idM: (M) -> M = id
 
-    property("MonadPlus - Distributivity: (x <|> y) >>- f == (x >>- f) <|> (y >>- f)")
-        <- monadPlusDistributivityLaw(makeMonad: idM, makeEquatable: idM)
+    property("MonadZero - Annihilation: empty >>- f = empty")
+        <- monadZeroAnnihilationLaw(makeMonad: idM, makeEquatable: idM)
 }
 
-func monadPlusLaws<A: Arbitrary, M: MonadPlus, E: Equatable>(
+public func monadZeroLaws<A: Arbitrary, M: MonadZero, E: Equatable>(
     makeMonad: @escaping (A) -> M,
     makeEquatable: @escaping (M) -> E
 ) -> Property where M.K1Arg: CoArbitrary & Hashable {
-    return monadPlusDistributivityLaw(makeMonad: makeMonad, makeEquatable: makeEquatable)
+    return monadZeroAnnihilationLaw(makeMonad: makeMonad, makeEquatable: makeEquatable)
 }

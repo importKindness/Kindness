@@ -16,7 +16,7 @@ import SwiftCheck
 
 import Kindness
 
-private func functorIdentityLaw<A: Arbitrary, F: Functor, E: Equatable>(
+public func functorIdentityLaw<A: Arbitrary, F: Functor, E: Equatable>(
     makeFunctor: @escaping (A) -> F,
     makeEquatable: @escaping (F) -> E
 ) -> Property {
@@ -30,7 +30,7 @@ private func functorIdentityLaw<A: Arbitrary, F: Functor, E: Equatable>(
     }
 }
 
-private func functorCompositionLaw<A: Arbitrary, F: Functor, E: Equatable>(
+public func functorCompositionLaw<A: Arbitrary, F: Functor, E: Equatable>(
     makeFunctor: @escaping (A) -> F,
     makeEquatable: @escaping (F) -> E
 ) -> Property where F.K1Arg: Arbitrary & CoArbitrary & Hashable {
@@ -47,7 +47,7 @@ private func functorCompositionLaw<A: Arbitrary, F: Functor, E: Equatable>(
     }
 }
 
-func checkFunctorLaws<F: Functor & Arbitrary & Equatable>(
+public func checkFunctorLaws<F: Functor & Arbitrary & Equatable>(
     for: F.Type
 ) where F.K1Arg: Arbitrary & CoArbitrary & Hashable {
     let idF: (F) -> F = id
@@ -59,7 +59,7 @@ func checkFunctorLaws<F: Functor & Arbitrary & Equatable>(
         <- functorCompositionLaw(makeFunctor: idF, makeEquatable: idF)
 }
 
-func functorLaws<A: Arbitrary, F: Functor, E: Equatable>(
+public func functorLaws<A: Arbitrary, F: Functor, E: Equatable>(
     makeFunctor: @escaping (A) -> F,
     makeEquatable: @escaping (F) -> E
 ) -> Property where F.K1Arg: Arbitrary & CoArbitrary & Hashable {

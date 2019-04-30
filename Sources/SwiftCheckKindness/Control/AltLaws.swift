@@ -16,7 +16,7 @@ import SwiftCheck
 
 import Kindness
 
-func altAssociativityLaw<A: Arbitrary, F: Alt, E: Equatable>(
+public func altAssociativityLaw<A: Arbitrary, F: Alt, E: Equatable>(
     makeFunctor: @escaping (A) -> F,
     makeEquatable: @escaping (F) -> E
 ) -> Property {
@@ -32,7 +32,7 @@ func altAssociativityLaw<A: Arbitrary, F: Alt, E: Equatable>(
     }
 }
 
-func altDistributivityLaw<A: Arbitrary, F: Alt, E: Equatable>(
+public func altDistributivityLaw<A: Arbitrary, F: Alt, E: Equatable>(
     makeFunctor: @escaping (A) -> F,
     makeEquatable: @escaping (F) -> E
 ) -> Property where F.K1Arg: Arbitrary & CoArbitrary & Hashable {
@@ -49,7 +49,7 @@ func altDistributivityLaw<A: Arbitrary, F: Alt, E: Equatable>(
     }
 }
 
-func checkAltLaws<A: Alt & Arbitrary & Equatable>(for: A.Type) where A.K1Arg: CoArbitrary & Arbitrary & Hashable {
+public func checkAltLaws<A: Alt & Arbitrary & Equatable>(for: A.Type) where A.K1Arg: CoArbitrary & Arbitrary & Hashable {
     let idA: (A) -> A = id
 
     property("Alt - Associativity: (x <|> y) <|> z == x <|> (y <|> z)")
@@ -59,7 +59,7 @@ func checkAltLaws<A: Alt & Arbitrary & Equatable>(for: A.Type) where A.K1Arg: Co
         <- altDistributivityLaw(makeFunctor: idA, makeEquatable: idA)
 }
 
-func altLaws<A: Arbitrary, F: Alt, E: Equatable>(
+public func altLaws<A: Arbitrary, F: Alt, E: Equatable>(
     makeFunctor: @escaping (A) -> F,
     makeEquatable: @escaping (F) -> E
 ) -> Property where F.K1Arg: Arbitrary & CoArbitrary & Hashable {

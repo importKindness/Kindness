@@ -16,7 +16,7 @@ import SwiftCheck
 
 import Kindness
 
-func bindAssociativityLaw<A: Arbitrary, F: Bind, E: Equatable>(
+public func bindAssociativityLaw<A: Arbitrary, F: Bind, E: Equatable>(
     makeFunctor: @escaping (A) -> F,
     makeEquatable: @escaping (F) -> E
 ) -> Property where F.K1Arg: CoArbitrary & Hashable {
@@ -33,14 +33,14 @@ func bindAssociativityLaw<A: Arbitrary, F: Bind, E: Equatable>(
     }
 }
 
-func checkBindLaws<F: Bind & Arbitrary & Equatable>(for: F.Type) where F.K1Arg: CoArbitrary & Hashable {
+public func checkBindLaws<F: Bind & Arbitrary & Equatable>(for: F.Type) where F.K1Arg: CoArbitrary & Hashable {
     let idF: (F) -> F = id
 
     property("Bind - Associativity: (x >>- f) >>- g = x >>- { k in f(k) >>- g }")
         <- bindAssociativityLaw(makeFunctor: idF, makeEquatable: idF)
 }
 
-func bindLaws<A: Arbitrary, F: Bind, E: Equatable>(
+public func bindLaws<A: Arbitrary, F: Bind, E: Equatable>(
     makeFunctor: @escaping (A) -> F,
     makeEquatable: @escaping (F) -> E
 ) -> Property where F.K1Arg: CoArbitrary & Hashable {

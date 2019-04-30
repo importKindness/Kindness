@@ -16,7 +16,7 @@ import SwiftCheck
 
 import Kindness
 
-func monadLeftIdentityLaw<A: Arbitrary, M: Monad, E: Equatable>(
+public func monadLeftIdentityLaw<A: Arbitrary, M: Monad, E: Equatable>(
     makeMonad: @escaping (A) -> M,
     makeEquatable: @escaping (M) -> E
 ) -> Property where M.K1Arg: Arbitrary & CoArbitrary & Hashable {
@@ -30,7 +30,7 @@ func monadLeftIdentityLaw<A: Arbitrary, M: Monad, E: Equatable>(
     }
 }
 
-func monadRightIdentityLaw<A: Arbitrary, M: Monad, E: Equatable>(
+public func monadRightIdentityLaw<A: Arbitrary, M: Monad, E: Equatable>(
     makeMonad: @escaping (A) -> M,
     makeEquatable: @escaping (M) -> E
 ) -> Property {
@@ -44,7 +44,7 @@ func monadRightIdentityLaw<A: Arbitrary, M: Monad, E: Equatable>(
     }
 }
 
-func checkMonadLaws<M: Monad & Arbitrary & Equatable>(for: M.Type) where M.K1Arg: Arbitrary & CoArbitrary & Hashable {
+public func checkMonadLaws<M: Monad & Arbitrary & Equatable>(for: M.Type) where M.K1Arg: Arbitrary & CoArbitrary & Hashable {
     let idM: (M) -> M = id
 
     property("\(M.self) - Monad - Left Identity: pure(x) >>- f == f(x)")
@@ -54,7 +54,7 @@ func checkMonadLaws<M: Monad & Arbitrary & Equatable>(for: M.Type) where M.K1Arg
         <- monadRightIdentityLaw(makeMonad: idM, makeEquatable: idM)
 }
 
-func monadLaws<A: Arbitrary, M: Monad, E: Equatable>(
+public func monadLaws<A: Arbitrary, M: Monad, E: Equatable>(
     makeMonad: @escaping (A) -> M,
     makeEquatable: @escaping (M) -> E
 ) -> Property where M.K1Arg: Arbitrary & CoArbitrary & Hashable {

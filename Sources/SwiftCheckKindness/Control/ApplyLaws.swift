@@ -16,7 +16,7 @@ import SwiftCheck
 
 import Kindness
 
-private func applyAssociativeCompositionLaw<A: Arbitrary, F: Apply, E: Equatable, B: Arbitrary, FAB: Apply>(
+public func applyAssociativeCompositionLaw<A: Arbitrary, F: Apply, E: Equatable, B: Arbitrary, FAB: Apply>(
     makeFunctor: @escaping (A) -> F,
     makeEquatable: @escaping (F) -> E,
     makeFAB: @escaping (B) -> FAB
@@ -37,7 +37,7 @@ private func applyAssociativeCompositionLaw<A: Arbitrary, F: Apply, E: Equatable
         }
 }
 
-func checkApplyLaws<F: Apply & Arbitrary & Equatable, FAB: Apply & Arbitrary>(
+public func checkApplyLaws<F: Apply & Arbitrary & Equatable, FAB: Apply & Arbitrary>(
     for: F.Type, fabType: FAB.Type
 ) where F.K1Arg: Arbitrary & CoArbitrary & Hashable, F.K1Tag == FAB.K1Tag, FAB.K1Arg == ArrowOf<F.K1Arg, F.K1Arg> {
     let idF: (F) -> F = id
@@ -47,7 +47,7 @@ func checkApplyLaws<F: Apply & Arbitrary & Equatable, FAB: Apply & Arbitrary>(
         <- applyAssociativeCompositionLaw(makeFunctor: idF, makeEquatable: idF, makeFAB: idFAB)
 }
 
-func applyLaws<A: Arbitrary, F: Apply, E: Equatable, B: Arbitrary, FAB: Apply>(
+public func applyLaws<A: Arbitrary, F: Apply, E: Equatable, B: Arbitrary, FAB: Apply>(
     makeFunctor: @escaping (A) -> F,
     makeEquatable: @escaping (F) -> E,
     makeFAB: @escaping (B) -> FAB

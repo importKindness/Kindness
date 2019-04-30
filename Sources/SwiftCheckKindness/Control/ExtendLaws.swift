@@ -16,7 +16,7 @@ import SwiftCheck
 
 import Kindness
 
-func checkExtendAssociativityLaw<E: Extend & Arbitrary & CoArbitrary & Hashable>(
+public func checkExtendAssociativityLaw<E: Extend & Arbitrary & CoArbitrary & Hashable>(
     for: E.Type
 ) where E.K1Arg: Arbitrary & Hashable {
     property("Extend - Associativity: extend f <<< extend g = extend (f <<< extend g)")
@@ -31,6 +31,6 @@ func checkExtendAssociativityLaw<E: Extend & Arbitrary & CoArbitrary & Hashable>
         }
 }
 
-func checkExtendLaws<E: Extend & Arbitrary & CoArbitrary & Hashable>(for: E.Type) where E.K1Arg: Arbitrary & Hashable {
+public func checkExtendLaws<E: Extend & Arbitrary & CoArbitrary & Hashable>(for: E.Type) where E.K1Arg: Arbitrary & Hashable {
     checkExtendAssociativityLaw(for: E.self)
 }

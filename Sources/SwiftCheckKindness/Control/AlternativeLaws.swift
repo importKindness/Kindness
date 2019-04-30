@@ -16,7 +16,7 @@ import SwiftCheck
 
 import Kindness
 
-func alternativeDistributivityLaw<A: Arbitrary, F: Alternative, E: Equatable, B: Arbitrary, FAB: Alternative>(
+public func alternativeDistributivityLaw<A: Arbitrary, F: Alternative, E: Equatable, B: Arbitrary, FAB: Alternative>(
     makeFunctor: @escaping (A) -> F,
     makeEquatable: @escaping (F) -> E,
     makeFAB: @escaping (B) -> FAB
@@ -40,7 +40,7 @@ func alternativeDistributivityLaw<A: Arbitrary, F: Alternative, E: Equatable, B:
         }
 }
 
-func alternativeAnnihilationLaw<A: Arbitrary, F: Alternative, E: Equatable, FAB: Alternative>(
+public func alternativeAnnihilationLaw<A: Arbitrary, F: Alternative, E: Equatable, FAB: Alternative>(
     makeFunctor: @escaping (A) -> F,
     makeEquatable: @escaping (F) -> E,
     fabType: FAB.Type
@@ -60,7 +60,7 @@ func alternativeAnnihilationLaw<A: Arbitrary, F: Alternative, E: Equatable, FAB:
         }
 }
 
-func checkAlternativeLaws<A: Alternative & Arbitrary & Equatable, FAB: Alternative & Arbitrary>(
+public func checkAlternativeLaws<A: Alternative & Arbitrary & Equatable, FAB: Alternative & Arbitrary>(
     for: A.Type,
     fabType: FAB.Type
 ) where A.K1Arg: Arbitrary & CoArbitrary & Hashable, A.K1Tag == FAB.K1Tag, FAB.K1Arg == ArrowOf<A.K1Arg, A.K1Arg> {
@@ -74,7 +74,7 @@ func checkAlternativeLaws<A: Alternative & Arbitrary & Equatable, FAB: Alternati
         <- alternativeAnnihilationLaw(makeFunctor: idA, makeEquatable: idA, fabType: FAB.self)
 }
 
-func alternativeLaws<A: Arbitrary, F: Alternative, E: Equatable, B: Arbitrary, FAB: Alternative>(
+public func alternativeLaws<A: Arbitrary, F: Alternative, E: Equatable, B: Arbitrary, FAB: Alternative>(
     makeFunctor: @escaping (A) -> F,
     makeEquatable: @escaping (F) -> E,
     makeFAB: @escaping (B) -> FAB
